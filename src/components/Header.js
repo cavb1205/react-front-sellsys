@@ -14,9 +14,10 @@ const Header = () => {
   
   
   return (
-    <div className="container-fluid">
-      <nav className="navbar navbar-expand-lg bg-light mb-4">
-        {user? 
+    
+      <nav className="navbar fixed-top navbar-expand-lg bg-light p-2">
+        {
+        user? 
         <>
         <span className="navbar-brand p-2"><Caja /></span>
         
@@ -30,7 +31,7 @@ const Header = () => {
               <Link className="nav-link active" aria-current="page" to="/">Home</Link>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"  aria-expanded="false">
                 Informes
               </a>
               <ul className="dropdown-menu">
@@ -79,9 +80,10 @@ const Header = () => {
           } 
         </div>
         
-        </>:<></>}
+        </>:null
+        }
         </nav>
-    </div>
+    
     
   )
 

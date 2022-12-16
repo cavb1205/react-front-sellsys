@@ -13,6 +13,8 @@ const GastosProvider = ({children}) => {
     } = useContext(AuthContext);
     
     const [tipoGastos,setTipoGastos] = useState([])
+    const [newTipoGasto, setNewTipoGasto] = useState({})
+    const [openModalTipoGasto, setOpenModalTipoGasto] = useState(false)
 
     
     const [gastos, setGastos]= useState([])
@@ -32,6 +34,7 @@ const GastosProvider = ({children}) => {
     const [loading, setLoading] = useState(true)
     const [serverError, setServerError] = useState(false)
     const [errorMessage, setErrorMessage] = useState(false)
+    const [error, setError] = useState(null)
 
     const [openModalCreate, setOpenModalCreate] = useState(false)
     const [openModalDetail, setOpenModalDetail] = useState(false)
@@ -113,6 +116,30 @@ const GastosProvider = ({children}) => {
         }
     }
 
+    const tipoGastoCreate = async ()=>{
+        try {
+                const response = await fetch(`${URL}/gastos/tipo/create/`,{
+                    method:'POST',
+                    headers:{
+                        'Content-Type':'application/json',
+                        'Authorization':`Bearer ${token}`,
+                    },
+                    body: JSON.stringify(newTipoGasto)
+                    
+                })
+                const data = await response.json()
+                if (response.status === 200){
+                    setOpenModalTipoGasto(!openModalTipoGasto)
+                    getTipoGastos()
+                }else if(response.statusText == 'Unauthorized'){
+                    logoutUser()
+                }
+            } 
+        catch (error) {
+            console.error(error)
+        }
+    }
+
     
     const gastoUpdateItem = async (event) => {
         
@@ -180,6 +207,13 @@ const GastosProvider = ({children}) => {
         setOpenModalDelete(!openModalDelete);
     }
 
+    const openModalCreateTipoGasto = ()=>{
+        setOpenModalTipoGasto(!openModalTipoGasto)
+        setNewTipoGasto({
+            'tipo_gasto':''
+        })
+    }
+
      
     const gastoSelected = (gasto,option) => {
          setGasto(gasto);
@@ -218,15 +252,20 @@ const GastosProvider = ({children}) => {
         handleChangeUpdate,
         handleChange,
         gastoSelected,
+        tipoGastoCreate,
       
         openModalUpdateGasto,
         openModalCreateGasto,
         openModalDeleteGasto,
+        openModalTipoGasto,
+        openModalCreateTipoGasto,
         
         openModalDetail,
         openModalCreate,
         openModalUpdate,
         tipoGastos,
+        setNewTipoGasto,
+        newTipoGasto,
         openModalDelete,
         totalGastos,
         loading,

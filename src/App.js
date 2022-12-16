@@ -52,7 +52,11 @@ function App() {
           
           <RecaudosProvider>
         <TiendaProvider>
-        <Header />
+        <div className="mb-5">
+          <Header />
+        </div>
+        <br /><br />
+        
         <Routes>
             <Route path="/register/" element={<RegisterPage />} />
             <Route path="/cierres/" element={<CierresCajaPage />} />
@@ -73,6 +77,7 @@ function App() {
             <Route path="/trabajadores/:trabajadorId/" element={<TrabajadorDetail />}/>
             <Route path="/not/" element={<NotFound />}/>
         </Routes>
+        
         </TiendaProvider>
           </RecaudosProvider>
           

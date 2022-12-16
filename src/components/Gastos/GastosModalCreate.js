@@ -41,9 +41,14 @@ const GastosModalCreate = () => {
                                 <Label for="floatingInput">Tipo de Gasto <span className='text-danger'>*</span></Label>
                                 <Input onChange={handleChange} value={newGasto.tipo_gasto?.id} name='tipo_gasto' type="select" className="form-control" id="floatingInput" required> 
                                         <option></option>
-                                    {tipoGastos.map((tipo)=>(
-                                        <option key={tipo.id} value={tipo.id}>{tipo.tipo_gasto}</option>
-                                    ))}
+                                    {
+                                        tipoGastos.message?
+                                            <option>No se han creado tipo de gastos</option>
+                                        :
+                                        tipoGastos.map((tipo)=>(
+                                            <option key={tipo.id} value={tipo.id}>{tipo.tipo_gasto}</option>
+                                        ))
+                                    }
                                 </Input>
                             </FormGroup>
                             <FormGroup>

@@ -13,6 +13,7 @@ import GastosModalUpdate from "../components/Gastos/GastosModalUpdate";
 import { useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useFilters } from "../hooks/useFilters";
+import TipoGastoModalCreate from "../components/Gastos/TipoGastoModalCreate";
 
 
 
@@ -26,7 +27,7 @@ const GastosListPage = () => {
         totalGastos,
         loading,
         getGastos,
-        
+        openModalCreateTipoGasto,
     } = useContext(GastosContext)
     
     const{query}=useContext(AuthContext)
@@ -36,7 +37,7 @@ const GastosListPage = () => {
     useEffect(()=>{
         getGastos()
     },[])
-    console.log(gastos)
+    
    
   return (
     <div className="container-sm">
@@ -45,9 +46,12 @@ const GastosListPage = () => {
             :
             <>
             <GastosListHeader gastos={gastos} totalGastos={totalGastos} query={query} />
-            <div className="my-2">
+
+            <div className="d-flex justify-content-around m-4">
                 <button onClick={openModalCreateGasto} className="btn btn-success">Crear Gasto</button>
+                <button onClick={openModalCreateTipoGasto} className="btn btn-primary">Crear Tipo Gasto</button>
             </div>
+
             {
                 gastos.message?
                     <AlertMessage message={'No se han creado gastos.'} />
@@ -93,6 +97,7 @@ const GastosListPage = () => {
            <GastosModalCreate />
            <GastosModalUpdate />
            <GastosModalDelete />
+           <TipoGastoModalCreate />
            </>
         }
         </div>
