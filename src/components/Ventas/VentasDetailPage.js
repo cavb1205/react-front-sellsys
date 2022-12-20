@@ -5,7 +5,8 @@ import { VentasContext } from '../../context/VentasContext'
 import AlertMessage from '../Utils/AlertMessage'
 import { RecaudosContext } from '../../context/RecaudosContext'
 import { Card, CardBody } from 'reactstrap'
-
+import VentasModalDelete from './VentasModalDelete'
+import VentasModalUpdate from './VentasModalUpdate'
 
 const VentasDetailPage = (props) => {
     const {
@@ -138,8 +139,8 @@ const VentasDetailPage = (props) => {
         </div>
 
         
-        
-
+    <VentasModalUpdate />
+    <VentasModalDelete />
     </div>
       )
     

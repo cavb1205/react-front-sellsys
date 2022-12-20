@@ -16,9 +16,7 @@ const AuthProvider = ({children}) => {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
 
-    console.log('datos del usuario logueado')
-    console.log(user)
-
+    
     const navigate = useNavigate()
 
     const loginUser = async (e) => {

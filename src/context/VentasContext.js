@@ -237,11 +237,12 @@ const VentasProvider = ({children}) => {
                 getVentasActivas()
             }
             else if (response.status === 406){
-                console.log('ingresa al status 206')
+                
                 setResponse(data)
-                console.log(data)
+                
                 setOpenModalDelete(!openModalDelete)
-                setOpenModalResponse(!openModalResponse)
+                alert(data.message)
+                
             }
             else if(response.statusText == 'Unauthorized'){
               logoutUser()

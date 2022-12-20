@@ -34,6 +34,7 @@ import RecaudosDetail from "./components/Recaudos/RecaudosDetail";
 import RegisterPage from "./pages/RegisterPage";
 import CierresCajaPage from "./pages/CierresCajaPage";
 import ClientesDisponiblesListPage from "./pages/ClientesDisponiblesListPage";
+import HomePageTiendaInfo from "./components/HomePage/HomePageTiendaInfo";
 
 
 
@@ -61,7 +62,8 @@ function App() {
             <Route path="/register/" element={<RegisterPage />} />
             <Route path="/cierres/" element={<CierresCajaPage />} />
             <Route path="/login/" element={<LoginPage />} />
-            <Route path="/" element={<HomePage />} />            
+            <Route path="/" element={<HomePage />} />
+            <Route path="/tiendas/detail/" element={<HomePageTiendaInfo />} />            
             <Route path="/aportes/" element={<AportesListPage />}/>
             <Route path="/gastos/" element={<GastosListPage />}/>
             <Route path="/utilidades/" element={<UtilidadesListPage />}/>

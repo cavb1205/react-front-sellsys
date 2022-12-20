@@ -68,15 +68,17 @@ const Header = () => {
                 <DropdownItem><Link className="dropdown-item" to="/trabajadores/" onClick={toggle}>Trabajadores</Link></DropdownItem>                                            
               </DropdownMenu>
             </UncontrolledDropdown>
-            {user && <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                      <NavItem>
-                        <Link className="nav-link" to={`/trabajadores/${perfil.id}/`} onClick={toggle}>Usuario: {user.first_name}</Link>
-                      </NavItem>
-                      <NavItem>
-                        <button className="nav-link btn btn-outline-light" to="/login/" onClick={logoutUser}>Salir</button>
-                      </NavItem> 
-                    </ul>              
-            } 
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Configuración
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem><Link className="dropdown-item" to={`/trabajadores/${perfil.id}/`} onClick={toggle}>Usuario: {user.first_name} </Link></DropdownItem>
+                <DropdownItem><Link className="dropdown-item" to={`/tiendas/detail/`} onClick={toggle}>Info Ruta </Link></DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem><Link className="dropdown-item" to="/trabajadores/" onClick={logoutUser}>Salir</Link></DropdownItem>                                            
+              </DropdownMenu>
+            </UncontrolledDropdown>                                   
           
           </Nav>
           

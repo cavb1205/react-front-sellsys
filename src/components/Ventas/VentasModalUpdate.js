@@ -12,32 +12,35 @@ const VentasModalUpdate = () => {
         handleChangeUpdate,
     } = useContext(VentasContext)
 
-    const {getClientes,clientes} = useContext(ClientesContext)
-
-    useEffect(()=>{
-      getClientes()
-    },[])
+    const handleSubmit = (event) => {
+      event.preventDefault()
+      ventaUpdateItem()
+    }
+   
+    
+   
   return (
     <Modal isOpen={openModalUpdate} toggle={openModalUpdateVenta}>
         <ModalHeader toggle={openModalUpdateVenta}>
-           Editando Venta 
+           Editando Venta {ventaDetail.id}
         </ModalHeader>
+        <form onSubmit={handleSubmit}>
         <ModalBody>
           <FormGroup>
             <Label>Fecha Venta</Label>
-            <Input onChange={handleChangeUpdate} value={ventaDetail.fecha_venta} name='fecha_venta' type='date' />
+            <Input onChange={handleChangeUpdate} value={ventaDetail.fecha_venta} name='fecha_venta' type='date' required />
           </FormGroup>
           <FormGroup>
             <Label>Valor</Label>
-            <Input onChange={handleChangeUpdate} value={ventaDetail.valor_venta} name='valor_venta' type='number' />
+            <Input onChange={handleChangeUpdate} value={ventaDetail.valor_venta} name='valor_venta' type='number' required />
           </FormGroup>
           <FormGroup>
                 <Label>Interés %</Label>
-                <Input onChange={handleChangeUpdate} value={ventaDetail.interes} name='interes' type="number" className="form-control"/>
+                <Input onChange={handleChangeUpdate} value={ventaDetail.interes} name='interes' type="number" className="form-control" required/>
             </FormGroup>
             <FormGroup>
                 <Label>Cuotas</Label>
-                <Input onChange={handleChangeUpdate} value={ventaDetail.cuotas} name='cuotas' type="number" className="form-control"/>
+                <Input onChange={handleChangeUpdate} value={ventaDetail.cuotas} name='cuotas' type="number" className="form-control" required/>
             </FormGroup>
           <FormGroup>
             <Label>Comentario</Label>
@@ -45,19 +48,13 @@ const VentasModalUpdate = () => {
           </FormGroup>
           <FormGroup>
             <Label>Cliente</Label>
-            <Input onChange={handleChangeUpdate}  name='cliente' type='select'>
-              <option value={-1}>Seleccione</option>
-              {clientes.map((cliente)=>(
-                <option key={cliente.id} value={cliente.id}>{cliente.nombres} {cliente.apellidos}</option>
-              ))}
-            </Input>
-           
+            <Input onChange={handleChangeUpdate} value={ventaDetail.cliente?.nombres + ' ' + ventaDetail.cliente?.apellidos}  name='cliente' type='text' disabled />                                     
           </FormGroup>
         </ModalBody>
         <ModalFooter>
-		        <button onClick={ventaUpdateItem} className='btn btn-warning'>Actualizar</button>
-            <button onClick={openModalUpdateVenta} className='btn btn-secondary'>Cerrar</button>
+		        <button type='submit' className='btn btn-warning'>Actualizar</button>            
         </ModalFooter>
+        </form>
     </Modal>
   )
 }
