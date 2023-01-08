@@ -8,11 +8,13 @@ const RecaudosProvider = ({children}) => {
         token,
         logoutUser,
         navigate,
+        
+        
     } = useContext(AuthContext)
 
     
     const [venta, setVenta] = useState({})
-    const [ventas,setVentas] = useState([])
+    
     const [ventaDetail, setVentaDetail] = useState({})
     
     const [allRecaudos, setAllRecaudos] = useState([])
@@ -51,8 +53,6 @@ const RecaudosProvider = ({children}) => {
         'tienda':'',
        
 })
-    
-    
     
 
     const recaudosCreateItem = async ()=>{

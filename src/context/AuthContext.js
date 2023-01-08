@@ -31,7 +31,7 @@ const AuthProvider = ({children}) => {
 
         })
         const data = await response.json()
-        console.log(data)
+        
         if(response.status === 200){
             setToken(data.token)
             setRefresh(data.refresh)
