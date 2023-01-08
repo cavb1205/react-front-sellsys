@@ -37,7 +37,13 @@ const Header = () => {
               <DropdownMenu right>
                 <DropdownItem><Link className="dropdown-item" to="/recaudos/" onClick={toggle}>Recaudos</Link></DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem><Link className="dropdown-item" to="/cierres/" onClick={toggle}>Cierres Caja</Link></DropdownItem>                
+                <DropdownItem><Link className="dropdown-item" to="/cierres/" onClick={toggle}>Cierres Caja</Link></DropdownItem>
+                {
+                  user.is_superuser?
+                    <DropdownItem><Link className="dropdown-item" to="/tiendas/" onClick={toggle}>Lista Tiendas</Link></DropdownItem>                
+                  :
+                  null
+                }
               </DropdownMenu>
             </UncontrolledDropdown>
             <UncontrolledDropdown nav inNavbar>

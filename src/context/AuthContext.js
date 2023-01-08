@@ -15,6 +15,7 @@ const AuthProvider = ({children}) => {
     const [perfil, setPerfil] = useState(localStorage.getItem('perfil') ? JSON.parse(localStorage.getItem('perfil')): null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(false)
+    const [membresia, setMembresia] = useState(null)
 
     
     const navigate = useNavigate()
@@ -30,16 +31,35 @@ const AuthProvider = ({children}) => {
 
         })
         const data = await response.json()
+        console.log(data)
         if(response.status === 200){
             setToken(data.token)
             setRefresh(data.refresh)
             setUser(data.user)
             setPerfil(data.perfil)
+            setMembresia(data.membresia)
             localStorage.setItem('token', JSON.stringify(data.token))
             localStorage.setItem('refresh', JSON.stringify(data.refresh))
             localStorage.setItem('user', JSON.stringify(data.user))
             localStorage.setItem('perfil', JSON.stringify(data.perfil))
-            navigate("/liquidar/");
+            if (membresia == 'Vencida'){
+                navigate("/")
+                alert(membresia)
+            }
+            if (membresia == 'Pendiente Pago'){
+                navigate("/")
+                alert(membresia)
+            }
+            
+            if (data.user.is_superuser){
+                navigate("/tiendas/")
+            }else if(data.user.is_active){
+                navigate("/liquidar/");
+            }
+            else {
+                alert('Usuario no esta activo!')
+                logoutUser()
+            }
         }else{
             setError(!error)
         }

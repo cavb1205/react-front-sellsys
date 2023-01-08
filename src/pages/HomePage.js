@@ -15,7 +15,7 @@ import { TiendaContext } from '../context/TiendaContext'
 import { VentasContext } from '../context/VentasContext'
 
 import { RecaudosContext } from '../context/RecaudosContext'
-import { Link } from 'react-router-dom'
+
 import CierreCajaModal from '../components/Informes/CierreCajaModal'
 
 
@@ -25,7 +25,7 @@ const HomePage = () => {
   const {
     tienda,
     loading,
-    getTienda,
+    getTiendaMembresia,
     openModalCierreCaja,
     
   }=useContext(TiendaContext)
@@ -39,7 +39,7 @@ const HomePage = () => {
   const {getAllRecaudos} = useContext(RecaudosContext)
   
     useEffect(()=>{
-       getTienda()
+       getTiendaMembresia()
        getAportes()
        getGastos()
        getUtilidades()
@@ -50,7 +50,8 @@ const HomePage = () => {
        
     },[])
 
-   
+    
+   const infoTienda = {...tienda.tienda}
 
   return (
       
@@ -60,7 +61,7 @@ const HomePage = () => {
           <AlertLoading />
           :
           <>
-          <HomePageHeader tienda={tienda}/>
+          <HomePageHeader tienda={infoTienda}/>
 
           <div className='m-2 text-center'>
             <button onClick={openModalCierreCaja} type="button" className="btn btn-outline-danger btn-sm">Cierre Caja</button>
@@ -73,28 +74,28 @@ const HomePage = () => {
             </div>
         
             <div className='d-flex justify-content-center my-3'>              
-                <HomePageTiendaCaja tienda={tienda} />
+                <HomePageTiendaCaja tienda={infoTienda} />
             </div>
             <h2 className='text-center text-secondary'>Estado Actual Ruta</h2>
               <div className='d-flex flex-wrap justify-content-evenly'>
                 <div className='m-2 flex-fill' >
-                  <HomePageTiendaCardItem tipo={"Inversión"} tienda={tienda} total={totalAportes()}/>
+                  <HomePageTiendaCardItem tipo={"Inversión"} total={totalAportes()}/>
                 </div>
                 <div className='m-2 flex-fill'>
-                  <HomePageTiendaCardItem tipo={"Gastos"} tienda={tienda} total={totalGastos()}/>
+                  <HomePageTiendaCardItem tipo={"Gastos"} total={totalGastos()}/>
                 </div>
                 <div className='m-2 flex-fill'>
-                  <HomePageTiendaCardItem tipo={"Utilidades"} tienda={tienda} total={totalUtilidades()}/>
+                  <HomePageTiendaCardItem tipo={"Utilidades"} total={totalUtilidades()}/>
                 </div>
                 <div className='m-2 flex-fill'>
-                  <HomePageTiendaCardItem tipo={"Pérdidas"} tienda={tienda} total={0}/>
+                  <HomePageTiendaCardItem tipo={"Pérdidas"} total={0}/>
                 </div>
                 <div className='m-2 flex-fill'>
-                  <HomePageTiendaCardItem tipo={"Ingresos x Ventas"} tienda={tienda} total={totalIngresosVentasFinalizadas()}/>
+                  <HomePageTiendaCardItem tipo={"Ingresos x Ventas"} total={totalIngresosVentasFinalizadas()}/>
                 </div>
                 
                 <div className='m-2 flex-fill'>
-                  <HomePageTiendaCardItem tipo={"Dinero x Cobrar"} tienda={tienda} total={totalVentasInteres()}/>
+                  <HomePageTiendaCardItem tipo={"Dinero x Cobrar"} total={totalVentasInteres()}/>
                 </div>
               </div>
             

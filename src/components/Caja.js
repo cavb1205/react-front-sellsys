@@ -1,14 +1,20 @@
-import React,{useContext} from 'react';
+import React,{useContext, useEffect} from 'react';
 import {Badge} from 'reactstrap';
 import { TiendaContext } from '../context/TiendaContext';
 
 
 const Caja = () => {
-  const {tienda} = useContext(TiendaContext)
+  const {
+    tienda,
+    getTiendaMembresia,
+  } = useContext(TiendaContext)
   
+  useEffect(()=>{
+    getTiendaMembresia()
+  },[])
 
   return (
-    (tienda.caja>0)? <Badge color='success'>Caja {tienda.caja}</Badge>:<Badge color='danger'>Caja {tienda.caja}</Badge>
+    (tienda.tienda?.caja>0)? <Badge color='success'>Caja {tienda.tienda?.caja}</Badge>:<Badge color='danger'>Caja {tienda.tienda?.caja}</Badge>
     
   )
 }

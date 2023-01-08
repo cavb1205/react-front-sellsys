@@ -54,6 +54,10 @@ export const useFilters = () => {
             const filtered = listItems.slice(currentPage,currentPage + ITEMS)
             return filtered
         }
+        if (listName == 'tiendas'){
+            const filtered = listItems.slice(currentPage,currentPage + ITEMS)
+            return filtered
+        }
     }
 
     const nextPage = () => {

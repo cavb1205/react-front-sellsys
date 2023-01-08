@@ -35,6 +35,7 @@ import RegisterPage from "./pages/RegisterPage";
 import CierresCajaPage from "./pages/CierresCajaPage";
 import ClientesDisponiblesListPage from "./pages/ClientesDisponiblesListPage";
 import HomePageTiendaInfo from "./components/HomePage/HomePageTiendaInfo";
+import TiendasListPage from "./pages/TiendasListPage";
 
 
 
@@ -63,6 +64,7 @@ function App() {
             <Route path="/cierres/" element={<CierresCajaPage />} />
             <Route path="/login/" element={<LoginPage />} />
             <Route path="/" element={<HomePage />} />
+            <Route path="/tiendas/" element={<TiendasListPage />} />
             <Route path="/tiendas/detail/" element={<HomePageTiendaInfo />} />            
             <Route path="/aportes/" element={<AportesListPage />}/>
             <Route path="/gastos/" element={<GastosListPage />}/>

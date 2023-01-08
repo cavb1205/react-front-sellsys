@@ -1,6 +1,6 @@
 import React from 'react'
 
-const HomePageTiendaCardItem = ({tipo,tienda,total}) => {
+const HomePageTiendaCardItem = ({tipo,total}) => {
     const cardColor = ()=>{
         if(tipo==="Inversión"){
             return "info";

@@ -18,6 +18,7 @@ const TiendaProvider = ({children}) => {
     const {recaudos} = useContext(RecaudosContext)
     
     const [tienda, setTienda] = useState([])
+    const [tiendas, setTiendas] = useState([])
     const [loading, setLoading] = useState(true)
     const [openModal, setOpenModal] = useState(false)
 
@@ -39,9 +40,43 @@ const TiendaProvider = ({children}) => {
     setCierre(cierre)
     setOpenModalDelete(!openModalDelete)
   }
+
+  const getAllTiendas = async () => {
+    let response = await fetch(`${URL}/tiendas/list/`,{
+      method:'GET',
+      headers:{
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${token}`
+      }
+    })
+    let data = await response.json();
+    if(response.status===200){
+        setTiendas(data);
+        setLoading(false)
+    }else if(response.statusText == 'Unauthorized'){
+        logoutUser()
+    }
+  }
   
  
   const getTienda = async () => {
+    let response = await fetch(`${URL}/tiendas/detail/`,{
+      method:'GET',
+      headers:{
+          'Content-Type':'application/json',
+          'Authorization':`Bearer ${token}`
+      }
+    })
+    let data = await response.json();
+    if(response.status===200){
+        setTienda(data);
+        setLoading(false)
+    }else if(response.statusText == 'Unauthorized'){
+        logoutUser()
+    }
+  }
+
+  const getTiendaMembresia = async () => {
     let response = await fetch(`${URL}/tiendas/detail/`,{
       method:'GET',
       headers:{
@@ -160,6 +195,9 @@ const TiendaProvider = ({children}) => {
         openModalDelete,
         cierre,
         deleteCierresCaja,
+        getAllTiendas,
+        tiendas,
+        getTiendaMembresia,
     }
   return (
     <TiendaContext.Provider value={contextData}>

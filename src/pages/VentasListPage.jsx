@@ -67,7 +67,12 @@ const VentasListPage = () => {
                     
                         <div className='d-flex flex-wrap justify-content-around my-2'>
                             <h6>Días Pendientes <span className="badge bg-secondary">{venta.pagos_pendientes}</span></h6>
-                            <h6>Días Atrasados <span className="badge bg-danger">{venta.dias_atrasados<=0?0:venta.dias_atrasados}</span></h6>
+                            {
+                                (venta.dias_atrasados < 0)?
+                                    <h6>Días Adelantados <span className="badge bg-success">{Math.abs(venta.dias_atrasados)}</span></h6>    
+                                :
+                                    <h6>Días Atrasados <span className="badge bg-danger">{venta.dias_atrasados}</span></h6>
+                            }  
                             <h6>Días Abonados <span className="badge bg-success">{venta.pagos_realizados}</span></h6>
                         </div>
 

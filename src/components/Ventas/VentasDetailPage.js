@@ -86,14 +86,19 @@ const VentasDetailPage = (props) => {
                             :<span className='badge rounded-pill bg-secondary'>{ventaDetail.estado_venta}</span>
                         }
                     </p>
-                    <p><strong>Pagos Atrasados:</strong> <span className='badge rounded-pill bg-danger'>{ventaDetail.dias_atrasados}</span> </p>
+                    {
+                        (ventaDetail.dias_atrasados < 0) ?
+                            <p><strong>Pagos Adelantados:</strong> <span className='badge rounded-pill bg-success'>{Math.abs(ventaDetail.dias_atrasados)}</span> </p>    
+                        :
+                            <p><strong>Pagos Atrasados:</strong> <span className='badge rounded-pill bg-danger'>{ventaDetail.dias_atrasados}</span> </p>
+                    }
                     <p><strong>Promedio de Pago:</strong> {ventaDetail.promedio_pago} </p>
                     <p><strong>Total Abonado: <span className='badge rounded-pill bg-success'>{ventaDetail.total_abonado}</span> </strong></p>
                 
                     <div className='card-footer d-flex flex-wrap justify-content-around'>
                         <button onClick={openModalUpdateVenta} className='btn btn-warning mb-2'>Actualizar</button>{' '}
                         <button onClick={openModalDeleteVenta}  className='btn btn-danger mb-2'>Eliminar</button>{' '}
-                        <Link to={`/liquidar/`}  className='btn btn-secondary mb-1'>Lista Ventas</Link>
+                        <Link to={`/liquidar/`}  className='btn btn-secondary mb-2'>Lista Ventas</Link>
                     </div>
                 
                 </div>
