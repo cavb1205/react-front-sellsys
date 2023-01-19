@@ -119,7 +119,7 @@ const VentasDetailPage = (props) => {
                                     <div className="d-flex flex-wrap justify-content-around">
                                         <small className='text-secondary'>{recaudo.fecha_recaudo}</small>
                                         <h2 className="text-capitalize text-success">{recaudo.valor_recaudo}</h2>
-                                        <span className='text-primary'>Ver</span>
+                                        <button className='btn btn-outline-primary btn-sm'>Ver</button>
                                     </div>
                                     {recaudo.visita_blanco?
                                         <div className=" text-center">

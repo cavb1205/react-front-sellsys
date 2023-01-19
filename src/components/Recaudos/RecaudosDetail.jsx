@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 import { Card, CardBody, CardFooter } from 'reactstrap'
 import { RecaudosContext } from '../../context/RecaudosContext'
 import RecaudosModalDelete from './RecaudosModalDelete'
@@ -27,7 +28,7 @@ const RecaudosDetail = () => {
       <Card className='mb-3 shadow rounder'>
         <CardBody>
           <div className='text-center text-secondary text-capitalize'>
-            <h2>{recaudo.venta?.cliente.nombres} {recaudo.venta?.cliente.apellidos}</h2>
+            <Link className='text-secondary text-decoration-none btn btn-outline-secondary' to={`/ventas/${recaudo.venta?.id}/`}><h2>{recaudo.venta?.cliente.nombres} {recaudo.venta?.cliente.apellidos}</h2></Link>
           </div>
           <div className='text-center'>
             <span className="badge rounded-pill text-bg-light">{recaudo.fecha_recaudo}</span>
