@@ -52,7 +52,7 @@ const VentasListPage = () => {
                                     <h2 className='text-capitalize text-secondary'>  {venta.cliente?.nombres} {venta.cliente?.apellidos}</h2>
                                 </div> 
                                 <div className='p-2'>
-                                    <Badge color={venta.estado_venta=='Vencido'?'danger':venta.estado_venta=='Atrasado'?'warning':'success'} pill>{venta.estado_venta}</Badge>
+                                    <Badge color={venta.estado_venta==='Vencido'?'danger':venta.estado_venta==='Atrasado'?'warning':'success'} pill>{venta.estado_venta}</Badge>
                                 </div>
                             </div>
                             <div>

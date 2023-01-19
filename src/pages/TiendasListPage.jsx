@@ -17,6 +17,9 @@ const TiendasListPage = () => {
         getAllTiendas()
     },[])
 
+    const tiendasInactivas = ()=>{
+        return tiendas.map(tienda => tienda.estado == false)
+    }
     console.log(tiendas)
   return (
     <div className='container-sm'>
@@ -31,8 +34,8 @@ const TiendasListPage = () => {
                 <span className="badge rounded-pill text-bg-secondary">Total Tiendas: {tiendas.length}</span>
             </div>
             <div className='d-flex justify-content-around m-4'>
-                <span className="badge rounded-pill text-bg-success">Tiendas Activas: 10</span>
-                <span className="badge rounded-pill text-bg-danger">Tiendas Inactivas: 20</span>
+                <span className="badge rounded-pill text-bg-success">Tiendas Activas: 1</span>
+                <span className="badge rounded-pill text-bg-danger">Tiendas Inactivas: {console.log(tiendasInactivas())}</span>
             </div>
             
             {
