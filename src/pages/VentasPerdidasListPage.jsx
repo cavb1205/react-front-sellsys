@@ -22,6 +22,7 @@ const VentasPerdidasListPage = () => {
     useEffect(()=>{
         getVentasPerdidas();
     },[])
+    
   return (
     <div className='container-sm '>
         {loading?
@@ -49,7 +50,7 @@ const VentasPerdidasListPage = () => {
                                 </div>
                             </div>
                             <div>
-                                <button className='btn btn-outline-danger'>Pérdida: {venta.perdida}</button>                       
+                                <button className='btn btn-outline-danger'>Pérdida: {venta.saldo_actual}</button>                       
                             </div>
                             
                         </div>

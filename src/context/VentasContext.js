@@ -376,7 +376,7 @@ const VentasProvider = ({children}) => {
         if (ventasPerdidas.message){
             return 0;
         }else{
-            return ventasPerdidas.map(venta => parseFloat(venta.perdida)).reduce((a,b)=>a + b,0)
+            return ventasPerdidas.map(venta => parseFloat(venta.saldo_actual)).reduce((a,b)=>a + b,0)
         }
     }
 

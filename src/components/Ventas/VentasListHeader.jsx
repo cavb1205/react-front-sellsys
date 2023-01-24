@@ -10,6 +10,7 @@ const VentasListHeader = (props) => {
         totalVentasInteres,
     } = useContext(VentasContext)
     const {titulo,ventas}=props
+    
   return (
     <div className="text-center mb-4">
         <h1>{titulo}</h1>
