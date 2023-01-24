@@ -6,7 +6,7 @@ const VentasListHeader = (props) => {
     const {
         
         totalVentas,
-        
+        totalPerdidas,
         totalVentasInteres,
     } = useContext(VentasContext)
     const {titulo,ventas}=props
@@ -22,11 +22,16 @@ const VentasListHeader = (props) => {
         <>
           <p className='badge rounded-pill text-bg-light'>Ventas Netas: {totalVentas()}</p>
           <p className='badge rounded-pill text-bg-primary'>Total Saldos: {totalVentasInteres()}</p>
+          <div className='mt-1'>
+            <Search />
+          </div>
         </>:null
         }
-        <div className='mt-1'>
-          <Search />
-        </div>
+        {titulo==='Ventas Pérdida'?
+        <>
+          <p className='badge rounded-pill text-bg-danger'>Total Pérdidas: {totalPerdidas()}</p>
+        </>:null
+        }
     </div>
   )
 }

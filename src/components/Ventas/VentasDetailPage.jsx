@@ -7,6 +7,7 @@ import { RecaudosContext } from '../../context/RecaudosContext'
 import { Card, CardBody } from 'reactstrap'
 import VentasModalDelete from './VentasModalDelete'
 import VentasModalUpdate from './VentasModalUpdate'
+import VentasModalPerdida from './VentasModalPerdida'
 
 const VentasDetailPage = (props) => {
     const {
@@ -18,8 +19,6 @@ const VentasDetailPage = (props) => {
 
     const {
         recaudos,
-        openModalDetailRecaudoItem,
-        setOpenModalDetailRecaudoItem,
         totalRecaudosVenta,
         getRecaudos,
     } = useContext(RecaudosContext)
@@ -35,12 +34,12 @@ const VentasDetailPage = (props) => {
         getVenta(ventaId)
     },[recaudos])
 
-    const [recaudo, setRecaudo] = useState({})
+    const [openModalPerdida, setOpenMOdalPerdida] = useState(false)
 
-    const SelectedRecaudoItem = (recaudo) => {
-        setRecaudo(recaudo);
-        setOpenModalDetailRecaudoItem(!openModalDetailRecaudoItem)
+    const clickOpenModalPerdida = () => {
+        setOpenMOdalPerdida(!openModalPerdida)
     }
+
    
   return (
     <div className='container-sm'>
@@ -62,21 +61,103 @@ const VentasDetailPage = (props) => {
             <div className="card-body tab-content" id='myTabContent'>
                 <div className='tab-pane fade show active' id="detailVenta" role="tabpanel">
                     
-                    <h1 className="card-title">{ventaDetail.cliente?.nombres} {ventaDetail.cliente?.apellidos}</h1>
+                    <h1 className="card-title text-center text-secondary ">{ventaDetail.cliente?.nombres} {ventaDetail.cliente?.apellidos}</h1>
                     
-                    <h5>Saldo Actual: <span className='badge rounded-pill bg-danger'>{ventaDetail.saldo_actual} </span></h5>
-                    <p><strong>Fecha Venta:</strong> {ventaDetail.fecha_venta}</p>
-                    <p><strong>Valor de la Venta:</strong> {ventaDetail.valor_venta}</p>
-                    <p><strong>Interés:</strong> {ventaDetail.interes}% <span className='m-3'><strong>Cuotas:</strong> {ventaDetail.cuotas}</span></p>
-                    <p><strong>Valor Cuota:</strong> {ventaDetail.valor_cuota}</p>
-                    <p><strong>Total a Pagar:</strong> {ventaDetail.total_a_pagar} </p>
-                    {ventaDetail.comentario?<p><strong>Comentario:</strong> {ventaDetail.comentario}</p>:null}
-                    <p><strong>Días Pagos:</strong> {ventaDetail.pagos_realizados} <span className='m-3'><strong>Días Faltantes:</strong> {ventaDetail.pagos_pendientes}</span></p>
-                    <p><strong>Fecha Vencimiento:</strong> {ventaDetail.fecha_vencimiento}</p>
-                    <p>
-                        <strong>
-                            Estado de la Venta:
-                        </strong>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Saldo Actual:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='badge rounded-pill bg-danger'>{ventaDetail.saldo_actual} </span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Fecha Venta:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span>{ventaDetail.fecha_venta}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Valor Venta:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='text-primary'>{ventaDetail.valor_venta}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Interés:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span>{ventaDetail.interes}%</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Cuotas:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span>{ventaDetail.cuotas}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Valor Cuota:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='text-primary'>{ventaDetail.valor_cuota}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Total a Pagar:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span>{ventaDetail.total_a_pagar}</span>
+                        </div>
+                    </div>
+                    {ventaDetail.comentario?
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Cuotas:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span>{ventaDetail.cuotas}</span>
+                        </div>
+                    </div>
+                    :null}
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Días Pagos:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='text-success'>{ventaDetail.pagos_realizados}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Días Faltantes:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='text-danger'>{ventaDetail.pagos_pendientes}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Fecha Vencimiento:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='text-danger'>{ventaDetail.fecha_vencimiento}</span>
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Estado de la Venta:</strong>
+                        </div>
+                        <div className="col-5">
                         {
                             ventaDetail.estado_venta=='Vencido'?
                                 <span className='badge rounded-pill bg-danger'>{ventaDetail.estado_venta}</span>
@@ -85,20 +166,87 @@ const VentasDetailPage = (props) => {
                             :ventaDetail.estado_venta=='Vigente'?<span className='badge rounded-pill bg-success'>{ventaDetail.estado_venta}</span>
                             :<span className='badge rounded-pill bg-secondary'>{ventaDetail.estado_venta}</span>
                         }
-                    </p>
+                        </div>
+                    </div>
+                    {
+                        ventaDetail.estado_venta === 'Perdida'?
+                            <div className="row justify-content-around my-2">
+                                <div className="col-5">
+                                    <strong>Valor Pérdida:</strong>
+                                </div>
+                                <div className="col-5">
+                                    <span className='badge rounded-pill bg-danger'>{ventaDetail.perdida}</span>
+                                </div>
+                            </div>
+                        :
+                        null
+                    }
+                    {
+                        ventaDetail.comentario?
+                        <div className="row justify-content-around my-2">
+                            <div className="col-5">
+                                <strong>Comentario:</strong>
+                            </div>
+                            <div className="col-5">
+                                <span className='text-secondary'>{ventaDetail.comentario}</span>
+                            </div>
+                        </div>
+                        :
+                        null
+                    }
+                    
                     {
                         (ventaDetail.dias_atrasados < 0) ?
-                            <p><strong>Pagos Adelantados:</strong> <span className='badge rounded-pill bg-success'>{Math.abs(ventaDetail.dias_atrasados)}</span> </p>    
+                            <div className="row justify-content-around my-2">
+                                <div className="col-5">
+                                    <strong>Pagos Adelantados:</strong>
+                                </div>
+                                <div className="col-5">
+                                    <span className='badge rounded-pill bg-success'>{Math.abs(ventaDetail.dias_atrasados)}</span>
+                                </div>
+                            </div>
                         :
-                            <p><strong>Pagos Atrasados:</strong> <span className='badge rounded-pill bg-danger'>{ventaDetail.dias_atrasados}</span> </p>
+                        <div className="row justify-content-around my-2">
+                                <div className="col-5">
+                                    <strong>Pagos Atrasados:</strong>
+                                </div>
+                                <div className="col-5">
+                                    <span className='badge rounded-pill bg-danger'>{ventaDetail.dias_atrasados}</span> 
+                                </div>
+                        </div>
                     }
-                    <p><strong>Promedio de Pago:</strong> {ventaDetail.promedio_pago} </p>
-                    <p><strong>Total Abonado: <span className='badge rounded-pill bg-success'>{ventaDetail.total_abonado}</span> </strong></p>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Promedio de Pago:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='badge rounded-pill bg-primary'>{ventaDetail.promedio_pago}</span> 
+                        </div>
+                    </div>
+                    <div className="row justify-content-around my-2">
+                        <div className="col-5">
+                            <strong>Total Abonado:</strong>
+                        </div>
+                        <div className="col-5">
+                            <span className='badge rounded-pill bg-success'>{ventaDetail.total_abonado}</span> 
+                        </div>
+                    </div>
+                   
+                            
+                        
+                        
+                    
+                    
+                    
                 
                     <div className='card-footer d-flex flex-wrap justify-content-around'>
                         <button onClick={openModalUpdateVenta} className='btn btn-warning mb-2'>Actualizar</button>{' '}
                         <button onClick={openModalDeleteVenta}  className='btn btn-danger mb-2'>Eliminar</button>{' '}
                         <Link to={`/liquidar/`}  className='btn btn-secondary mb-2'>Lista Ventas</Link>
+                    </div>
+
+                    <div className='d-flex justify-content-center'>
+                        <button className='btn btn-outline-danger' onClick={clickOpenModalPerdida}>Pérdida</button>
                     </div>
                 
                 </div>
@@ -146,6 +294,7 @@ const VentasDetailPage = (props) => {
         
     <VentasModalUpdate />
     <VentasModalDelete />
+    <VentasModalPerdida venta={ventaDetail} clickOpenModalPerdida={clickOpenModalPerdida} openModalPerdida={openModalPerdida} />
     </div>
       )
     

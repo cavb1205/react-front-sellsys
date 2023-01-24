@@ -35,7 +35,15 @@ const HomePage = () => {
   const {totalAportes, getAportes} = useContext(AportesContext)
   const {totalGastos, getGastos} = useContext(GastosContext)
   const {totalUtilidades, getUtilidades} = useContext(UtilidadesContext)
-  const {totalVentasInteres,totalIngresosVentasFinalizadas,getVentasActivas,getVentasPagas,getAllVentas} = useContext(VentasContext)
+  const {
+    totalVentasInteres,
+    totalIngresosVentasFinalizadas,
+    totalPerdidas,
+    getVentasActivas,
+    getVentasPagas,
+    getAllVentas,
+    getVentasPerdidas,
+  } = useContext(VentasContext)
   const {getAllRecaudos} = useContext(RecaudosContext)
   
     useEffect(()=>{
@@ -46,6 +54,7 @@ const HomePage = () => {
        getAllVentas()
        getVentasActivas()
        getVentasPagas()
+       getVentasPerdidas()
        getAllRecaudos()
        
     },[])
@@ -88,7 +97,7 @@ const HomePage = () => {
                   <HomePageTiendaCardItem tipo={"Utilidades"} total={totalUtilidades()}/>
                 </div>
                 <div className='m-2 flex-fill'>
-                  <HomePageTiendaCardItem tipo={"Pérdidas"} total={0}/>
+                  <HomePageTiendaCardItem tipo={"Pérdidas"} total={totalPerdidas()}/>
                 </div>
                 <div className='m-2 flex-fill'>
                   <HomePageTiendaCardItem tipo={"Ingresos x Ventas"} total={totalIngresosVentasFinalizadas()}/>

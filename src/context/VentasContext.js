@@ -18,6 +18,7 @@ const VentasProvider = ({children}) => {
     const [venta, setVenta] = useState({})
     const [ventaDetail, setVentaDetail] = useState({})
     const [ventasPagas, setVentasPagas] = useState([])
+    const [ventasPerdidas, setVentasPerdidas] = useState([])
 
 
     const [loading, setLoading] = useState(true)
@@ -134,7 +135,28 @@ const VentasProvider = ({children}) => {
             setServerError(true);
         }
     }
-    console.log(newVenta)
+    
+    const getVentasPerdidas = async () => {
+        try{
+            let response = await fetch(`${URL}/ventas/perdidas/`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+            })
+            let data = await response.json();
+            if(response.status===200){
+                setVentasPerdidas(data);
+                setLoading(false);
+            }else if(response.statusText == 'Unauthorized'){
+                logoutUser()
+            }
+        }catch{
+            setServerError(true);
+            setLoading(false);
+        }
+    }
 
     const ventasCreateItem = async (event)=>{
         try {
@@ -179,7 +201,6 @@ const VentasProvider = ({children}) => {
             const data = await response.json();
             if(response.status === 200){
                 setVentaDetail(data)
-                console.log('guarda la venta')
                 setLoading(false)
             } else if(response.statusText=='Unauthorized'){
                 logoutUser()
@@ -194,8 +215,6 @@ const VentasProvider = ({children}) => {
 
     const ventaUpdateItem = async () => {
         try {
-            console.log('detalle')
-            console.log(ventaDetail)
             let response = await fetch(`${URL}/ventas/${ventaDetail.id}/update/`,{
                 method:'PUT',
                 headers:{
@@ -252,6 +271,29 @@ const VentasProvider = ({children}) => {
             setLoading(false)
         }
       }
+
+      const ventaPerdida = async () => {
+        try {
+            let response = await fetch(`${URL}/ventas/${ventaDetail.id}/perdida/`,{
+                method:'PUT',
+                headers:{
+                  'Content-Type':'application/json',
+                  'Authorization':`Bearer ${token}`
+                },
+                body: JSON.stringify(ventaDetail)
+              })
+              let data = await response.json();
+              if (response.status === 200){
+                  alert('La venta se envío como pérdida.')
+                  getVentasPerdidas()
+              }else if(response.statusText == 'Unauthorized'){
+                logoutUser()
+              }
+        } catch {
+            setServerError(true)
+            setLoading(false)
+        }
+    }
 
 
 
@@ -330,6 +372,14 @@ const VentasProvider = ({children}) => {
         }
     }
 
+    const totalPerdidas = () => {
+        if (ventasPerdidas.message){
+            return 0;
+        }else{
+            return ventasPerdidas.map(venta => parseFloat(venta.perdida)).reduce((a,b)=>a + b,0)
+        }
+    }
+
 
     const openModalCreateVenta = () => {
         setOpenModalCreate(!openModalCreate);
@@ -383,6 +433,7 @@ const VentasProvider = ({children}) => {
         totalVentasPagas,
         totalIngresosVentasFinalizadas,
         totalRecaudar,
+        totalPerdidas,
         
         handleChange,
         handleChangeUpdate,
@@ -395,7 +446,9 @@ const VentasProvider = ({children}) => {
         openModalUpdate,
         openModalDelete,
         openModalCreateVenta,
-        
+        ventaPerdida,
+        ventasPerdidas,
+        getVentasPerdidas,
         getVentasActivas,
         openModalDeleteVenta,
         

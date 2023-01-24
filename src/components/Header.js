@@ -58,9 +58,16 @@ const Header = () => {
                 <DropdownItem><Link className="dropdown-item" to="/utilidades/" onClick={toggle}>Utilidades</Link></DropdownItem>                
               </DropdownMenu>
             </UncontrolledDropdown>
-            <NavItem>
-              <Link className="nav-link" to="/ventas/" onClick={toggle}>Ventas</Link>
-            </NavItem>
+            <UncontrolledDropdown nav inNavbar>
+              <DropdownToggle nav caret>
+                Ventas
+              </DropdownToggle>
+              <DropdownMenu right>
+                <DropdownItem><Link className="dropdown-item" to="/ventas/" onClick={toggle}>Ventas Activas</Link></DropdownItem>
+                <DropdownItem divider />
+                <DropdownItem><Link className="dropdown-item" to="/ventas/perdidas/" onClick={toggle}>Ventas Pérdida</Link></DropdownItem>                                            
+              </DropdownMenu>
+            </UncontrolledDropdown>
             <NavItem>
               <Link className="nav-link" to="/liquidar/" onClick={toggle}>Liquidar</Link>
             </NavItem>

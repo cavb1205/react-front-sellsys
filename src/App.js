@@ -35,6 +35,7 @@ import CierresCajaPage from "./pages/CierresCajaPage";
 import ClientesDisponiblesListPage from "./pages/ClientesDisponiblesListPage";
 import HomePageTiendaInfo from "./components/HomePage/HomePageTiendaInfo";
 import TiendasListPage from "./pages/TiendasListPage";
+import VentasPerdidasListPage from "./pages/VentasPerdidasListPage";
 
 
 
@@ -69,6 +70,7 @@ function App() {
             <Route path="/gastos/" element={<GastosListPage />}/>
             <Route path="/utilidades/" element={<UtilidadesListPage />}/>
             <Route path="/ventas/" element={<VentasListPage />} />
+            <Route path="/ventas/perdidas/" element={<VentasPerdidasListPage />} />
             <Route path="/ventas/:ventaId/" element={<VentasDetailPage />} />
             <Route path="/recaudos/" element={<RecaudosListPage />} />
             <Route path="/recaudos/:recaudoId/" element={<RecaudosDetail />} />
