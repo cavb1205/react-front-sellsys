@@ -13,6 +13,7 @@ const ClientesProvider = ({children}) => {
 
     const [clientes, setClientes] = useState([])
     const [clientesDisponibles, setClientesDisponibles] = useState([])
+    const [clientesActivos, setClientesActivos] = useState([])
     
     const [ventasActivas, setVentasActivas] = useState([])
     
@@ -61,6 +62,29 @@ const ClientesProvider = ({children}) => {
             
             if(response.status === 200){
                 setClientes(data)
+                setLoading(false)
+            } else if(response.statusText=='Unauthorized'){
+                logoutUser()
+            }
+        } catch (error) {
+            alert('Error al cargar los datos, intente de nuevo!')
+            setLoading(false)
+        }
+    }
+
+    const getClientesActivos = async () => {
+        try {
+            const response = await fetch(`${URL}/clientes/activos/`,{
+                method:'GET',
+                headers:{
+                    'Content-Type':'application/json',
+                    'Authorization':`Bearer ${token}`
+                },
+            })
+            const data = await response.json();
+            
+            if(response.status === 200){
+                setClientesActivos(data)
                 setLoading(false)
             } else if(response.statusText=='Unauthorized'){
                 logoutUser()
@@ -289,8 +313,8 @@ const ClientesProvider = ({children}) => {
         getVentasActivasCliente,
         ventasActivas,
         getClientesDisponibles,
-        
-        
+        getClientesActivos,
+        clientesActivos,
         openModalCreate,
         
         openModalUpdate,

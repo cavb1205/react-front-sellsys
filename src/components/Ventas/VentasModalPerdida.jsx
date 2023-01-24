@@ -17,8 +17,6 @@ const VentasModalPerdida = (props) => {
         openModalPerdida,
     } = props
 
-    
-
     const valorPerdida = (venta.valor_venta - venta.total_abonado)
 
     const sendPerdida = () => {

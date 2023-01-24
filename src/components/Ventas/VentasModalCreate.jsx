@@ -20,11 +20,11 @@ const VentasModalCreate = () => {
         ventasCreateItem,
     } = useContext(VentasContext)
 
-    const {getClientes,clientes} = useContext(ClientesContext)
+    const {getClientesActivos,clientesActivos} = useContext(ClientesContext)
 
 
     useEffect(()=>{
-        getClientes()
+        getClientesActivos()
     },[])
 
     const handleSubmit = (event) => {
@@ -65,10 +65,10 @@ const VentasModalCreate = () => {
                 <Label>Cliente</Label>               
                 <Input type='select' onChange={handleChange} value={newVenta.cliente} name='cliente' className="form-control" placeholder='Seleccione' required>
                     <option value={''}>Seleccione</option>
-                    {clientes.message?
+                    {clientesActivos.message?
                     <option>No se han creado clientes</option>
                     :
-                    clientes.filter(cliente => cliente.nombres.toLowerCase().includes(query)).map((cliente)=>(
+                    clientesActivos.filter(cliente => cliente.nombres.toLowerCase().includes(query)).map((cliente)=>(
                         <option key={cliente.id} value={cliente.id}>{cliente.nombres} {cliente.apellidos}</option>
                     ))}
                 </Input>
