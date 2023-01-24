@@ -56,7 +56,7 @@ const VentasListPage = () => {
                                 </div>
                             </div>
                             <div>
-                                <button className='btn btn-light'>Saldo: {venta.saldo_actual}</button>                       
+                                <button className='btn btn-outline-danger'>Saldo: {venta.saldo_actual}</button>                       
                             </div>
                             
                         </div>
