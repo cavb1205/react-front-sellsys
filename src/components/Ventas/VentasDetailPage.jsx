@@ -61,7 +61,7 @@ const VentasDetailPage = (props) => {
             <div className="card-body tab-content" id='myTabContent'>
                 <div className='tab-pane fade show active' id="detailVenta" role="tabpanel">
                     
-                    <h1 className="card-title text-center text-secondary ">{ventaDetail.cliente?.nombres} {ventaDetail.cliente?.apellidos}</h1>
+                    <Link to={`/clientes/${ventaDetail.cliente?.id}/`} className='text-decoration-none'><h1 className="card-title text-center text-secondary ">{ventaDetail.cliente?.nombres} {ventaDetail.cliente?.apellidos}</h1></Link>
                     
                     <div className="row justify-content-around my-2">
                         <div className="col-5">

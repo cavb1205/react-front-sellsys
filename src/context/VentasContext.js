@@ -333,10 +333,10 @@ const VentasProvider = ({children}) => {
 
     //calculamos la suma de las utilidades
     const totalVentas = () => {
-        if (ventas.message){
+        if (ventasActivas.message){
             return 0;
         }else {
-            return ventas.map(venta => parseFloat(venta.valor_venta)).reduce((a,b) => a + b, 0);
+            return ventasActivas.map(venta => parseFloat(venta.valor_venta)).reduce((a,b) => a + b, 0);
         }
     }
 
@@ -350,10 +350,10 @@ const VentasProvider = ({children}) => {
 
     const totalVentasInteres = () => {
         
-        if (ventas.message){
+        if (ventasActivas.message){
             return 0;
         }else{
-            return ventas.map(venta => parseFloat(venta.saldo_actual)).reduce((a,b) => a + b, 0); 
+            return ventasActivas.map(venta => parseFloat(venta.saldo_actual)).reduce((a,b) => a + b, 0); 
         }
     }
 
