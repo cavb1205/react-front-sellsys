@@ -41,7 +41,7 @@ const RecaudosProvider = ({children}) => {
     const [openModalRecaudosList, setOpenModalRecaudosList] = useState(false)
     const [openModalDetailRecaudoItem, setOpenModalDetailRecaudoItem] = useState(false)
     
-    // const [openModalDate, setOpenModalDate]=useState(false)
+    
     const [liquidarDate, setLiquidarDate] = useState({'fecha_liquidar':createUtcDateIso()})
     
    
@@ -356,12 +356,22 @@ const RecaudosProvider = ({children}) => {
     //boton abonar de liquidar ventas
     const SelectedRecaudo = (venta) => {
         setVenta(venta)
-        setNewRecaudo({
-             'fecha_recaudo':liquidarDate.fecha_liquidar,
-             'valor_recaudo':venta.valor_cuota,
-             'venta':venta.id,
-             'tienda':'',
-         })
+        
+        if(venta.saldo_actual < venta.valor_cuota){
+            setNewRecaudo({
+                'fecha_recaudo':liquidarDate.fecha_liquidar,
+                'valor_recaudo':venta.saldo_actual,
+                'venta':venta.id,
+                'tienda':'',
+            })    
+        }else{
+            setNewRecaudo({
+                 'fecha_recaudo':liquidarDate.fecha_liquidar,
+                 'valor_recaudo':venta.valor_cuota,
+                 'venta':venta.id,
+                 'tienda':'',
+             })
+        }
         setOpenModalCreate(!openModalCreate)
     }
 
