@@ -12,9 +12,8 @@ import { useFilters } from '../hooks/useFilters'
 
 const VentasListPage = () => {
     const {
-        ventas,
+        ventasActivas,
         getVentasActivas,
-        getClientes,
         openModalCreateVenta,
         loading,
     } = useContext(VentasContext)
@@ -33,13 +32,13 @@ const VentasListPage = () => {
             <AlertLoading />
             :
             <>
-            <VentasListHeader titulo={'Ventas Activas'} ventas={ventas}/>
+            <VentasListHeader titulo={'Ventas Activas'} ventas={ventasActivas}/>
             <div className="my-2">
                 <button onClick={openModalCreateVenta} className="btn btn-success">Crear Venta</button>
             </div>
-            {ventas.message?<AlertMessage message={'No hay ventas activas para mostrar'} />:
+            {ventasActivas.message?<AlertMessage message={'No hay ventas activas para mostrar'} />:
             <>
-            {listFilter(ventas,'ventas').map((venta)=>(
+            {listFilter(ventasActivas,'ventas').map((venta)=>(
                 
                 <Card key={venta.id} className='mb-3 shadow rounder'>
                     
@@ -87,7 +86,7 @@ const VentasListPage = () => {
 
             ))
             }
-            {listFilter(ventas,'ventas').length === 0?
+            {listFilter(ventasActivas,'ventas').length === 0?
                 <AlertMessage message={'No se encontraron ventas en la búsqueda'} />:null   
             }
             <div className='d-flex justify-content-around mb-4'>

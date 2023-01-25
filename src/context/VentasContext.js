@@ -17,6 +17,7 @@ const VentasProvider = ({children}) => {
     const [ventas,setVentas] = useState([])
     const [venta, setVenta] = useState({})
     const [ventaDetail, setVentaDetail] = useState({})
+    const [ventasActivas,setVentasActivas] = useState([])
     const [ventasPagas, setVentasPagas] = useState([])
     const [ventasPerdidas, setVentasPerdidas] = useState([])
 
@@ -81,8 +82,8 @@ const VentasProvider = ({children}) => {
             })
             let data = await response.json();
             if(response.status===200){
-                setVentas(data);
-                setLoading(false);
+                setVentasActivas(data)
+                setLoading(false)
             }else if(response.statusText == 'Unauthorized'){
                 logoutUser()
             }
@@ -448,6 +449,7 @@ const VentasProvider = ({children}) => {
         openModalCreateVenta,
         ventaPerdida,
         ventasPerdidas,
+        ventasActivas,
         getVentasPerdidas,
         getVentasActivas,
         openModalDeleteVenta,

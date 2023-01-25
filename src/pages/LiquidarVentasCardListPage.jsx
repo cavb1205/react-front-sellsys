@@ -20,6 +20,8 @@ const LiquidarVentasCardListPage = () => {
         handleSearch,
         ventas,
         loading,
+        ventasActivas,
+        getVentasActivas,
     } = useContext(VentasContext)
 
     const {
@@ -35,6 +37,7 @@ const LiquidarVentasCardListPage = () => {
 
     useEffect(()=>{
         getTienda()
+        getVentasActivas()
         getVentasLiquidar(liquidarDate.fecha_liquidar)
     },[recaudos,newRecaudo,liquidarDate])
 
@@ -49,7 +52,7 @@ const LiquidarVentasCardListPage = () => {
             <AlertLoading />
             :
             <>
-            <LiquidarVentasListHeader ventas={ventas} handleSearch={handleSearch} />
+            <LiquidarVentasListHeader ventas={ventas} handleSearch={handleSearch} ventasActivas={ventasActivas} />
             {ventas.message?<AlertMessage message={'No hay ventas para liquidar el día de hoy'} />:
             <>
             {listFilter(ventas,'liquidar').map((venta)=>(

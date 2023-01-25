@@ -410,6 +410,8 @@ const RecaudosProvider = ({children}) => {
         }
     }
 
+    
+
     const totalRecaudosFecha = () => {
         if (recaudos.message){
             return 0
