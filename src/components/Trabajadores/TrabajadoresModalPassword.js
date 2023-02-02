@@ -18,7 +18,7 @@ const TrabajadoresModalPassword = () => {
         trabajadorUpdatePassword()
     }
 
-    console.log(passwordUpdate)
+    
 
   return (
     <Modal isOpen={openModalPassword} toggle={openModalPasswordTrabajador}>

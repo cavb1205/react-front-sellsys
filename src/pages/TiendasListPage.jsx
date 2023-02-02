@@ -20,7 +20,7 @@ const TiendasListPage = () => {
     const tiendasInactivas = ()=>{
         return tiendas.map(tienda => tienda.estado == false)
     }
-    console.log(tiendas)
+    
   return (
     <div className='container-sm'>
         

@@ -26,7 +26,7 @@ const TipoGastoModalCreate = () => {
         })
     }
 
-    console.log(newTipoGasto)
+
 
   return (
     <Modal isOpen={openModalTipoGasto} toggle={openModalCreateTipoGasto} >

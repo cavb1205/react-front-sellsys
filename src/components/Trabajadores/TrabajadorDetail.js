@@ -29,7 +29,7 @@ const TrabajadorDetail = () => {
         getTrabajador(trabajadorId)
     },[])
     
-    console.log(error)
+    
   return (
     <div className='container-sm'>
         {loading? <AlertLoading />:error?<AlertError error={'Error al cargar la información. intente de nuevo.'} />:

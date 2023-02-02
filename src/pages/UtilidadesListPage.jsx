@@ -31,7 +31,7 @@ const UtilidadesListPage = () => {
     useEffect(()=>{
         getUtilidades()
     },[])
-    console.log(utilidades)
+    
 
   return (
     <div className="container-sm">

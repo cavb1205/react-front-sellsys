@@ -15,7 +15,7 @@ const ClienteDetailItem = () => {
   
   const {
     cliente,
-    clienteMessage,
+    
     getCliente,
     openModalUpdateCliente,
     openModalDeleteCliente,
@@ -57,14 +57,64 @@ const ClienteDetailItem = () => {
             
               
               <div className='card-body tab-pane fade show active' id='info'>
-                {clienteMessage?<AlertMessage message={clienteMessage.message}/>:null}
-                <p className='card-text'><strong>Identificación:</strong> {cliente.identificacion}</p>
-                <p><strong>Nombres:</strong> {cliente.nombres} {cliente.apellidos} </p>
-                <p><strong>Nombre Local:</strong> {cliente.nombre_local}</p>
-                <p><strong>Dirección:</strong> {cliente.direccion}</p>
-                <p><strong>Teléfono:</strong> {cliente.telefono_principal}</p>
-                <p><strong>Estado:</strong> <span className={`badge rounded-pill text-bg-${cliente.estado_cliente=='Bloqueado'?'danger':cliente.estado_cliente=='Inactivo'?'warning':'success'}`}>{cliente.estado_cliente}</span></p>
-                <small><strong>Fecha Creación:</strong> {cliente.fecha_creacion}</small>
+                <div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Identificación:</strong>
+                    </div>
+                    <div  className='col-5'>
+                      <span>{cliente.identificacion}</span>
+                    </div>
+                  </div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Nombres:</strong>
+                    </div>
+                    <div  className='col-5'>
+                      <span>{cliente.nombres} {cliente.apellidos}</span>
+                    </div>
+                  </div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Nombre Local:</strong>
+                    </div>
+                    <div  className='col-5'>
+                      <span>{cliente.nombre_local}</span>
+                    </div>
+                  </div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Dirección:</strong>
+                    </div>
+                    <div  className='col-5'>
+                      <span>{cliente.direccion}</span>
+                    </div>
+                  </div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Teléfono:</strong>
+                    </div>
+                    <div  className='col-5'>
+                      <span>{cliente.telefono_principal}</span>
+                    </div>
+                  </div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Estado:</strong>
+                    </div>
+                    <div  className='col-5'>
+                    <span className={`badge rounded-pill text-bg-${cliente.estado_cliente=='Bloqueado'?'danger':cliente.estado_cliente=='Inactivo'?'warning':'success'}`}>{cliente.estado_cliente}</span>
+                    </div>
+                  </div>
+                  <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                      <strong>Fecha Creación:</strong>
+                    </div>
+                    <div  className='col-5'>
+                      <span>{cliente.fecha_creacion}</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             
             

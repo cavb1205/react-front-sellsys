@@ -9,7 +9,7 @@ const AportesModalDelete = () => {
         aporteDeleteItem,
         openModalDeleteAporte
     } = useContext(AportesContext)
-    console.log(aporteId)
+    
   return (
     <Modal isOpen={openModalDelete} toggle={openModalDeleteAporte}>
         <ModalHeader toggle={openModalDeleteAporte}>

@@ -29,7 +29,7 @@ const RecaudosListPage = () => {
     useEffect(()=>{
         getRecaudosFecha(fecha)
     },[fecha])
-    console.log(recaudos)
+    
   return (
     <div className='container-sm'>
 

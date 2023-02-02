@@ -12,6 +12,7 @@ import AportesModalUpdate from "../components/Aportes/AportesModalUpdate";
 
 import { AuthContext } from "../context/AuthContext";
 import { useFilters } from "../hooks/useFilters";
+import { TiendaContext } from "../context/TiendaContext";
 
 const AportesListPage = () => {
     

@@ -19,7 +19,7 @@ const UtilidadesModalUpdate = () => {
       utilidadUpdateItem()
     }
 
-    console.log(utilidad)
+    
   return (
     <Modal isOpen={openModalUpdate} toggle={openModalUpdateUtilidad}>
         <ModalHeader toggle={openModalUpdateUtilidad}>

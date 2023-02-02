@@ -21,8 +21,8 @@ const CierresCajaPage = () => {
     useEffect(()=>{
         getCierresCaja()
     },[])
-    console.log('cierres caja lista')
-    console.log(cierresCaja)
+
+
   return (
     <div className='container-sm'>
         <div className='text-center m-3'>

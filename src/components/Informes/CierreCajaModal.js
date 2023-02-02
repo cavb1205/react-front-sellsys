@@ -19,7 +19,6 @@ const CierreCajaModal = () => {
         postCierreCaja,
     } = useContext(TiendaContext)
 
-    console.log(cajaAnterior)
 
     const {aportes} = useContext(AportesContext)
     const {allRecaudos} = useContext(RecaudosContext)
