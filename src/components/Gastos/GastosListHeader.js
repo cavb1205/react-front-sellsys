@@ -14,7 +14,7 @@ const GastosListHeader = ({gastos,totalGastos,query}) => {
         <p>Total Gastos: <span className='badge bg-danger'>{totalGastos()}</span></p>
         
     </div>
-    <div>
+    <div className='text-center'>
       <Search />
     </div>
     </>

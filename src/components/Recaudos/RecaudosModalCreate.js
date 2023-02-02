@@ -11,7 +11,7 @@ const RecaudosModalCreate = () => {
         handleChange,
         recaudosCreateItem,
     } = useContext(RecaudosContext)
-    console.log(newRecaudo)
+    
 
     const handleSubmit = (event) => {
         event.preventDefault()

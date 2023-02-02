@@ -13,6 +13,8 @@ import { VentasContext } from '../context/VentasContext'
 import {TiendaContext} from '../context/TiendaContext'
 import { useFilters } from '../hooks/useFilters'
 
+
+
 const LiquidarVentasCardListPage = () => {
     const {getTienda} = useContext(TiendaContext)
     const {
@@ -34,7 +36,8 @@ const LiquidarVentasCardListPage = () => {
     } = useContext(RecaudosContext)
 
     const {listFilter,prevPage, nextPage} = useFilters()
-
+    
+    
     useEffect(()=>{
         getTienda()
         getVentasActivas()
@@ -55,7 +58,7 @@ const LiquidarVentasCardListPage = () => {
             <LiquidarVentasListHeader ventas={ventas} handleSearch={handleSearch} ventasActivas={ventasActivas} />
             {ventas.message?<AlertMessage message={'No hay ventas para liquidar el día de hoy'} />:
             <>
-            {listFilter(ventas,'liquidar').map((venta)=>(
+            {listFilter(ventas,'liquidar', ).map((venta)=>(
                 
                 <Card key={venta.id} className='mb-3 shadow rounder'>
                     

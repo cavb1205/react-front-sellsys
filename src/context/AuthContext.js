@@ -22,6 +22,7 @@ const AuthProvider = ({children}) => {
 
     const loginUser = async (e) => {
         e.preventDefault();
+        console.log('ingresa a la funcion login user')
         const response = await fetch(`${URL}/login/`,{
             method:'POST',
             headers:{
@@ -30,9 +31,11 @@ const AuthProvider = ({children}) => {
             body:JSON.stringify({'username':e.target.username.value,'password':e.target.password.value})
 
         })
+        console.log(e.target.username.value)
         const data = await response.json()
         
         if(response.status === 200){
+            console.log('pasa loginnnnnnnnn')
             setToken(data.token)
             setRefresh(data.refresh)
             setUser(data.user)
@@ -42,24 +45,25 @@ const AuthProvider = ({children}) => {
             localStorage.setItem('refresh', JSON.stringify(data.refresh))
             localStorage.setItem('user', JSON.stringify(data.user))
             localStorage.setItem('perfil', JSON.stringify(data.perfil))
-            if (membresia == 'Vencida'){
-                navigate("/")
-                alert(membresia)
-            }
-            if (membresia == 'Pendiente Pago'){
-                navigate("/")
-                alert(membresia)
-            }
+            navigate('/liquidar/')
+            // if (membresia == 'Vencida'){
+            //     navigate("/")
+            //     alert(membresia)
+            // }
+            // if (membresia == 'Pendiente Pago'){
+            //     navigate("/")
+            //     alert(membresia)
+            // }
             
-            if (data.user.is_superuser){
-                navigate("/tiendas/")
-            }else if(data.user.is_active){
-                navigate("/liquidar/");
-            }
-            else {
-                alert('Usuario no esta activo!')
-                logoutUser()
-            }
+            // if (data.user.is_superuser){
+            //     navigate("/tiendas/")
+            // }else if(data.user.is_active){
+            //     navigate("/liquidar/");
+            // }
+            // else {
+            //     alert('Usuario no esta activo!')
+            //     logoutUser()
+            // }
         }else{
             setError(!error)
         }
@@ -116,6 +120,7 @@ const AuthProvider = ({children}) => {
        error,
        query,
        handleSearch,
+       setQuery,
        perfil,
     }
 

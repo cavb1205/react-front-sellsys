@@ -5,7 +5,7 @@ import  Search  from '../Utils/Search'
 
 const LiquidarVentasListHeader = (props) => {
     
-    const {ventas,handleSearch, ventasActivas} = props
+    const {ventas, ventasActivas} = props
 
     const {handleChangeDate,
         openModalDate,

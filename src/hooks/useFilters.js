@@ -1,12 +1,18 @@
 import React, { useContext, useState } from "react";
-import { AuthContext } from "../context/AuthContext";
+
 import { ITEMS } from "../config";
+import { AuthContext } from "../context/AuthContext";
+
+
+
+
 
 
 export const useFilters = () => {
 
-    const {query} = useContext(AuthContext)
-
+    const {query} =useContext(AuthContext)
+    
+    
     const [currentPage, setCurrentPage] = useState(0)
 
     const listFilter = (listItems, listName) => {

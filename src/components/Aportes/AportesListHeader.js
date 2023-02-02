@@ -19,7 +19,7 @@ const AportesListHeader = (props) => {
       }
         <p>Total Aportado: <span className='badge bg-success'>{totalAportes()}</span></p>
     </div>
-    <div>
+    <div className='text-center'>
       <Search />
     </div>
     </>
