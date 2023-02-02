@@ -44,7 +44,7 @@ const ClienteDetailItem = () => {
           <div className='card-header'>
             <ul className="nav nav-tabs card-header-tabs">
               <li className="nav-item">
-                <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#info" aria-current="true" >Info CLiente</a>
+                <a className="nav-link active" data-bs-toggle="tab" data-bs-target="#info" aria-current="true" >Info Cliente</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" data-bs-toggle="tab" data-bs-target="#ventasActivas" >Historial Ventas</a>

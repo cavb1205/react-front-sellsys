@@ -36,19 +36,74 @@ const TrabajadorDetail = () => {
 
         <div className='card shadow'>
             <div className='card-header'>
-                <h2 className='text-secondary text-capitalize'>{trabajador.first_name} {trabajador.last_name}</h2>
+                <h2 className='text-secondary text-capitalize text-center'>{trabajador.first_name} {trabajador.last_name}</h2>
             </div>
             <div className='card-body'>
-                <h5 className='text-secondary'>Username: {trabajador.username}</h5>
-                <p><strong>Identificación:</strong> {trabajador.identificacion}</p>
-                <p><strong>Teléfono:</strong> {trabajador.telefono}</p>
-                <p><strong>Dirección:</strong> {trabajador.direccion}</p>
-                <p><strong>Email:</strong> {trabajador.email}</p>
-                {(trabajador.is_active)?<p><strong>Estado:</strong> <span className='badge rounded-pill text-bg-success'>Activo</span></p>:<p><strong>Estado:</strong> <span className='badge rounded-pill text-bg-danger'>Inactivo</span></p>}
-                <small className='badge rounded-pill text-bg-light'>Fecha Creación: {trabajador.date_joined?.split('T')[0]}</small>
+                <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                        <h5 className='text-secondary'>Username:</h5>
+                    </div>
+                    <div className='col-5'>
+                        <h5 className='text-secondary'> {trabajador.username}</h5>
+                    </div>
+                </div>
+                <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                        <p><strong>Identificación:</strong></p>
+                    </div>
+                    <div className='col-5'>
+                        <p className='text-secondary'> {trabajador.identificacion}</p>
+                    </div>
+                </div>
+                <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                        <p><strong>Teléfono:</strong></p>
+                    </div>
+                    <div className='col-5'>
+                        <p className='text-secondary'>{trabajador.telefono}</p>
+                    </div>
+                </div>
+                <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                        <p><strong>Dirección:</strong></p>
+                    </div>
+                    <div className='col-5'>
+                        <p className='text-secondary'>{trabajador.direccion}</p>
+                    </div>
+                </div>
+                <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                        <p><strong>Email:</strong></p>
+                    </div>
+                    <div className='col-5'>
+                        <p className='text-secondary'>{trabajador.email}</p>
+                    </div>
+                </div>
+                    <div className='row justify-content-around my-2'>
+                        <div className='col-5'>
+                            <p><strong>Estado:</strong></p>
+                        </div>
+                        <div className='col-5'>
+                    {
+                        (trabajador.is_active)?
+                            <span className='badge rounded-pill text-bg-success'>Activo</span>
+                            :
+                            <span className='badge rounded-pill text-bg-danger'>Inactivo</span>
+                    }
+                        </div>
+                    </div>
+                <div className='row justify-content-around my-2'>
+                    <div className='col-5'>
+                        <p><strong>Fecha Creación:</strong></p>
+                    </div>
+                    <div className='col-5'>
+                        <p className='text-secondary'>{trabajador.date_joined?.split('T')[0]}</p>
+                    </div>
+                </div>
+                    
             </div>
             {user.username === trabajador.username?
-            <div>
+            <div className='text-center'>
                 <button onClick={openModalPasswordTrabajador} className='btn btn-outline-primary m-3'>Cambiar Contraseña</button>
             </div>
             :
