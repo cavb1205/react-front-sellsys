@@ -29,6 +29,7 @@ const ClientesListPage = () => {
     
     useEffect(()=>{
         getClientes()
+        console.log('ClientesListPage')
     },[])
     
     

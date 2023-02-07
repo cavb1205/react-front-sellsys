@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, memo } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 
 
@@ -19,4 +19,4 @@ const Search = () => {
   )
 }
 
-export default Search
+export default memo(Search)
