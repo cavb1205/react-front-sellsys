@@ -29,7 +29,7 @@ const ClientesListPage = () => {
     
     useEffect(()=>{
         getClientes()
-        console.log('ClientesListPage')
+        
     },[])
     
     
@@ -44,7 +44,7 @@ const ClientesListPage = () => {
                 <button onClick={openModalCreateCliente} className="btn btn-success">Crear Cliente</button>
                 <Link to={'/clientes/disponibles/'}><button  className="btn btn-primary">Clientes Disponibles</button></Link>
             </div>
-            {
+            {   
                 clientes.message?
                     <AlertMessage message={'No se han creado clientes.'} />
                 :
