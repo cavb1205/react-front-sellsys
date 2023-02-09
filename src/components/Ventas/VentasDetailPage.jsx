@@ -8,6 +8,7 @@ import { Card, CardBody } from 'reactstrap'
 import VentasModalDelete from './VentasModalDelete'
 import VentasModalUpdate from './VentasModalUpdate'
 import VentasModalPerdida from './VentasModalPerdida'
+import RecaudosVentaDetailListItem from '../Recaudos/RecaudosVentaDetailListItem'
 
 const VentasDetailPage = (props) => {
     const {
@@ -22,7 +23,7 @@ const VentasDetailPage = (props) => {
         totalRecaudosVenta,
         getRecaudos,
     } = useContext(RecaudosContext)
-
+    console.log(recaudos)
     const {ventaId} = useParams()
 
     useEffect(()=>{
@@ -40,6 +41,7 @@ const VentasDetailPage = (props) => {
         setOpenMOdalPerdida(!openModalPerdida)
     }
 
+    
    
   return (
     <div className='container-sm'>
@@ -231,17 +233,15 @@ const VentasDetailPage = (props) => {
                             <span className='badge rounded-pill bg-success'>{ventaDetail.total_abonado}</span> 
                         </div>
                     </div>
-                   
-                            
-                        
-                        
-                    
-                    
-                    
                 
                     <div className='card-footer d-flex flex-wrap justify-content-around'>
-                        <button onClick={openModalUpdateVenta} className='btn btn-warning mb-2'>Actualizar</button>{' '}
-                        <button onClick={openModalDeleteVenta}  className='btn btn-danger mb-2'>Eliminar</button>{' '}
+                        {
+                            recaudos.length>0? 
+                                <button onClick={openModalUpdateVenta} className='btn btn-warning mb-2' disabled>Actualizar</button>
+                            :
+                                <button onClick={openModalUpdateVenta} className='btn btn-warning mb-2'>Actualizar</button>
+                        }
+                        <button onClick={openModalDeleteVenta}  className='btn btn-danger mb-2'>Eliminar</button>
                         <Link to={`/liquidar/`}  className='btn btn-secondary mb-2'>Lista Ventas</Link>
                     </div>
 
@@ -261,24 +261,7 @@ const VentasDetailPage = (props) => {
                     :
                     <>
                     {recaudos.map((recaudo)=>(
-                        <Link key={recaudo.id} className='text-decoration-none' to={`/recaudos/${recaudo.id}/`}>
-                            <Card className='mb-2 shadow rounder'>
-                                <CardBody>
-                                    <div className="d-flex flex-wrap justify-content-around">
-                                        <small className='text-secondary'>{recaudo.fecha_recaudo}</small>
-                                        <h2 className="text-capitalize text-success">{recaudo.valor_recaudo}</h2>
-                                        <button className='btn btn-outline-primary btn-sm'>Ver</button>
-                                    </div>
-                                    {recaudo.visita_blanco?
-                                        <div className=" text-center">
-                                            <small className="badge bg-light text-secondary">{recaudo.visita_blanco?.tipo_falla} </small> <br />
-                                        </div>
-                                        :null
-                                    }
-                                    
-                                </CardBody>
-                            </Card>
-                        </Link>
+                        <RecaudosVentaDetailListItem key={recaudo.id} recaudo={recaudo}/>
                     ))
                     }
                     </>

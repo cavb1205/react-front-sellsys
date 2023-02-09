@@ -15,7 +15,6 @@ const ClienteDetailItem = () => {
   
   const {
     cliente,
-    
     getCliente,
     openModalUpdateCliente,
     openModalDeleteCliente,
