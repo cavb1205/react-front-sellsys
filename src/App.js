@@ -4,9 +4,6 @@ import AuthProvider from "./context/AuthContext";
 import ClientesProvider from "./context/ClientesContext";
 import AportesProvider from "./context/AportesContext";
 
-
-
-
 import  Header  from './components/Header';
 import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
@@ -36,8 +33,6 @@ import ClientesDisponiblesListPage from "./pages/ClientesDisponiblesListPage";
 import HomePageTiendaInfo from "./components/HomePage/HomePageTiendaInfo";
 import TiendasListPage from "./pages/TiendasListPage";
 import VentasPerdidasListPage from "./pages/VentasPerdidasListPage";
-
-
 
 
 
