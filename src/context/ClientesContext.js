@@ -120,7 +120,7 @@ const ClientesProvider = ({children}) => {
   
     const getCliente = async (clienteId) => {
         try {
-
+            setLoading(true)
             const response = await fetch(`${URL}/clientes/${clienteId}/`,{
                 method:'GET',
                 headers:{

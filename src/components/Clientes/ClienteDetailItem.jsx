@@ -6,9 +6,9 @@ import { ClientesContext } from '../../context/ClientesContext';
 import ClienteModalDelete from './ClienteModalDelete';
 import ClienteModalUpdate from './ClienteModalUpdate';
 import AlertMessage from '../Utils/AlertMessage';
-import { Card, CardBody } from 'reactstrap';
-import AlertError from '../Utils/AlertError';
-import AlertLoading from '../Utils/AlertLoading'
+
+import VentasClienteResume from '../Ventas/VentasClienteResume';
+import VentasClientHistoryList from '../Ventas/VentasClientHistoryList';
 
 
 const ClienteDetailItem = () => {
@@ -21,7 +21,7 @@ const ClienteDetailItem = () => {
     openModalDetailVentaCliente,
     getVentasActivasCliente,
     ventasActivas,
-    error,
+    
     loading,
   } = useContext(ClientesContext);
 
@@ -32,12 +32,12 @@ const ClienteDetailItem = () => {
     getVentasActivasCliente(clienteId);
   },[])
 
-
+  console.log(ventasActivas)
+  
   return (
     
     <div className='container-sm'>
-        {loading?<AlertLoading />:null}
-       {error?<AlertError error={error}/>:null}
+        
        
         <div className='card text center shadow'>
           <div className='card-header'>
@@ -123,34 +123,11 @@ const ClienteDetailItem = () => {
                 <div>
                   {ventasActivas.message?
                     <AlertMessage message={'No hay ventas para mostrar'}/>
-                  :
+                    :
                   <>
+                  <VentasClienteResume ventas={ventasActivas} />
                   {ventasActivas.map((venta,index)=>(
-                    <Card key={venta.id} className='mb-2 shadow rounder'>
-                      <CardBody>
-                        <div className="d-flex flex-wrap justify-content-between">
-                          <span className='badge rounded-pill text-bg-light my-2'>{index+1}</span>
-                          <h2 className=" text-capitalize text-secondary mx-4 ">Venta: {venta.valor_venta}</h2>
-                          <span></span>
-                        </div>
-                        <div className='d-flex flex-wrap justify-content-evenly my-1'>
-                          <small className='badge rounded-pill text-bg-light'>Fecha Venta: {venta.fecha_venta}</small>
-                          {
-                            (venta.estado_venta === 'Perdida')?
-                              <span className='badge rounded-pill text-bg-danger'>{venta.estado_venta}</span>
-                              :
-                              (venta.estado_venta === 'Pagado')?
-                                <span className='badge rounded-pill text-bg-secondary'>{venta.estado_venta}</span>
-                              :
-                                <span className='badge rounded-pill text-bg-success'>{venta.estado_venta}</span>
-                          }
-                        </div>
-                        <div className='d-flex flex-wrap justify-content-around mt-2'>
-                          <Link to={`/ventas/${venta.id}/`}><button className='btn btn-primary btn-sm'>Ver Venta</button></Link>
-                        </div>
-                      </CardBody>
-                    </Card>
-
+                    <VentasClientHistoryList key={venta.id} venta={venta} index={index} />
                     ))
                   }
                   </>
@@ -162,6 +139,7 @@ const ClienteDetailItem = () => {
           </div>
               
 
+        
   
           <div className='card-footer d-flex flex-wrap justify-content-around'>
             <Link to={'/clientes/'}><button className='btn btn-primary mb-1'>Lista Clientes</button></Link>
@@ -172,6 +150,7 @@ const ClienteDetailItem = () => {
       
       <ClienteModalUpdate />
       <ClienteModalDelete />
+
     </div>
   )
 }

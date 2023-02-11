@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { VentasContext } from '../../context/VentasContext'
 import AlertMessage from '../Utils/AlertMessage'
 import { RecaudosContext } from '../../context/RecaudosContext'
-import { Card, CardBody } from 'reactstrap'
 import VentasModalDelete from './VentasModalDelete'
 import VentasModalUpdate from './VentasModalUpdate'
 import VentasModalPerdida from './VentasModalPerdida'
 import RecaudosVentaDetailListItem from '../Recaudos/RecaudosVentaDetailListItem'
+import AlertLoading from '../Utils/AlertLoading'
 
 const VentasDetailPage = (props) => {
     const {
@@ -16,6 +16,7 @@ const VentasDetailPage = (props) => {
         ventaDetail,
         openModalDeleteVenta,
         openModalUpdateVenta,
+        loading,
     } = useContext(VentasContext)
 
     const {
@@ -23,7 +24,7 @@ const VentasDetailPage = (props) => {
         totalRecaudosVenta,
         getRecaudos,
     } = useContext(RecaudosContext)
-    console.log(recaudos)
+    
     const {ventaId} = useParams()
 
     useEffect(()=>{
@@ -45,7 +46,7 @@ const VentasDetailPage = (props) => {
    
   return (
     <div className='container-sm'>
-
+        
         <div className='card shadow p-3 mb-5 bg-body rounded'>
         <div className="card">
             <div className='card-header'>
@@ -62,6 +63,13 @@ const VentasDetailPage = (props) => {
             {/* VENTA DETAIL */}
             <div className="card-body tab-content" id='myTabContent'>
                 <div className='tab-pane fade show active' id="detailVenta" role="tabpanel">
+                    {
+                        loading?<AlertLoading />
+                        :
+                        
+                    <>
+                    
+                    
                     
                     <Link to={`/clientes/${ventaDetail.cliente?.id}/`} className='text-decoration-none'><h1 className="card-title text-center text-secondary ">{ventaDetail.cliente?.nombres} {ventaDetail.cliente?.apellidos}</h1></Link>
                     
@@ -248,6 +256,8 @@ const VentasDetailPage = (props) => {
                     <div className='d-flex justify-content-center'>
                         <button className='btn btn-outline-danger' onClick={clickOpenModalPerdida}>Pérdida</button>
                     </div>
+                    </>
+                    }    
                 
                 </div>
                 
