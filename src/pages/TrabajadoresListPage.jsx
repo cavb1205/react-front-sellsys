@@ -1,22 +1,15 @@
 import React,{useContext,useEffect} from 'react';
-import { Card, CardBody} from 'reactstrap';
 
-
-
-
-import { Link } from 'react-router-dom';
 import { TrabajadoresContext } from '../context/TrabajadoresContext';
 import TrabajadoresListHeader from '../components/Trabajadores/TrabajadoresListHeader';
-
 import AlertMessage from '../components/Utils/AlertMessage';
-
 import TrabajadorModalCreate from '../components/Trabajadores/TrabajadorModalCreate';
-
 
 import { AuthContext } from '../context/AuthContext';
 import { useFilters } from '../hooks/useFilters';
 import AlertLoading from '../components/Utils/AlertLoading';
-import AlertError from '../components/Utils/AlertError';
+
+import TrabajadorListItem from '../components/Trabajadores/TrabajadorListItem';
 
 
 const TrabajadoresListPage = () => {
@@ -24,9 +17,7 @@ const TrabajadoresListPage = () => {
 
     const {
         trabajadores,
-        
         openModalCreateTrabajador,
-
         trabajadoresFiltrados,
         loading,
         getTrabajadores,
@@ -56,29 +47,8 @@ const TrabajadoresListPage = () => {
                 :
                     <>
                         {listFilter(trabajadores,'trabajadores').map((trabajador, index)=>(
-                            <Card key={trabajador.id} className='mb-3 shadow rounder'>
-                                <CardBody>
-                                    <div className="d-flex flex-wrap justify-content-center ">
-                                        <h2 className="text-capitalize text-secondary mx-4 ">{trabajador.trabajador}</h2>
-                                    </div>
-                                    <div className="d-flex flex-wrap justify-content-center">
-                                        <span className="badge text-bg-light">{trabajador.identificacion} </span>
-                                    </div>  
-                                    <div className="d-flex flex-wrap justify-content-around mt-2">
-                                        <span className="badge bg-light text-secondary">Direccion: {trabajador.direccion} </span>
-                                    </div>
-                                    <div className="d-flex flex-wrap justify-content-around">
-                                        <span className="badge bg-light text-secondary">Teléfono: {trabajador.telefono} </span>
-                                    </div>
-                                    <div className="d-flex flex-wrap justify-content-around mt-2">
-                                       <Link to={`/trabajadores/${trabajador.id}/`}><button  className="btn btn-primary">Ver Más</button></Link>
-                                    </div>
-                                </CardBody>
-                            </Card>
-                        
-
-                        ))
-                            
+                            <TrabajadorListItem key={trabajador.id} trabajador={trabajador}/>
+                        ))        
                         }
                         {listFilter(trabajadores,'trabajadores').length === 0?
                             <AlertMessage message={'No se encontraron trabajadores en la búsqueda'} />:null   

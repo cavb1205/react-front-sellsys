@@ -17,8 +17,6 @@ const TrabajadorModalCreate = () => {
         event.preventDefault()
         trabajadorCreateItem()
     }
-
-    console.log(error)
     
   return (
             <Modal isOpen={openModalCreate} toggle={openModalCreateTrabajador}>

@@ -14,7 +14,7 @@ const ClienteModalDelete = () => {
         clienteDeleteItem,
         error,
     }=useContext(ClientesContext)
-    console.log(cliente)
+    
   return (
     <Modal isOpen={openModalDelete}>
         <ModalHeader>

@@ -32,7 +32,7 @@ const ClienteDetailItem = () => {
     getVentasActivasCliente(clienteId);
   },[])
 
-  console.log(ventasActivas)
+  
   
   return (
     
