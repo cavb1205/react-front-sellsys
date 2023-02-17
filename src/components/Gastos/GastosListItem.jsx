@@ -1,7 +1,7 @@
-import React from 'react'
-import { Card, CardBody } from 'reactstrap';
+import React from "react";
+import { Card, CardBody } from "reactstrap";
 
-const GastosListItem = ({gasto, index, gastoSelected}) => {
+const GastosListItem = ({ gasto, index, gastoSelected }) => {
   return (
     <Card className="mb-3 shadow rounder">
       <CardBody>
@@ -38,6 +38,6 @@ const GastosListItem = ({gasto, index, gastoSelected}) => {
       </CardBody>
     </Card>
   );
-}
+};
 
-export default GastosListItem
+export default GastosListItem;

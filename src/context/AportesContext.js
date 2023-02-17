@@ -1,179 +1,182 @@
-import React, { createContext, useContext, useState } from 'react'
-import { AuthContext } from './AuthContext'
-import { URL } from '../config'
+import React, { createContext, useContext, useState } from "react";
+import { AuthContext } from "./AuthContext";
+import { URL } from "../config";
 
-export const AportesContext = createContext()
+export const AportesContext = createContext();
 
 const AportesProvider = ({ children }) => {
-  const { token, logoutUser, navigate, query } = useContext(AuthContext)
+  const { token, logoutUser, navigate, query } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(true)
-  const [serverError, setServerError] = useState(false)
-  const [message, setMessage] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [serverError, setServerError] = useState(false);
+  const [message, setMessage] = useState(false);
 
-  const createUtcDateIso = (date) => {
-    const offset = new Date().getTimezoneOffset()
-    const myDate = Date.parse(Date()) - offset * 60 * 1000
-    const dateIso = new Date(myDate).toISOString()
-    return dateIso.slice(0, 10)
-  }
+  /// Esto se debe importar del hook 
+  const createUtcDateIso = () => {
+    const offset = new Date().getTimezoneOffset();
+    const myDate = Date.parse(Date()) - offset * 60 * 1000;
+    const dateIso = new Date(myDate).toISOString();
+    return dateIso.slice(0, 10);
+  };
 
-  const [aportes, setAportes] = useState([])
+  const [aportes, setAportes] = useState([]);
   const [newAporte, setNewAporte] = useState({
     fecha: createUtcDateIso(),
-    valor: '',
-    comentario: '',
-    trabajador: ''
-  })
-  const [aporteId, setAporteId] = useState({})
+    valor: "",
+    comentario: "",
+    trabajador: "",
+  });
+  const [aporteId, setAporteId] = useState({});
 
-  const [openModalCreate, setOpenModalCreate] = useState(false)
-  const [openModalUpdate, setOpenModalUpdate] = useState(false)
-  const [openModalDelete, setOpenModalDelete] = useState(false)
+  const [openModalCreate, setOpenModalCreate] = useState(false);
+  const [openModalUpdate, setOpenModalUpdate] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   // calculamos la suma de los aportes
   const totalAportes = () => {
     if (aportes.message) {
-      return 0
+      return 0;
     } else {
-      return aportes.filter(aporte => aporte.trabajador?.trabajador.toLowerCase().includes(query)).map(aporte => parseFloat(aporte.valor)).reduce((a, b) => a + b, 0)
+      return aportes
+        .filter((aporte) =>
+          aporte.trabajador?.trabajador.toLowerCase().includes(query)
+        )
+        .map((aporte) => parseFloat(aporte.valor))
+        .reduce((a, b) => a + b, 0);
     }
-  }
+  };
 
   const getAportes = async () => {
     try {
       const response = await fetch(`${URL}/aportes/`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (response.status === 200) {
-        setAportes(data)
-        setLoading(false)
-      } else if (response.statusText === 'Unauthorized') {
-        logoutUser()
+        setAportes(data);
+        setLoading(false);
+      } else if (response.statusText === "Unauthorized") {
+        logoutUser();
       }
     } catch {
-      setServerError(true)
-      setLoading(false)
+      setServerError(true);
+      setLoading(false);
     }
-  }
+  };
 
   const aporteCreateItem = async () => {
     try {
       const response = await fetch(`${URL}/aportes/create/`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newAporte)
-
-      })
-      const data = await response.json()
+        body: JSON.stringify(newAporte),
+      });
 
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate)
-        getAportes()
+        setOpenModalCreate(!openModalCreate);
+        getAportes();
       } else if (response.status === 400) {
-        setMessage(!message)
-      } else if (response.statusText === 'Unauthorized') {
-        logoutUser()
+        setMessage(!message);
+      } else if (response.statusText === "Unauthorized") {
+        logoutUser();
       }
     } catch {
-      setServerError(true)
+      setServerError(true);
     }
-  }
+  };
 
-  const aporteUpdateItem = async (event) => {
+  const aporteUpdateItem = async () => {
     try {
       const response = await fetch(`${URL}/aportes/${aporteId.id}/update/`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(aporteId)
-
-      })
-      const data = await response.json()
+        body: JSON.stringify(aporteId),
+      });
+      
       if (response.status === 200) {
-        setOpenModalUpdate(!setOpenModalUpdate)
-        getAportes()
-      } else if (response.statusText === 'Unauthorized') {
-        logoutUser()
+        setOpenModalUpdate(!setOpenModalUpdate);
+        getAportes();
+      } else if (response.statusText === "Unauthorized") {
+        logoutUser();
       }
     } catch {
-      setServerError(true)
+      setServerError(true);
     }
-  }
+  };
   const aporteDeleteItem = async () => {
     try {
       const response = await fetch(`${URL}/aportes/${aporteId.id}/delete/`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        }
-      })
-      const data = await response.json()
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      
       if (response.status === 200) {
-        setOpenModalDelete(!openModalDelete)
-        navigate('/aportes/')
-        getAportes()
-      } else if (response.statusText === 'Unauthorized') {
-        logoutUser()
+        setOpenModalDelete(!openModalDelete);
+        navigate("/aportes/");
+        getAportes();
+      } else if (response.statusText === "Unauthorized") {
+        logoutUser();
       }
     } catch {
-      setServerError(true)
+      setServerError(true);
     }
-  }
+  };
 
   const openModalCreateAporte = () => {
-    setOpenModalCreate(!openModalCreate)
+    setOpenModalCreate(!openModalCreate);
     setNewAporte({
       fecha: createUtcDateIso(),
-      valor: '',
-      comentario: '',
-      trabajador: ''
-    })
-  }
+      valor: "",
+      comentario: "",
+      trabajador: "",
+    });
+  };
 
   const openModalUpdateAporte = () => {
-    setOpenModalUpdate(!openModalUpdate)
-  }
+    setOpenModalUpdate(!openModalUpdate);
+  };
   const openModalDeleteAporte = () => {
-    setOpenModalDelete(!openModalDelete)
-  }
+    setOpenModalDelete(!openModalDelete);
+  };
 
   const handleChange = (event) => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
     setNewAporte({
       ...newAporte,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
   const handleChangeUpdate = (event) => {
-    const { name, value } = event.target
+    const { name, value } = event.target;
     setAporteId({
       ...aporteId,
-      [name]: value
-    })
-  }
+      [name]: value,
+    });
+  };
 
   const aporteSeleccionado = (aporte, option) => {
-    setAporteId(aporte)
-    if (option === 'Editar') {
-      setOpenModalUpdate(!openModalUpdate)
+    setAporteId(aporte);
+    if (option === "Editar") {
+      setOpenModalUpdate(!openModalUpdate);
     } else {
-      setOpenModalDelete(!openModalDelete)
+      setOpenModalDelete(!openModalDelete);
     }
-  }
+  };
 
   const contextData = {
     aportes,
@@ -200,15 +203,14 @@ const AportesProvider = ({ children }) => {
     serverError,
     message,
 
-    getAportes
-
-  }
+    getAportes,
+  };
 
   return (
     <AportesContext.Provider value={contextData}>
       {children}
     </AportesContext.Provider>
-  )
-}
+  );
+};
 
-export default AportesProvider
+export default AportesProvider;

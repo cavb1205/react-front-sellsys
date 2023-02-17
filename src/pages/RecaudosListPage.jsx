@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 import InformeRecaudosListItem from "../components/Informes/InformeRecaudosListItem";
 import AlertLoading from "../components/Utils/AlertLoading";
-import AlertMessage from "../components/Utils/AlertMessage.js";
+import AlertMessage from "../components/Utils/AlertMessage";
 import Paginator from "../components/Utils/Paginator";
 import { RecaudosContext } from "../context/RecaudosContext";
 import useDateFilter from "../hooks/useDateFilter";
