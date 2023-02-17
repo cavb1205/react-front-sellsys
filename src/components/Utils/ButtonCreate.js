@@ -1,8 +1,8 @@
 import React from 'react'
 
-const ButtonCreate = ({action,label}) => {
+const ButtonCreate = ({ action, label }) => {
   return (
-    <button  type="button" className="btn btn-success">{label}</button>
+    <button type='button' className='btn btn-success'>{label}</button>
   )
 }
 

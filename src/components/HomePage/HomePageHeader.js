@@ -1,11 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-
-
-const HomePageHeader = ({tienda}) => {
+const HomePageHeader = ({ tienda }) => {
   return (
-    <div >
-        <h1 className='text-center text-secondary text-capitalize'>{tienda.nombre}</h1>
+    <div>
+      <h1 className='text-center text-secondary text-capitalize'>{tienda.nombre}</h1>
     </div>
   )
 }

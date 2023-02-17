@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {createUtcDateIso} from './useDate'
 
 const useDateFilter = () => {

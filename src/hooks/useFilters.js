@@ -1,11 +1,7 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 
 import { ITEMS } from "../config";
 import { AuthContext } from "../context/AuthContext";
-
-
-
-
 
 
 export const useFilters = () => {
