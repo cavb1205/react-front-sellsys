@@ -14,8 +14,6 @@ import { UtilidadesContext } from "../context/UtilidadesContext";
 import { TiendaContext } from "../context/TiendaContext";
 import { VentasContext } from "../context/VentasContext";
 
-import { RecaudosContext } from "../context/RecaudosContext";
-
 import CierreCajaModal from "../components/Informes/CierreCajaModal";
 
 const HomePage = () => {
@@ -34,7 +32,7 @@ const HomePage = () => {
     getAllVentas,
     getVentasPerdidas,
   } = useContext(VentasContext);
-  const { getAllRecaudos } = useContext(RecaudosContext);
+
 
   useEffect(() => {
     getTiendaMembresia();
@@ -45,7 +43,6 @@ const HomePage = () => {
     getVentasActivas();
     getVentasPagas();
     getVentasPerdidas();
-    getAllRecaudos();
   }, []);
 
   const infoTienda = { ...tienda.tienda };

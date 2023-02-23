@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import useTotalResume from "../../hooks/useTotalResume";
 
@@ -14,12 +14,16 @@ const HomePageTiendaGraphip = () => {
   const { aportes } = useContext(AportesContext);
   const { gastos } = useContext(GastosContext);
   const { utilidades } = useContext(UtilidadesContext);
-  const { allRecaudos } = useContext(RecaudosContext);
+  const { getRecaudosFecha, recaudos } = useContext(RecaudosContext);
   const { allVentas } = useContext(VentasContext);
 
   const { dateChange, fecha } = useDateFilter();
 
   const { itemsDia, itemsMes, itemsAño } = useTotalResume();
+
+  useEffect(()=>{
+    getRecaudosFecha(fecha)
+  },[fecha])
 
   return (
     <div className="card rounded-3 overflow-hidden shadow">
@@ -72,8 +76,9 @@ const HomePageTiendaGraphip = () => {
             aportes={itemsDia(aportes, "aportes", fecha)}
             gastos={itemsDia(gastos, "gastos", fecha)}
             utilidades={itemsDia(utilidades, "utilidades", fecha)}
-            recaudos={itemsDia(allRecaudos, "recaudos", fecha)}
+            recaudos={itemsDia(recaudos, "recaudos", fecha)}
             ventasNetas={itemsDia(allVentas, "ventasNetas", fecha)}
+            dia={true}
           />
         </div>
 
@@ -90,7 +95,6 @@ const HomePageTiendaGraphip = () => {
             aportes={itemsMes(aportes, "aportesMes", fecha)}
             gastos={itemsMes(gastos, "gastosMes", fecha)}
             utilidades={itemsMes(utilidades, "utilidadesMes", fecha)}
-            recaudos={itemsMes(allRecaudos, "recaudosMes", fecha)}
           />
         </div>
 
@@ -105,7 +109,6 @@ const HomePageTiendaGraphip = () => {
             aportes={itemsAño(aportes, "aportesAño", fecha)}
             gastos={itemsAño(gastos, "gastosAño", fecha)}
             utilidades={itemsAño(utilidades, "utilidadesAño", fecha)}
-            recaudos={itemsAño(allRecaudos, "recaudosAño", fecha)}
             ventasNetas={itemsAño(allVentas, "ventasNetasAño", fecha)}
           />
         </div>

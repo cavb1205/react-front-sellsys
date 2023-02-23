@@ -10,7 +10,6 @@ const RecaudosProvider = ({ children }) => {
 
   const [ventaDetail, setVentaDetail] = useState({});
 
-  const [allRecaudos, setAllRecaudos] = useState([]);
   const [recaudos, setRecaudos] = useState([]);
   const [recaudo, setRecaudo] = useState({});
 
@@ -178,27 +177,7 @@ const RecaudosProvider = ({ children }) => {
     }
   };
 
-  const getAllRecaudos = async () => {
-    try {
-      let response = await fetch(`${URL}/recaudos/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let data = await response.json();
-      if (response.status === 200) {
-        setAllRecaudos(data);
-        setLoading(false);
-      } else if (response.statusText == "Unauthorized") {
-        logoutUser();
-      }
-    } catch (error) {
-      console.error(error);
-      setLoading(false);
-    }
-  };
+ 
 
   const recaudoUpdateItem = async (recaudoId) => {
     try {
@@ -406,7 +385,6 @@ const RecaudosProvider = ({ children }) => {
     ventaDetail,
     handleChangeDate,
     liquidarDate,
-    allRecaudos,
     recaudos,
     recaudo,
     newRecaudo,
@@ -431,7 +409,7 @@ const RecaudosProvider = ({ children }) => {
     loading,
     getRecaudo,
     totalRecaudosFecha,
-    getAllRecaudos,
+    
   };
   return (
     <RecaudosContext.Provider value={contextData}>
