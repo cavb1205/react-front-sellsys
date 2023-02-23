@@ -10,7 +10,7 @@ import VentasModalPerdida from './VentasModalPerdida'
 import RecaudosVentaDetailListItem from '../Recaudos/RecaudosVentaDetailListItem'
 import AlertLoading from '../Utils/AlertLoading'
 
-const VentasDetailPage = (props) => {
+const VentasDetailPage = () => {
   const {
     getVenta,
     ventaDetail,
