@@ -15,12 +15,11 @@ const CierreCajaModal = () => {
     openModalCierreCaja,
     getCierreCaja,
     cajaAnterior,
-
     postCierreCaja,
   } = useContext(TiendaContext);
 
   const { aportes } = useContext(AportesContext);
-  const { allRecaudos } = useContext(RecaudosContext);
+  const { getRecaudosFecha, recaudos } = useContext(RecaudosContext);
   const { allVentas } = useContext(VentasContext);
   const { gastos } = useContext(GastosContext);
   const { utilidades } = useContext(UtilidadesContext);
@@ -30,13 +29,14 @@ const CierreCajaModal = () => {
 
   useEffect(() => {
     getCierreCaja(fecha);
+    getRecaudosFecha(fecha)
   }, [fecha]);
 
   const totalCaja = () => {
     return (
       parseInt(cajaAnterior.valor) +
       itemsDia(aportes, "aportes", fecha) +
-      itemsDia(allRecaudos, "recaudos", fecha) -
+      itemsDia(recaudos, "recaudos", fecha) -
       itemsDia(allVentas, "ventasNetas", fecha) -
       itemsDia(gastos, "gastos", fecha) -
       itemsDia(utilidades, "utilidades", fecha)
@@ -89,29 +89,25 @@ const CierreCajaModal = () => {
             </tr>
             <tr className="table-light">
               <td>Ingresos Recaudos</td>
-              <td className="text-success">
-                {" "}
-                {itemsDia(allRecaudos, "recaudos", fecha)}
+              <td className="text-success">                
+                {itemsDia(recaudos, "recaudos", fecha)}
               </td>
             </tr>
             <tr className="table-light">
               <td>Salida x Ventas</td>
               <td className="text-danger">
-                {" "}
                 {itemsDia(allVentas, "ventasNetas", fecha)}
               </td>
             </tr>
             <tr className="table-light">
               <td>Salida x Gastos</td>
-              <td className="text-danger">
-                {" "}
+              <td className="text-danger">                
                 {itemsDia(gastos, "gastos", fecha)}
               </td>
             </tr>
             <tr className="table-light">
               <td>Salida x Utilidades</td>
               <td className="text-danger">
-                {" "}
                 {itemsDia(utilidades, "utilidades", fecha)}
               </td>
             </tr>
