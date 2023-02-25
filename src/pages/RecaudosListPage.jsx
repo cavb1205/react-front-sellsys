@@ -5,6 +5,7 @@ import { useContext } from "react";
 import InformeRecaudosListItem from "../components/Informes/InformeRecaudosListItem";
 import AlertLoading from "../components/Utils/AlertLoading";
 import AlertMessage from "../components/Utils/AlertMessage";
+import FechaInput from "../components/Utils/FechaInput";
 import Paginator from "../components/Utils/Paginator";
 import { RecaudosContext } from "../context/RecaudosContext";
 import useDateFilter from "../hooks/useDateFilter";
@@ -20,7 +21,7 @@ const RecaudosListPage = () => {
   useEffect(() => {
     getRecaudosFecha(fecha);
   }, [fecha]);
-
+  console.log(fecha)
   return (
     <div className="container-sm">
       <div className="text-center mb-1">
@@ -38,12 +39,8 @@ const RecaudosListPage = () => {
         </p>
       </div>
 
-      <div className="text-center mb-2">
-        <span className="badge bg-primary">
-          Fecha:{" "}
-          <input onChange={dateChange} value={fecha} type="date" name="fecha" />
-        </span>
-      </div>
+      <FechaInput fecha={fecha} dateChange={dateChange} />
+
       {loading ? (
         <AlertLoading />
       ) : recaudos.message ? (
