@@ -1,7 +1,11 @@
 import React from "react";
+
+
 import Search from "../Utils/Search";
 
+
 const AportesListHeader = ({ aportes, totalAportes, query }) => {
+  
   return (
     <>
       <div className="text-center">
@@ -27,6 +31,7 @@ const AportesListHeader = ({ aportes, totalAportes, query }) => {
           <span className="badge bg-success">{totalAportes()}</span>
         </p>
       </div>
+
       <div className="text-center">
         <Search />
       </div>

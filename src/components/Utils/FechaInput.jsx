@@ -1,7 +1,7 @@
 import React from "react";
 
-const FechaInput = ({fecha, dateChange}) => {
-  
+const FechaInput = ({fecha='', dateChange}) => {
+  console.log(`fecha es: ${fecha}`)
   return (
     <div className="text-center mb-2">
       <span className="badge bg-primary">

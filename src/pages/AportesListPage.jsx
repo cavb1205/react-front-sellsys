@@ -13,6 +13,7 @@ import { useFilters } from "../hooks/useFilters";
 import AportesListItem from "../components/Aportes/AportesListItem";
 import Paginator from "../components/Utils/Paginator";
 
+
 const AportesListPage = () => {
   const {
     aportes,
@@ -26,9 +27,11 @@ const AportesListPage = () => {
   const { query } = useContext(AuthContext);
 
   const { nextPage, prevPage, listFilter } = useFilters();
+  
 
   useEffect(() => {
     getAportes();
+    
   }, []);
 
   return (
@@ -41,6 +44,7 @@ const AportesListPage = () => {
             aportes={aportes}
             totalAportes={totalAportes}
             query={query}
+            
           />
           <div className="my-2">
             <button onClick={openModalCreateAporte} className="btn btn-success">

@@ -21,7 +21,7 @@ const RecaudosListPage = () => {
   useEffect(() => {
     getRecaudosFecha(fecha);
   }, [fecha]);
-  console.log(fecha)
+  
   return (
     <div className="container-sm">
       <div className="text-center mb-1">

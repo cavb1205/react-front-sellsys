@@ -2,7 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Badge, Card, CardBody } from 'reactstrap'
 
+
 const RecaudosListItem = ({ venta, selectedNoPago, SelectedRecaudo }) => {
+  
   return (
     <Card className='mb-3 shadow rounder'>
 
