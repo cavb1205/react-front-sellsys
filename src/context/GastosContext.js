@@ -31,23 +31,33 @@ const GastosProvider = ({ children }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  //calculamos la suma de los aportes
-  const totalGastos = () => {
-    if (gastos.message) {
-      return 0;
-    } else {
-      return gastos
-        .filter((gasto) =>
-          gasto.tipo_gasto?.tipo_gasto.toLowerCase().includes(query)
-        )
-        .map((gasto) => parseFloat(gasto.valor))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
+ 
 
   const getGastos = async () => {
     try {
       let response = await fetch(`${URL}/gastos/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let data = await response.json();
+      if (response.status === 200) {
+        setGastos(data);
+        setLoading(false);
+      } else if (response.statusText == "Unauthorized") {
+        logoutUser();
+      }
+    } catch {
+      setLoading(false);
+      setServerError(true);
+    }
+  };
+
+  const getGastosFecha = async (fecha) => {
+    try {
+      let response = await fetch(`${URL}/gastos/list/${fecha}/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -227,7 +237,7 @@ const GastosProvider = ({ children }) => {
     handleChange,
     gastoSelected,
     tipoGastoCreate,
-
+    getGastosFecha,
     openModalUpdateGasto,
     openModalCreateGasto,
     openModalDeleteGasto,
@@ -239,7 +249,6 @@ const GastosProvider = ({ children }) => {
     setNewTipoGasto,
     newTipoGasto,
     openModalDelete,
-    totalGastos,
     loading,
     serverError,
     getTipoGastos,

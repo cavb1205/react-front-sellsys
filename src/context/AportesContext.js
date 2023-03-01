@@ -5,7 +5,7 @@ import { URL } from "../config";
 export const AportesContext = createContext();
 
 const AportesProvider = ({ children }) => {
-  const { token, logoutUser, navigate, query } = useContext(AuthContext);
+  const { token, logoutUser, navigate } = useContext(AuthContext);
 
   const [loading, setLoading] = useState(true);
   const [serverError, setServerError] = useState(false);
@@ -32,23 +32,34 @@ const AportesProvider = ({ children }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  // calculamos la suma de los aportes
-  const totalAportes = () => {
-    if (aportes.message) {
-      return 0;
-    } else {
-      return aportes
-        .filter((aporte) =>
-          aporte.trabajador?.trabajador.toLowerCase().includes(query)
-        )
-        .map((aporte) => parseFloat(aporte.valor))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
 
   const getAportes = async () => {
     try {
       const response = await fetch(`${URL}/aportes/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.status === 200) {
+        setAportes(data);
+        setLoading(false);
+      } else if (response.statusText === "Unauthorized") {
+        logoutUser();
+      }
+    } catch {
+      setServerError(true);
+      setLoading(false);
+    }
+  };
+
+  const getAportesFecha = async (fecha) => {
+    try {
+      const response = await fetch(`${URL}/aportes/list/${fecha}/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -182,7 +193,6 @@ const AportesProvider = ({ children }) => {
     aportes,
     newAporte,
     aporteId,
-    totalAportes,
     openModalCreate,
     setOpenModalCreate,
     openModalUpdate,
@@ -198,7 +208,7 @@ const AportesProvider = ({ children }) => {
     openModalUpdateAporte,
     aporteDeleteItem,
     openModalDeleteAporte,
-
+    getAportesFecha,
     loading,
     serverError,
     message,

@@ -4,7 +4,7 @@ import { URL } from "../config";
 import { createUtcDateIso } from "../hooks/useDate";
 
 const UtilidadesProvider = ({ children }) => {
-  const { token, logoutUser, query } = useContext(AuthContext);
+  const { token, logoutUser } = useContext(AuthContext);
 
   const [aportantes, setAportantes] = useState([]);
 
@@ -48,6 +48,28 @@ const UtilidadesProvider = ({ children }) => {
   const getUtilidades = async () => {
     try {
       let response = await fetch(`${URL}/utilidades/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let data = await response.json();
+      if (response.status === 200) {
+        setUtilidades(data);
+        setLoading(false);
+      } else if (response.statusText == "Unauthorized") {
+        logoutUser();
+      }
+    } catch {
+      setServerError(true);
+      setLoading(false);
+    }
+  };
+
+  const getUtilidadesFecha = async (fecha) => {
+    try {
+      let response = await fetch(`${URL}/utilidades/list/${fecha}/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -134,19 +156,7 @@ const UtilidadesProvider = ({ children }) => {
     }
   };
 
-  //calculamos la suma de las utilidades
-  const totalUtilidades = () => {
-    if (utilidades.message) {
-      return 0;
-    } else {
-      return utilidades
-        .filter((utilidad) =>
-          utilidad.trabajador?.trabajador.toLowerCase().includes(query)
-        )
-        .map((utilidad) => parseFloat(utilidad.valor))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
+ 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -196,14 +206,14 @@ const UtilidadesProvider = ({ children }) => {
     utilidad,
     newUtilidad,
     aportantes,
-    totalUtilidades,
+    
     utilidadCreateItem,
     utilidadUpdateItem,
     utilidadDeleteItem,
     handleChange,
     handleChangeUpdate,
     Selected,
-
+    getUtilidadesFecha,
     openModalCreate,
     openModalDelete,
     openModalUpdate,

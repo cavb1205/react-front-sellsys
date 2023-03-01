@@ -12,17 +12,19 @@ import { AuthContext } from "../context/AuthContext";
 import { useFilters } from "../hooks/useFilters";
 import AportesListItem from "../components/Aportes/AportesListItem";
 import Paginator from "../components/Utils/Paginator";
+import { TiendaContext } from "../context/TiendaContext";
 
 
 const AportesListPage = () => {
   const {
     aportes,
-    totalAportes,
     getAportes,
     openModalCreateAporte,
     aporteSeleccionado,
     loading,
   } = useContext(AportesContext);
+
+  const {tienda} = useContext(TiendaContext)
 
   const { query } = useContext(AuthContext);
 
@@ -31,7 +33,6 @@ const AportesListPage = () => {
 
   useEffect(() => {
     getAportes();
-    
   }, []);
 
   return (
@@ -42,9 +43,8 @@ const AportesListPage = () => {
         <>
           <AportesListHeader
             aportes={aportes}
-            totalAportes={totalAportes}
+            totalAportes={tienda.tienda?.inversion}
             query={query}
-            
           />
           <div className="my-2">
             <button onClick={openModalCreateAporte} className="btn btn-success">

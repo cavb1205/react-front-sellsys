@@ -18,18 +18,22 @@ const CierreCajaModal = () => {
     postCierreCaja,
   } = useContext(TiendaContext);
 
-  const { aportes } = useContext(AportesContext);
+  const { aportes, getAportesFecha } = useContext(AportesContext);
   const { getRecaudosFecha, recaudos } = useContext(RecaudosContext);
-  const { allVentas } = useContext(VentasContext);
-  const { gastos } = useContext(GastosContext);
-  const { utilidades } = useContext(UtilidadesContext);
+  const { allVentas,getVentasFecha } = useContext(VentasContext);
+  const { gastos, getGastosFecha } = useContext(GastosContext);
+  const { utilidades, getUtilidadesFecha } = useContext(UtilidadesContext);
 
   const { fecha, dateChange } = useDateFilter();
   const { itemsDia } = useTotalResume();
 
   useEffect(() => {
     getCierreCaja(fecha);
-    getRecaudosFecha(fecha)
+    getRecaudosFecha(fecha);
+    getAportesFecha(fecha);
+    getVentasFecha(fecha);
+    getGastosFecha(fecha);
+    getUtilidadesFecha(fecha);
   }, [fecha]);
 
   const totalCaja = () => {

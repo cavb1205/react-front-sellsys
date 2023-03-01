@@ -32,7 +32,7 @@ const VentasDetailPage = () => {
   useEffect(() => {
     getVenta(ventaId);
   }, [recaudos]);
-  console.log(ventaDetail);
+
   const [openModalPerdida, setOpenMOdalPerdida] = useState(false);
 
   const clickOpenModalPerdida = () => {

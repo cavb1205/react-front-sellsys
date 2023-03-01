@@ -13,17 +13,17 @@ import { AuthContext } from "../context/AuthContext";
 import { useFilters } from "../hooks/useFilters";
 import { UtilidadesListItem } from "../components/Utilidades/UtilidadesListItem";
 import Paginator from "../components/Utils/Paginator";
+import { TiendaContext } from "../context/TiendaContext";
 
 const UtilidadesListPage = () => {
   const {
     utilidades,
-    totalUtilidades,
     Selected,
     getUtilidades,
     openModalCreateUtilidad,
     loading,
   } = useContext(UtilidadesContext);
-
+  const {tienda} = useContext(TiendaContext)
   const { query } = useContext(AuthContext);
 
   const { listFilter, prevPage, nextPage } = useFilters();
@@ -40,7 +40,7 @@ const UtilidadesListPage = () => {
         <>
           <UtilidadesListHeader
             utilidades={utilidades}
-            totalUtilidades={totalUtilidades}
+            totalUtilidades={tienda.tienda?.utilidades}
             query={query}
           />
           <div className="my-2">

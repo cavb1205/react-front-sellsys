@@ -14,6 +14,7 @@ import { useFilters } from "../hooks/useFilters";
 import TipoGastoModalCreate from "../components/Gastos/TipoGastoModalCreate";
 import GastosListItem from "../components/Gastos/GastosListItem";
 import Paginator from "../components/Utils/Paginator"
+import { TiendaContext } from "../context/TiendaContext";
 
 
 const GastosListPage = () => {
@@ -21,11 +22,12 @@ const GastosListPage = () => {
     gastos,
     gastoSelected,
     openModalCreateGasto,
-    totalGastos,
     loading,
     getGastos,
     openModalCreateTipoGasto,
   } = useContext(GastosContext);
+
+  const {tienda} = useContext(TiendaContext)
 
   const { query } = useContext(AuthContext);
 
@@ -43,7 +45,7 @@ const GastosListPage = () => {
         <>
           <GastosListHeader
             gastos={gastos}
-            totalGastos={totalGastos}
+            totalGastos={tienda.tienda?.gastos}
             query={query}
           />
 

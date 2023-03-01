@@ -1,12 +1,18 @@
 import React from "react";
 
-const HomePageResume = (props) => {
-  const { aportes, recaudos, ventasNetas, utilidades, gastos, dia } = props;
-
+const HomePageResume = ({
+  ventasNetas,
+  utilidades,
+  gastos,
+  aportes,
+  recaudos,
+  perdidas,
+}) => {
+  console.log(perdidas);
   return (
     <div className="d-flex flex-wrap justify-content-around">
       <span className="badge text-bg-primary mb-1 mx-1">Aportes {aportes}</span>
-      {dia && (
+      {recaudos && (
         <span className="badge text-bg-success mb-1 mx-1">
           Recaudos {recaudos}
         </span>
@@ -18,6 +24,11 @@ const HomePageResume = (props) => {
       <span className="badge text-bg-secondary mb-1 mx-1">
         Ventas Netas {ventasNetas}
       </span>
+      {perdidas && (
+        <span className="badge text-bg-danger mb-1 mx-1">
+          Pérdidas {perdidas}
+        </span>
+      )}
     </div>
   );
 };

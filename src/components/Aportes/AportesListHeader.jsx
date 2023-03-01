@@ -28,7 +28,7 @@ const AportesListHeader = ({ aportes, totalAportes, query }) => {
         )}
         <p>
           Total Aportado:{" "}
-          <span className="badge bg-success">{totalAportes()}</span>
+          <span className="badge bg-success">{totalAportes}</span>
         </p>
       </div>
 

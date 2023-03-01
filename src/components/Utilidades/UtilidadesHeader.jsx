@@ -24,7 +24,7 @@ const UtilidadesListHeader = ({ utilidades, totalUtilidades, query }) => {
         )}
         <p>
           Total utilidades:{" "}
-          <span className="badge bg-success">{totalUtilidades()}</span>
+          <span className="badge bg-success">{totalUtilidades}</span>
         </p>
       </div>
       <div className="text-center">

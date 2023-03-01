@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 
 import HomePageHeader from "../components/HomePage/HomePageHeader";
 import HomePageTiendaCaja from "../components/HomePage/HomePageTiendaCaja";
@@ -7,46 +7,16 @@ import HomePageTiendaGraphip from "../components/HomePage/HomePageTiendaGraphip"
 
 import AlertLoading from "../components/Utils/AlertLoading";
 
-import { AportesContext } from "../context/AportesContext";
-import { GastosContext } from "../context/GastosContext";
-import { UtilidadesContext } from "../context/UtilidadesContext";
-
 import { TiendaContext } from "../context/TiendaContext";
-import { VentasContext } from "../context/VentasContext";
 
 import CierreCajaModal from "../components/Informes/CierreCajaModal";
 
 const HomePage = () => {
-  const { tienda, loading, getTiendaMembresia, openModalCierreCaja } =
-    useContext(TiendaContext);
-
-  const { totalAportes, getAportes } = useContext(AportesContext);
-  const { totalGastos, getGastos } = useContext(GastosContext);
-  const { totalUtilidades, getUtilidades } = useContext(UtilidadesContext);
-  const {
-    totalVentasInteres,
-    totalIngresosVentasFinalizadas,
-    totalPerdidas,
-    getVentasActivas,
-    getVentasPagas,
-    getAllVentas,
-    getVentasPerdidas,
-  } = useContext(VentasContext);
-
-
-  useEffect(() => {
-    getTiendaMembresia();
-    getAportes();
-    getGastos();
-    getUtilidades();
-    getAllVentas();
-    getVentasActivas();
-    getVentasPagas();
-    getVentasPerdidas();
-  }, []);
+  const { tienda, loading, openModalCierreCaja } = useContext(TiendaContext);
 
   const infoTienda = { ...tienda.tienda };
-
+  
+  console.log(infoTienda)
   return (
     <div className="container-sm">
       {loading ? (
@@ -67,7 +37,7 @@ const HomePage = () => {
 
           <div>
             <div className="d-flex justify-content-center">
-              <HomePageTiendaGraphip />
+              <HomePageTiendaGraphip infoTienda={infoTienda}/>
             </div>
 
             <div className="d-flex justify-content-center my-3">
@@ -78,35 +48,38 @@ const HomePage = () => {
               <div className="m-2 flex-fill">
                 <HomePageTiendaCardItem
                   tipo={"Inversión"}
-                  total={totalAportes()}
+                  total={infoTienda.inversion}
                 />
               </div>
               <div className="m-2 flex-fill">
-                <HomePageTiendaCardItem tipo={"Gastos"} total={totalGastos()} />
+                <HomePageTiendaCardItem
+                  tipo={"Gastos"}
+                  total={infoTienda.gastos}
+                />
               </div>
               <div className="m-2 flex-fill">
                 <HomePageTiendaCardItem
                   tipo={"Utilidades"}
-                  total={totalUtilidades()}
+                  total={infoTienda.utilidades}
                 />
               </div>
               <div className="m-2 flex-fill">
                 <HomePageTiendaCardItem
                   tipo={"Pérdidas"}
-                  total={totalPerdidas()}
+                  total={infoTienda.perdidas}
                 />
               </div>
               <div className="m-2 flex-fill">
                 <HomePageTiendaCardItem
                   tipo={"Ingresos x Ventas"}
-                  total={totalIngresosVentasFinalizadas()}
+                  total={infoTienda.ingresos_ventas_finalizadas}
                 />
               </div>
-
+º
               <div className="m-2 flex-fill">
                 <HomePageTiendaCardItem
                   tipo={"Dinero x Cobrar"}
-                  total={totalVentasInteres()}
+                  total={infoTienda.dinero_x_cobrar}
                 />
               </div>
             </div>

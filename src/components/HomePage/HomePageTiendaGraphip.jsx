@@ -1,29 +1,14 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 
-import useTotalResume from "../../hooks/useTotalResume";
+
 
 import HomePageResume from "./HomePageResume";
-import { AportesContext } from "../../context/AportesContext";
-import { GastosContext } from "../../context/GastosContext";
-import { UtilidadesContext } from "../../context/UtilidadesContext";
-import { RecaudosContext } from "../../context/RecaudosContext";
-import { VentasContext } from "../../context/VentasContext";
+
 import useDateFilter from "../../hooks/useDateFilter";
 
-const HomePageTiendaGraphip = () => {
-  const { aportes } = useContext(AportesContext);
-  const { gastos } = useContext(GastosContext);
-  const { utilidades } = useContext(UtilidadesContext);
-  const { getRecaudosFecha, recaudos } = useContext(RecaudosContext);
-  const { allVentas } = useContext(VentasContext);
-
-  const { dateChange, fecha } = useDateFilter();
-
-  const { itemsDia, itemsMes, itemsAño } = useTotalResume();
-
-  useEffect(()=>{
-    getRecaudosFecha(fecha)
-  },[fecha])
+const HomePageTiendaGraphip = ({infoTienda}) => {
+  
+  const { fecha } = useDateFilter();
 
   return (
     <div className="card rounded-3 overflow-hidden shadow">
@@ -31,6 +16,7 @@ const HomePageTiendaGraphip = () => {
         <ul className="nav nav-tabs card-header-tabs">
           <li className="nav-item">
             <a
+              
               className="nav-link active"
               aria-current="true"
               id="dia-tab"
@@ -42,6 +28,7 @@ const HomePageTiendaGraphip = () => {
           </li>
           <li className="nav-item">
             <a
+              
               className="nav-link"
               aria-current="true"
               id="mes-tab"
@@ -67,49 +54,40 @@ const HomePageTiendaGraphip = () => {
       <div className="card-body tab-content" id="myTabContent">
         <div className="tab-pane fade show active" id="dia" role="tabpanel">
           <h5 className="text-secondary text-center">
-            Resumen Día{" "}
-            <span className="badge rounded-pill text-bg-light">
-              <input value={fecha} onChange={dateChange} type="date" />
-            </span>
+            Resumen Día {fecha}
           </h5>
           <HomePageResume
-            aportes={itemsDia(aportes, "aportes", fecha)}
-            gastos={itemsDia(gastos, "gastos", fecha)}
-            utilidades={itemsDia(utilidades, "utilidades", fecha)}
-            recaudos={itemsDia(recaudos, "recaudos", fecha)}
-            ventasNetas={itemsDia(allVentas, "ventasNetas", fecha)}
-            dia={true}
+            aportes={infoTienda.aportes_dia}
+            gastos={infoTienda.gastos_dia}
+            utilidades={infoTienda.utilidades_dia}
+            ventasNetas={infoTienda.ventas_netas_dia}
+            recaudos={infoTienda.recaudos_dia===0?'0':infoTienda.recaudos_dia}
           />
         </div>
 
         <div className="tab-pane fade show" id="mes" role="tabpanel">
           <h5 className="text-secondary text-center">
-            Resumen Mes {new Date(fecha).getUTCMonth() + 1}{" "}
-            <span className="badge rounded-pill text-bg-light">
-              <input value={fecha} onChange={dateChange} type="month" />
-            </span>{" "}
+            Resumen Mes 
           </h5>
           <p className="text-secondary text-center" />
           <HomePageResume
-            ventasNetas={itemsMes(allVentas, "ventasNetasMes", fecha)}
-            aportes={itemsMes(aportes, "aportesMes", fecha)}
-            gastos={itemsMes(gastos, "gastosMes", fecha)}
-            utilidades={itemsMes(utilidades, "utilidadesMes", fecha)}
+            ventasNetas={infoTienda.ventas_netas_mes}
+            aportes={infoTienda.aportes_mes}
+            gastos={infoTienda.gastos_mes}
+            utilidades={infoTienda.utilidades_mes}
           />
         </div>
 
         <div className="tab-pane fade show" id="año" role="tabpanel">
           <h5 className="text-secondary text-center">
             Resumen Año {new Date(fecha).getUTCFullYear()}
-            <span className="badge rounded-pill text-bg-light">
-              <input value={fecha} onChange={dateChange} type="month" />
-            </span>{" "}
           </h5>
           <HomePageResume
-            aportes={itemsAño(aportes, "aportesAño", fecha)}
-            gastos={itemsAño(gastos, "gastosAño", fecha)}
-            utilidades={itemsAño(utilidades, "utilidadesAño", fecha)}
-            ventasNetas={itemsAño(allVentas, "ventasNetasAño", fecha)}
+            aportes={infoTienda.aportes_ano}
+            gastos={infoTienda.gastos_ano}
+            utilidades={infoTienda.utilidades_ano}
+            ventasNetas={infoTienda.ventas_netas_ano}
+            perdidas={infoTienda.perdidas_ano===0?'0':infoTienda.perdidas_ano}
           />
         </div>
       </div>

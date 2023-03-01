@@ -39,9 +39,9 @@ const VentasProvider = ({ children }) => {
     saldo_actual: "",
   });
 
-  const getAllVentas = async () => {
+  const getVentasFecha = async (fecha) => {
     try {
-      let response = await fetch(`${URL}/ventas/`, {
+      let response = await fetch(`${URL}/ventas/list/${fecha}/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -304,48 +304,8 @@ const VentasProvider = ({ children }) => {
 
   const handleSearch = (event) => {
     setQuery(event.target.value.toLowerCase());
-  };
+  };  
 
-  //calculamos la suma de las utilidades
-  const totalVentas = () => {
-    if (ventasActivas.message) {
-      return 0;
-    } else {
-      return ventasActivas
-        .map((venta) => parseFloat(venta.valor_venta))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
-
-  const totalVentasPagas = () => {
-    if (ventasPagas.message) {
-      return 0;
-    } else {
-      return ventasPagas
-        .map((venta) => parseFloat(venta.valor_venta))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
-
-  const totalVentasInteres = () => {
-    if (ventasActivas.message) {
-      return 0;
-    } else {
-      return ventasActivas
-        .map((venta) => parseFloat(venta.saldo_actual))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
-
-  const totalIngresosVentasFinalizadas = () => {
-    if (ventasPagas.message) {
-      return 0;
-    } else {
-      return ventasPagas
-        .map((venta) => parseFloat(venta.total_a_pagar - venta.valor_venta))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
 
   const totalRecaudar = () => {
     if (ventas.message) {
@@ -357,15 +317,7 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const totalPerdidas = () => {
-    if (ventasPerdidas.message) {
-      return 0;
-    } else {
-      return ventasPerdidas
-        .map((venta) => parseFloat(venta.saldo_actual))
-        .reduce((a, b) => a + b, 0);
-    }
-  };
+  
 
   const openModalCreateVenta = () => {
     setOpenModalCreate(!openModalCreate);
@@ -399,7 +351,7 @@ const VentasProvider = ({ children }) => {
     ventaDetail,
 
     getVentasLiquidar,
-    getAllVentas,
+    getVentasFecha,
     ventasPagas,
 
     ventasCreateItem,
@@ -408,12 +360,8 @@ const VentasProvider = ({ children }) => {
     getVenta,
 
     getVentasPagas,
-    totalVentas,
-    totalVentasInteres,
-    totalVentasPagas,
-    totalIngresosVentasFinalizadas,
     totalRecaudar,
-    totalPerdidas,
+    
 
     handleChange,
     handleChangeUpdate,
