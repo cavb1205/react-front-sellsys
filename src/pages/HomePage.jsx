@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import HomePageHeader from "../components/HomePage/HomePageHeader";
 import HomePageTiendaCaja from "../components/HomePage/HomePageTiendaCaja";
@@ -12,10 +12,12 @@ import { TiendaContext } from "../context/TiendaContext";
 import CierreCajaModal from "../components/Informes/CierreCajaModal";
 
 const HomePage = () => {
-  const { tienda, loading, openModalCierreCaja } = useContext(TiendaContext);
+  const { tienda,getTienda, loading, openModalCierreCaja } = useContext(TiendaContext);
 
   const infoTienda = { ...tienda.tienda };
-  
+  useEffect(() => {
+    getTienda();
+  }, []);
   console.log(infoTienda)
   return (
     <div className="container-sm">

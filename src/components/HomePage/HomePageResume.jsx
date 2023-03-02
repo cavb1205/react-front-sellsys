@@ -5,7 +5,7 @@ const HomePageResume = ({
   utilidades,
   gastos,
   aportes,
-  recaudos,
+  recaudos, 
   perdidas,
 }) => {
   console.log(perdidas);
