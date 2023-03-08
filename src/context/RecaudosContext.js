@@ -20,7 +20,7 @@ const RecaudosProvider = ({ children }) => {
     tienda: "",
   });
 
-  console.log(newRecaudo)
+  
 
   const [openModalNoPago, setOpenModalNoPago] = useState(false);
 

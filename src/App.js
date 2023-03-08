@@ -36,6 +36,8 @@ import TiendasListPage from './pages/TiendasListPage'
 import VentasPerdidasListPage from './pages/VentasPerdidasListPage'
 
 function App () {
+  
+  
   return (
     <div className='App'>
       <AuthProvider>
@@ -45,10 +47,9 @@ function App () {
               <AportesProvider>
                 <GastosProvider>
                   <UtilidadesProvider>
-
                     <RecaudosProvider>
                       <TiendaProvider>
-                        <div className='mb-5'>
+                        <div className='mb-5'>                  
                           <Header />
                         </div>
                         <br /><br />

@@ -26,7 +26,7 @@ const TrabajadorDetail = () => {
   useEffect(() => {
     getTrabajador(trabajadorId);
   }, []);
-
+  console.log(trabajador);
   return (
     <div className="container-sm">
       {loading ? (
@@ -106,6 +106,22 @@ const TrabajadorDetail = () => {
                   </span>
                 )}
               </div>
+              <div className="col-5">
+                <p>
+                  <strong>Perfil:</strong>
+                </p>
+              </div>
+              <div className="col-5">
+                {trabajador.is_staff ? (
+                  <span className="badge rounded-pill text-bg-success">
+                    Administrador
+                  </span>
+                ) : (
+                  <span className="badge rounded-pill text-bg-success">
+                    Trabajador
+                  </span>
+                )}
+              </div>
             </div>
             <div className="row justify-content-around my-2">
               <div className="col-5">
@@ -130,25 +146,27 @@ const TrabajadorDetail = () => {
               </button>
             </div>
           ) : null}
-          <div className="card-footer text-center">
-            <Link to="/trabajadores/">
-              <button className="btn btn-secondary m-1" color="secondary">
-                Lista Trabajadores
+          {user.is_staff ? (
+            <div className="card-footer text-center">
+              <Link to="/trabajadores/">
+                <button className="btn btn-secondary m-1" color="secondary">
+                  Lista Trabajadores
+                </button>
+              </Link>
+              <button
+                onClick={openModalUpdateTrabajador}
+                className="btn btn-warning m-1"
+              >
+                Actualizar
               </button>
-            </Link>
-            <button
-              onClick={openModalUpdateTrabajador}
-              className="btn btn-warning m-1"
-            >
-              Actualizar
-            </button>
-            <button
-              onClick={openModalDeleteTrabajador}
-              className="btn btn-danger m-1"
-            >
-              Eliminar
-            </button>
-          </div>
+              <button
+                onClick={openModalDeleteTrabajador}
+                className="btn btn-danger m-1"
+              >
+                Eliminar
+              </button>
+            </div>
+          ) : null}
         </div>
       )}
       <TrabajadorModalUpdate />

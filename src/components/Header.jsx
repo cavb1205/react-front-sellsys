@@ -15,6 +15,7 @@ import {
 import { AuthContext } from "../context/AuthContext";
 
 import Caja from "./Caja";
+import HeaderTrabajador from "./HeaderTrabajador";
 
 const Header = () => {
   const { user, perfil, logoutUser } = useContext(AuthContext);
@@ -24,10 +25,10 @@ const Header = () => {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-
+  console.log(user);
   return (
     <div>
-      {user ? (
+      {user && user.is_staff ? (
         <Navbar className="fixed-top navbar-expand-lg bg-light">
           <NavbarBrand href="/">
             <span className="navbar-brand p-2">
@@ -215,6 +216,14 @@ const Header = () => {
             </Nav>
           </Collapse>
         </Navbar>
+      ) : user && user.is_active ? (
+        <HeaderTrabajador
+          user={user}
+          perfil={perfil}
+          isOpen={isOpen}
+          toggle={toggle}
+          logoutUser={logoutUser}
+        />
       ) : null}
     </div>
   );

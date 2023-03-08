@@ -9,8 +9,10 @@ import VentasModalUpdate from "./VentasModalUpdate";
 import VentasModalPerdida from "./VentasModalPerdida";
 import RecaudosVentaDetailListItem from "../Recaudos/RecaudosVentaDetailListItem";
 import AlertLoading from "../Utils/AlertLoading";
+import { AuthContext } from "../../context/AuthContext";
 
 const VentasDetailPage = () => {
+  const { user } = useContext(AuthContext);
   const {
     getVenta,
     ventaDetail,
@@ -90,7 +92,11 @@ const VentasDetailPage = () => {
                     </h1>
                   </Link>
                   <div className="text-center">
-                    <a href={`tel:${ventaDetail.cliente?.telefono_principal}`}><button className="btn btn-success btn-sm">Llamar Cliente</button></a>
+                    <a href={`tel:${ventaDetail.cliente?.telefono_principal}`}>
+                      <button className="btn btn-success btn-sm">
+                        Llamar Cliente
+                      </button>
+                    </a>
                   </div>
 
                   <div className="row justify-content-around my-2">
@@ -315,15 +321,16 @@ const VentasDetailPage = () => {
                       Lista Ventas
                     </Link>
                   </div>
-
-                  <div className="d-flex justify-content-center">
-                    <button
-                      className="btn btn-outline-danger"
-                      onClick={clickOpenModalPerdida}
-                    >
-                      Pérdida
-                    </button>
-                  </div>
+                  {user.is_staff ? (
+                    <div className="d-flex justify-content-center">
+                      <button
+                        className="btn btn-outline-danger"
+                        onClick={clickOpenModalPerdida}
+                      >
+                        Pérdida
+                      </button>
+                    </div>
+                  ) : null}
                 </>
               )}
             </div>

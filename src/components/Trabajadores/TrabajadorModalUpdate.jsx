@@ -108,6 +108,17 @@ const TrabajadorModalUpdate = () => {
               className="form-control"
             />
           </FormGroup>
+          <FormGroup>
+            <Label>Administrador</Label>
+            <Input
+              onChange={handleChangeUpdate}
+              value
+              checked={!!trabajador.is_staff}
+              name="is_staff"
+              type="checkbox"
+              className="form-control"
+            />
+          </FormGroup>
           <ModalFooter>
             <button type="submit" className="btn btn-success">
               Actualizar

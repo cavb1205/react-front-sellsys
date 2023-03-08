@@ -8,7 +8,7 @@ const HomePageResume = ({
   recaudos, 
   perdidas,
 }) => {
-  console.log(perdidas);
+  
   return (
     <div className="d-flex flex-wrap justify-content-around">
       <span className="badge text-bg-primary mb-1 mx-1">Aportes {aportes}</span>

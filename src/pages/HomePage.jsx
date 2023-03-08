@@ -18,7 +18,7 @@ const HomePage = () => {
   useEffect(() => {
     getTienda();
   }, []);
-  console.log(infoTienda)
+  
   return (
     <div className="container-sm">
       {loading ? (
@@ -77,7 +77,6 @@ const HomePage = () => {
                   total={infoTienda.ingresos_ventas_finalizadas}
                 />
               </div>
-º
               <div className="m-2 flex-fill">
                 <HomePageTiendaCardItem
                   tipo={"Dinero x Cobrar"}

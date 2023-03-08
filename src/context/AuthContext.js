@@ -34,7 +34,6 @@ const AuthProvider = ({ children }) => {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    console.log("ingresa a la funcion login user");
     const response = await fetch(`${URL}/login/`, {
       method: "POST",
       headers: {
@@ -45,11 +44,9 @@ const AuthProvider = ({ children }) => {
         password: e.target.password.value,
       }),
     });
-    console.log(e.target.username.value);
     const data = await response.json();
-
+    console.log(data.user)
     if (response.status === 200) {
-      console.log("pasa loginnnnnnnnn");
       setToken(data.token);
       setRefresh(data.refresh);
       setUser(data.user);
@@ -78,7 +75,8 @@ const AuthProvider = ({ children }) => {
       //     alert('Usuario no esta activo!')
       //     logoutUser()
       // }
-    } else {
+    } 
+    else {
       setError(!error);
     }
   };
