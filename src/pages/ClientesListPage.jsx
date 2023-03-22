@@ -10,6 +10,7 @@ import Paginator from "../components/Utils/Paginator"
 import { ClientesContext } from '../context/ClientesContext'
 import { useFilters } from '../hooks/useFilters'
 import ClienteListItem from '../components/Clientes/ClienteListItem'
+import { TiendaContext } from '../context/TiendaContext'
 
 
 const ClientesListPage = () => {
@@ -20,10 +21,12 @@ const ClientesListPage = () => {
     openModalCreateCliente
   } = useContext(ClientesContext)
 
+  const {selectedStore} = useContext(TiendaContext)
+
   const { nextPage, prevPage, listFilter } = useFilters()
 
   useEffect(() => {
-    getClientes()
+    getClientes(selectedStore)
   }, [])
 
   return (

@@ -44,9 +44,15 @@ const ClientesProvider = ({ children }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
-  const getClientes = async () => {
+  const getClientes = async (tiendaId = null) => {
+    console.log(tiendaId)
+    console.log(typeof(tiendaId))
     try {
-      const response = await fetch(`${URL}/clientes/`, {
+      let fullUrl = `${URL}/clientes/`;
+      if (tiendaId){
+        fullUrl = `${URL}/clientes/tienda/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

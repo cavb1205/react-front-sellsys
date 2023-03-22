@@ -8,11 +8,10 @@ const Caja = () => {
   useEffect(() => {
     getTienda();
   }, []);
-
   return tienda.tienda?.caja > 0 ? (
-    <span className="badge text-bg-success">Caja {tienda.tienda?.caja}</span>
+    <span className="badge text-bg-success">{tienda.tienda?.caja}</span>
   ) : (
-    <span className="badge text-bg-danger">Caja {tienda.tienda?.caja}</span>
+    <span className="badge text-bg-danger">{tienda.tienda?.caja}</span>
   );
 };
 

@@ -114,7 +114,7 @@ const TrabajadorDetail = () => {
               <div className="col-5">
                 {trabajador.is_staff ? (
                   <span className="badge rounded-pill text-bg-success">
-                    Administrador
+                    Supervisor
                   </span>
                 ) : (
                   <span className="badge rounded-pill text-bg-success">

@@ -18,6 +18,11 @@ const TiendaProvider = ({ children }) => {
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const [cierre, setCierre] = useState({});
+  const [stores, setStores] = useState([])
+  const [selectedStore, setSelectedStore] = useState('')
+
+  
+  
 
   const openModalCierreCaja = () => {
     setOpenModal(!openModal);
@@ -27,6 +32,23 @@ const TiendaProvider = ({ children }) => {
     setCierre(cierre);
     setOpenModalDelete(!openModalDelete);
   };
+
+    const getStoresAdmin = async ()=>{
+      let response = await fetch(`${URL}/tiendas/list/admin/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let data = await response.json();
+    if (response.status === 200) {
+      setStores(data);
+      setLoading(false);
+    } else if (response.statusText == "Unauthorized") {
+      logoutUser();
+    }
+    }
 
   const getAllTiendas = async () => {
     let response = await fetch(`${URL}/tiendas/list/`, {
@@ -78,6 +100,24 @@ const TiendaProvider = ({ children }) => {
       logoutUser();
     }
   };
+
+  const getTiendaMembresiaAdmin = async () => {
+    let response = await fetch(`${URL}/tiendas/detail/admin/${selectedStore}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let data = await response.json();
+    if (response.status === 200) {
+      setTienda(data);
+      setLoading(false);
+    } else if (response.statusText == "Unauthorized") {
+      logoutUser();
+    }
+  };
+
 
   const getCierresCaja = async () => {
     try {
@@ -180,7 +220,12 @@ const TiendaProvider = ({ children }) => {
     getAllTiendas,
     tiendas,
     getTiendaMembresia,
-    error
+    error,
+    getStoresAdmin,
+    stores,
+    selectedStore,
+    setSelectedStore,
+    getTiendaMembresiaAdmin,
   };
   return (
     <TiendaContext.Provider value={contextData}>

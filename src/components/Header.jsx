@@ -13,31 +13,43 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 import { AuthContext } from "../context/AuthContext";
+import { TiendaContext } from "../context/TiendaContext";
 
 import Caja from "./Caja";
 import HeaderTrabajador from "./HeaderTrabajador";
 
 const Header = () => {
   const { user, perfil, logoutUser } = useContext(AuthContext);
+  const { tienda } = useContext(TiendaContext);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
     setIsOpen(!isOpen);
   };
-  console.log(user);
+
   return (
     <div>
       {user && user.is_staff ? (
         <Navbar className="fixed-top navbar-expand-lg bg-light">
-          <NavbarBrand href="/">
-            <span className="navbar-brand p-2">
+          <NavbarBrand>
+            <span className="navbar-brand">
               <Caja />
             </span>
+            {user.id === tienda.tienda?.administrador_id && (
+              <small className="text-secondary text-capitalize ">{tienda.tienda?.nombre}</small>
+            )}
           </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="me-auto" navbar>
+              {user.id === tienda.tienda?.administrador_id && (
+                <NavItem>
+                  <Link className="nav-link" to="/select/" onClick={toggle}>
+                    Rutas
+                  </Link>
+                </NavItem>
+              )}
               <NavItem>
                 <Link
                   className="nav-link"

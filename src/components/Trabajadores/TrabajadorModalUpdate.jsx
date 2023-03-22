@@ -109,7 +109,7 @@ const TrabajadorModalUpdate = () => {
             />
           </FormGroup>
           <FormGroup>
-            <Label>Administrador</Label>
+            <Label>Supervisor</Label>
             <Input
               onChange={handleChangeUpdate}
               value

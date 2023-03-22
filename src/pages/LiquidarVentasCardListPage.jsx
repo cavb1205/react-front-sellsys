@@ -8,13 +8,13 @@ import AlertMessage from "../components/Utils/AlertMessage";
 import AlertLoading from "../components/Utils/AlertLoading";
 import { RecaudosContext } from "../context/RecaudosContext";
 import { VentasContext } from "../context/VentasContext";
-import { TiendaContext } from "../context/TiendaContext";
+
 import { useFilters } from "../hooks/useFilters";
 import RecaudosListItem from "../components/Recaudos/RecaudosListItem";
 import Paginator from "../components/Utils/Paginator";
 
 const LiquidarVentasCardListPage = () => {
-  const { getTienda } = useContext(TiendaContext);
+  // const { getTienda } = useContext(TiendaContext);
   const {
     getVentasLiquidar,
     handleSearch,
@@ -36,7 +36,6 @@ const LiquidarVentasCardListPage = () => {
   const { listFilter, prevPage, nextPage } = useFilters();
 
   useEffect(() => {
-    getTienda();
     getVentasActivas();
     getVentasLiquidar(liquidarDate.fecha_liquidar);
   }, [recaudos, newRecaudo, liquidarDate]);

@@ -34,6 +34,8 @@ import ClientesDisponiblesListPage from './pages/ClientesDisponiblesListPage'
 import HomePageTiendaInfo from './components/HomePage/HomePageTiendaInfo'
 import TiendasListPage from './pages/TiendasListPage'
 import VentasPerdidasListPage from './pages/VentasPerdidasListPage'
+import SelectStoresAdminPage from './pages/SelectStoresAdminPage';
+import TiendasCreateAdmin from './pages/TiendasCreateAdmin';
 
 function App () {
   
@@ -58,7 +60,9 @@ function App () {
                           <Route path='/cierres/' element={<CierresCajaPage />} />
                           <Route path='/login/' element={<LoginPage />} />
                           <Route path='/' element={<HomePage />} />
+                          <Route path='/select/' element={<SelectStoresAdminPage />} />
                           <Route path='/tiendas/' element={<TiendasListPage />} />
+                          <Route path='/tiendas/create/' element={<TiendasCreateAdmin />}></Route>
                           <Route path='/tiendas/detail/' element={<HomePageTiendaInfo />} />
                           <Route path='/aportes/' element={<AportesListPage />} />
                           <Route path='/gastos/' element={<GastosListPage />} />
