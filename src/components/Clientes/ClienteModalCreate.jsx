@@ -10,6 +10,7 @@ import {
   FormGroup,
 } from "reactstrap";
 import { ClientesContext } from "../../context/ClientesContext";
+import { TiendaContext } from "../../context/TiendaContext";
 import AlertError from "../Utils/AlertError";
 
 const ClienteModalCreate = () => {
@@ -21,9 +22,11 @@ const ClienteModalCreate = () => {
     error,
   } = useContext(ClientesContext);
 
+  const {selectedStore} = useContext(TiendaContext)
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    clienteCreateItem();
+    clienteCreateItem(selectedStore);
   };
 
   return (

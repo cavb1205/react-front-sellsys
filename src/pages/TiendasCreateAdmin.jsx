@@ -5,12 +5,14 @@ import { AuthContext } from "../context/AuthContext";
 
 const TiendasCreateAdmin = () => {
   const navigate = useNavigate();
+
   const { user, token } = useContext(AuthContext);
+
   const [newTienda, setNewTienda] = useState({
     nombre: "",
     administrador: user.id,
   });
-  console.log(newTienda);
+
   const tiendaCreate = async () => {
     try {
       const response = await fetch(`${URL}/tiendas/create/`, {
@@ -32,6 +34,7 @@ const TiendasCreateAdmin = () => {
       console.error(error);
     }
   };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewTienda({
@@ -39,10 +42,12 @@ const TiendasCreateAdmin = () => {
       [name]: value,
     });
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     tiendaCreate();
   };
+
   return (
     <div className="container-sm">
       <div className="card shadow-lg p-3 mb-5 bg-body rounded">

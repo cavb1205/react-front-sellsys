@@ -1,12 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { TiendaContext } from "../../context/TiendaContext";
 
 const HomePageTiendaInfo = () => {
-  const { tienda, getTiendaMembresia } = useContext(TiendaContext);
-
-  useEffect(() => {
-    getTiendaMembresia();
-  }, []);
+  const { tienda } = useContext(TiendaContext);
 
   return (
     <div className="container-sm">

@@ -45,8 +45,6 @@ const ClientesProvider = ({ children }) => {
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const getClientes = async (tiendaId = null) => {
-    console.log(tiendaId)
-    console.log(typeof(tiendaId))
     try {
       let fullUrl = `${URL}/clientes/`;
       if (tiendaId){
@@ -145,9 +143,13 @@ const ClientesProvider = ({ children }) => {
     }
   };
 
-  const clienteCreateItem = async () => {
+  const clienteCreateItem = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/clientes/create/`, {
+      let fullUrl = `${URL}/clientes/create/`;
+      if (tiendaId){
+        fullUrl = `${URL}/clientes/create/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
