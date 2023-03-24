@@ -160,7 +160,7 @@ const ClientesProvider = ({ children }) => {
       const data = await response.json();
       if (response.status === 200) {
         setOpenModalCreate(!openModalCreate);
-        getClientes();
+        getClientes(tiendaId);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
