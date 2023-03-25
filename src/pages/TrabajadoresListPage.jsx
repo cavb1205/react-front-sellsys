@@ -11,16 +11,17 @@ import AlertLoading from "../components/Utils/AlertLoading";
 
 import TrabajadorListItem from "../components/Trabajadores/TrabajadorListItem";
 import Paginator from "../components/Utils/Paginator";
+import { TiendaContext } from "../context/TiendaContext";
 
 const TrabajadoresListPage = () => {
   const { trabajadores, openModalCreateTrabajador, loading, getTrabajadores } =
     useContext(TrabajadoresContext);
-
+  const {selectedStore} = useContext(TiendaContext)
   const { query } = useContext(AuthContext);
   const { listFilter, prevPage, nextPage } = useFilters();
-
+  
   useEffect(() => {
-    getTrabajadores();
+    getTrabajadores(selectedStore);
   }, []);
 
   return (

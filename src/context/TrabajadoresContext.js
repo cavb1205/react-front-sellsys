@@ -31,9 +31,13 @@ const TrabajadoresProvider = ({ children }) => {
 
   const [currentPage, setCurrentPage] = useState(0);
 
-  const getTrabajadores = async () => {
+  const getTrabajadores = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/trabajadores/`, {
+      let fullUrl = `${URL}/trabajadores/`;
+      if (tiendaId){
+        fullUrl = `${URL}/trabajadores/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -81,9 +85,13 @@ const TrabajadoresProvider = ({ children }) => {
     }
   };
 
-  const trabajadorCreateItem = async () => {
+  const trabajadorCreateItem = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/trabajadores/create/`, {
+      let fullUrl = `${URL}/trabajadores/create/`
+      if (tiendaId){
+        fullUrl = `${URL}/trabajadores/create/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +102,7 @@ const TrabajadoresProvider = ({ children }) => {
       const data = await response.json();
       if (response.status === 200) {
         setOpenModalCreate(!openModalCreate);
-        getTrabajadores();
+        getTrabajadores(tiendaId);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {

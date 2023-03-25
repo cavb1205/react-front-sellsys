@@ -8,6 +8,7 @@ import {
   Label,
   Input,
 } from "reactstrap";
+import { TiendaContext } from "../../context/TiendaContext";
 import { TrabajadoresContext } from "../../context/TrabajadoresContext";
 import AlertError from "../Utils/AlertError";
 
@@ -20,9 +21,11 @@ const TrabajadorModalCreate = () => {
     error,
   } = useContext(TrabajadoresContext);
 
+  const {selectedStore} = useContext(TiendaContext)
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    trabajadorCreateItem();
+    trabajadorCreateItem(selectedStore);
   };
 
   return (
