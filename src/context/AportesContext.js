@@ -11,7 +11,7 @@ const AportesProvider = ({ children }) => {
   const [serverError, setServerError] = useState(false);
   const [message, setMessage] = useState(false);
 
-  /// Esto se debe importar del hook 
+  /// Esto se debe importar del hook
   const createUtcDateIso = () => {
     const offset = new Date().getTimezoneOffset();
     const myDate = Date.parse(Date()) - offset * 60 * 1000;
@@ -32,10 +32,13 @@ const AportesProvider = ({ children }) => {
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
-
-  const getAportes = async () => {
+  const getAportes = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/aportes/`, {
+      let fullUrl = `${URL}/aportes/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/aportes/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -81,9 +84,13 @@ const AportesProvider = ({ children }) => {
     }
   };
 
-  const aporteCreateItem = async () => {
+  const aporteCreateItem = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/aportes/create/`, {
+      let fullUrl = `${URL}/aportes/create/`
+      if(tiendaId){
+        fullUrl = `${URL}/aportes/create/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +101,7 @@ const AportesProvider = ({ children }) => {
 
       if (response.status === 200) {
         setOpenModalCreate(!openModalCreate);
-        getAportes();
+        getAportes(tiendaId);
       } else if (response.status === 400) {
         setMessage(!message);
       } else if (response.statusText === "Unauthorized") {
@@ -115,7 +122,7 @@ const AportesProvider = ({ children }) => {
         },
         body: JSON.stringify(aporteId),
       });
-      
+
       if (response.status === 200) {
         setOpenModalUpdate(!setOpenModalUpdate);
         getAportes();
@@ -135,7 +142,7 @@ const AportesProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      
+
       if (response.status === 200) {
         setOpenModalDelete(!openModalDelete);
         navigate("/aportes/");

@@ -13,6 +13,7 @@ import {
   Container,
 } from "reactstrap";
 import { TrabajadoresContext } from "../../context/TrabajadoresContext";
+import { TiendaContext } from "../../context/TiendaContext";
 
 const AportesModalCreate = () => {
   const {
@@ -23,15 +24,17 @@ const AportesModalCreate = () => {
     openModalCreateAporte,
   } = useContext(AportesContext);
 
+  const { selectedStore } = useContext(TiendaContext);
+
   const { getTrabajadores, trabajadores } = useContext(TrabajadoresContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    aporteCreateItem();
+    aporteCreateItem(selectedStore);
   };
 
   useEffect(() => {
-    getTrabajadores();
+    getTrabajadores(selectedStore);
   }, []);
 
   return (

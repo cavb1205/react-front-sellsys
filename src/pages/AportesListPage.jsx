@@ -24,7 +24,7 @@ const AportesListPage = () => {
     loading,
   } = useContext(AportesContext);
 
-  const {tienda} = useContext(TiendaContext)
+  const {tienda, selectedStore} = useContext(TiendaContext)
 
   const { query } = useContext(AuthContext);
 
@@ -32,7 +32,7 @@ const AportesListPage = () => {
   
 
   useEffect(() => {
-    getAportes();
+    getAportes(selectedStore);
   }, []);
 
   return (

@@ -22,7 +22,6 @@ const TiendaProvider = ({ children }) => {
   const [selectedStore, setSelectedStore] = useState('')
 
   
-  
 
   const openModalCierreCaja = () => {
     setOpenModal(!openModal);
