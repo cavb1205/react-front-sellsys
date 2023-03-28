@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { AportesContext } from "../../context/AportesContext";
 import { Modal, ModalHeader, Button, ModalBody, ModalFooter } from "reactstrap";
+import { TiendaContext } from "../../context/TiendaContext";
 
 const AportesModalDelete = () => {
   const { openModalDelete, aporteId, aporteDeleteItem, openModalDeleteAporte } =
     useContext(AportesContext);
+  const {selectedStore} = useContext(TiendaContext)
 
   return (
     <Modal isOpen={openModalDelete} toggle={openModalDeleteAporte}>
@@ -19,7 +21,7 @@ const AportesModalDelete = () => {
         ?
       </ModalBody>
       <ModalFooter>
-        <Button onClick={aporteDeleteItem} color="danger">
+        <Button onClick={()=>aporteDeleteItem(selectedStore)} color="danger">
           Confirmar
         </Button>
         <Button onClick={openModalDeleteAporte} color="secondary">

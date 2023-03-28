@@ -66,8 +66,12 @@ const TiendaProvider = ({ children }) => {
     }
   };
 
-  const getTienda = async () => {
-    let response = await fetch(`${URL}/tiendas/detail/`, {
+  const getTienda = async (tiendaId = null) => {
+    let fullUrl = `${URL}/tiendas/detail/`
+    if(tiendaId){
+      fullUrl = `${URL}/tiendas/detail/admin/${tiendaId}/`
+    }
+    let response = await fetch(fullUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

@@ -10,6 +10,7 @@ import {
   ModalHeader,
   Button,
 } from "reactstrap";
+import { TiendaContext } from "../../context/TiendaContext";
 
 const AportesModalUpdate = () => {
   const {
@@ -19,10 +20,11 @@ const AportesModalUpdate = () => {
     aporteUpdateItem,
     openModalUpdateAporte,
   } = useContext(AportesContext);
+  const {selectedStore}=useContext(TiendaContext)
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    aporteUpdateItem();
+    aporteUpdateItem(selectedStore);
   };
 
   return (

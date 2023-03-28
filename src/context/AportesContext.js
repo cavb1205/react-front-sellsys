@@ -1,23 +1,17 @@
 import React, { createContext, useContext, useState } from "react";
 import { AuthContext } from "./AuthContext";
 import { URL } from "../config";
+import { createUtcDateIso } from "../hooks/useDate";
 
 export const AportesContext = createContext();
 
 const AportesProvider = ({ children }) => {
   const { token, logoutUser, navigate } = useContext(AuthContext);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
   const [message, setMessage] = useState(false);
 
-  /// Esto se debe importar del hook
-  const createUtcDateIso = () => {
-    const offset = new Date().getTimezoneOffset();
-    const myDate = Date.parse(Date()) - offset * 60 * 1000;
-    const dateIso = new Date(myDate).toISOString();
-    return dateIso.slice(0, 10);
-  };
 
   const [aportes, setAportes] = useState([]);
   const [newAporte, setNewAporte] = useState({
@@ -28,12 +22,12 @@ const AportesProvider = ({ children }) => {
   });
   const [aporteId, setAporteId] = useState({});
 
-  const [openModalCreate, setOpenModalCreate] = useState(false);
   const [openModalUpdate, setOpenModalUpdate] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const getAportes = async (tiendaId = null) => {
     try {
+      setLoading(true)
       let fullUrl = `${URL}/aportes/`;
       if (tiendaId) {
         fullUrl = `${URL}/aportes/t/${tiendaId}/`
@@ -86,6 +80,7 @@ const AportesProvider = ({ children }) => {
 
   const aporteCreateItem = async (tiendaId = null) => {
     try {
+      setLoading(true)
       let fullUrl = `${URL}/aportes/create/`
       if(tiendaId){
         fullUrl = `${URL}/aportes/create/t/${tiendaId}/`
@@ -100,8 +95,9 @@ const AportesProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
+        setLoading(false)
         getAportes(tiendaId);
+        navigate('/aportes/')
       } else if (response.status === 400) {
         setMessage(!message);
       } else if (response.statusText === "Unauthorized") {
@@ -112,9 +108,14 @@ const AportesProvider = ({ children }) => {
     }
   };
 
-  const aporteUpdateItem = async () => {
+  const aporteUpdateItem = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/aportes/${aporteId.id}/update/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/aportes/${aporteId.id}/update/`
+      if(tiendaId){
+        fullUrl = `${URL}/aportes/${aporteId.id}/update/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -124,8 +125,9 @@ const AportesProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
+        setLoading(false)
         setOpenModalUpdate(!setOpenModalUpdate);
-        getAportes();
+        getAportes(tiendaId);
       } else if (response.statusText === "Unauthorized") {
         logoutUser();
       }
@@ -133,9 +135,15 @@ const AportesProvider = ({ children }) => {
       setServerError(true);
     }
   };
-  const aporteDeleteItem = async () => {
+
+  const aporteDeleteItem = async (tiendaId=null) => {
     try {
-      const response = await fetch(`${URL}/aportes/${aporteId.id}/delete/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/aportes/${aporteId.id}/delete/`
+      if (tiendaId){
+        fullUrl = `${URL}/aportes/${aporteId.id}/delete/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -144,9 +152,10 @@ const AportesProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
+        setLoading(false)
         setOpenModalDelete(!openModalDelete);
+        getAportes(tiendaId);
         navigate("/aportes/");
-        getAportes();
       } else if (response.statusText === "Unauthorized") {
         logoutUser();
       }
@@ -155,15 +164,7 @@ const AportesProvider = ({ children }) => {
     }
   };
 
-  const openModalCreateAporte = () => {
-    setOpenModalCreate(!openModalCreate);
-    setNewAporte({
-      fecha: createUtcDateIso(),
-      valor: "",
-      comentario: "",
-      trabajador: "",
-    });
-  };
+
 
   const openModalUpdateAporte = () => {
     setOpenModalUpdate(!openModalUpdate);
@@ -200,13 +201,10 @@ const AportesProvider = ({ children }) => {
     aportes,
     newAporte,
     aporteId,
-    openModalCreate,
-    setOpenModalCreate,
     openModalUpdate,
     setOpenModalUpdate,
     openModalDelete,
     setOpenModalDelete,
-    openModalCreateAporte,
     aporteSeleccionado,
     handleChange,
     aporteCreateItem,

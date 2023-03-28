@@ -4,7 +4,7 @@ import { AportesContext } from "../context/AportesContext";
 import AportesListHeader from "../components/Aportes/AportesListHeader";
 import AlertMessage from "../components/Utils/AlertMessage";
 import AlertLoading from "../components/Utils/AlertLoading";
-import AportesModalCreate from "../components/Aportes/AportesModalCreate";
+// import AportesModalCreate from "../components/Aportes/AportesModalCreate";
 import AportesModalDelete from "../components/Aportes/AportesModalDelete";
 import AportesModalUpdate from "../components/Aportes/AportesModalUpdate";
 
@@ -13,13 +13,14 @@ import { useFilters } from "../hooks/useFilters";
 import AportesListItem from "../components/Aportes/AportesListItem";
 import Paginator from "../components/Utils/Paginator";
 import { TiendaContext } from "../context/TiendaContext";
+import { Link } from "react-router-dom";
 
 
 const AportesListPage = () => {
   const {
     aportes,
     getAportes,
-    openModalCreateAporte,
+    // openModalCreateAporte,
     aporteSeleccionado,
     loading,
   } = useContext(AportesContext);
@@ -47,9 +48,9 @@ const AportesListPage = () => {
             query={query}
           />
           <div className="my-2">
-            <button onClick={openModalCreateAporte} className="btn btn-success">
+            <Link to={'/aportes/create/'} className="btn btn-success">
               Crear Aporte 
-            </button>
+            </Link>
           </div>
           {aportes.message ? (
             <AlertMessage message={"No se han creado aportes."} />
@@ -77,7 +78,7 @@ const AportesListPage = () => {
             </>
           )}
 
-          <AportesModalCreate />
+          {/* <AportesModalCreate /> */}
           <AportesModalUpdate />
           <AportesModalDelete />
         </>

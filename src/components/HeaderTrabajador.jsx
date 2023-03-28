@@ -40,11 +40,6 @@ const HeaderTrabajador = ({ user, isOpen, toggle, perfil, logoutUser }) => {
             </Link>
           </NavItem>
           <NavItem>
-            <Link className="nav-link" to="/utilidades/" onClick={toggle}>
-              Utilidades
-            </Link>
-          </NavItem>
-          <NavItem>
             <Link className="nav-link" to="/ventas/" onClick={toggle}>
               Ventas Activas
             </Link>

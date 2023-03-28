@@ -1,35 +1,18 @@
 import React, { useContext, useEffect } from "react";
-
 import { AportesContext } from "../../context/AportesContext";
-
-import {
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  Label,
-  Input,
-  FormGroup,
-  Container,
-} from "reactstrap";
-import { TrabajadoresContext } from "../../context/TrabajadoresContext";
 import { TiendaContext } from "../../context/TiendaContext";
+import { TrabajadoresContext } from "../../context/TrabajadoresContext";
 import AlertLoading from "../Utils/AlertLoading";
 
-const AportesModalCreate = () => {
-  const {
-    openModalCreate,
-    handleChange,
-    newAporte,
-    aporteCreateItem,
-    openModalCreateAporte,
-    loading,
-  } = useContext(AportesContext);
+const AportesCreate = () => {
+    
+  const { aporteCreateItem, newAporte, handleChange, loading } =
+    useContext(AportesContext);
 
   const { selectedStore } = useContext(TiendaContext);
 
   const { getTrabajadores, trabajadores } = useContext(TrabajadoresContext);
-  console.log(loading)
+  console.log(newAporte)
   const handleSubmit = (event) => {
     event.preventDefault();
     aporteCreateItem(selectedStore);
@@ -38,22 +21,20 @@ const AportesModalCreate = () => {
   useEffect(() => {
     getTrabajadores(selectedStore);
   }, []);
-
   return (
-    <Modal isOpen={openModalCreate} toggle={openModalCreateAporte}>
-      {loading ? (
-        <AlertLoading />
-      ) : (
-        <>
-          <ModalHeader toggle={openModalCreateAporte}>Crear Aporte</ModalHeader>
-          <ModalBody>
-            <Container>
-              <form onSubmit={handleSubmit}>
-                <FormGroup>
-                  <Label>
-                    Fecha <span className="text-danger">*</span>
-                  </Label>
-                  <Input
+    <div className="container-sm">
+        {
+            loading? <AlertLoading /> :
+
+      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
+        <h3 className="card-header text-secondary text-center">Crear Aporte</h3>
+        <form onSubmit={handleSubmit}>
+            <div className="card-body">
+                <div className="mb-3">
+                    <label>
+                        Fecha <span className="text-danger">*</span>
+                    </label>
+                    <input
                     onChange={handleChange}
                     value={newAporte.fecha}
                     name="fecha"
@@ -62,13 +43,13 @@ const AportesModalCreate = () => {
                     id="floatingInput"
                     placeholder="fecha"
                     required
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="floatingInput">
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="floatingInput">
                     Valor <span className="text-danger">*</span>
-                  </Label>
-                  <Input
+                    </label>
+                    <input
                     onChange={handleChange}
                     name="valor"
                     type="number"
@@ -76,24 +57,24 @@ const AportesModalCreate = () => {
                     id="floatingInput"
                     placeholder="valor"
                     required
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="floatingInput">Comentario</Label>
-                  <Input
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="floatingInput">Comentario</label>
+                    <input
                     onChange={handleChange}
                     name="comentario"
                     type="text"
                     className="form-control"
                     id="floatingInput"
                     placeholder=""
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="floatingInput">
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="floatingInput">
                     Aportante <span className="text-danger">*</span>
-                  </Label>
-                  <Input
+                    </label>
+                    <select
                     onChange={handleChange}
                     value={newAporte.trabajador?.id}
                     name="trabajador"
@@ -101,27 +82,26 @@ const AportesModalCreate = () => {
                     className="form-control"
                     id="floatingInput"
                     required
-                  >
-                    <option />
+                    >
+                        <option>Select</option>
                     {trabajadores.map((aportante) => (
-                      <option key={aportante.id} value={aportante.id}>
+                        <option key={aportante.id} value={aportante.id}>
                         {aportante.trabajador}
-                      </option>
+                        </option>
                     ))}
-                  </Input>
-                </FormGroup>
-                <ModalFooter>
-                  <button type="submit" className="btn btn-success">
+                    </select>
+                </div>
+            </div>
+            <div className="card-footer text-center">
+                <button type="submit" className="btn btn-success btn-lg">
                     Crear
-                  </button>
-                </ModalFooter>
-              </form>
-            </Container>
-          </ModalBody>
-        </>
-      )}
-    </Modal>
+                </button>
+            </div>
+        </form>
+      </div>
+        }
+    </div>
   );
 };
 
-export default AportesModalCreate;
+export default AportesCreate;

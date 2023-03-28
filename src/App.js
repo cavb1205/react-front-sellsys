@@ -36,6 +36,7 @@ import TiendasListPage from './pages/TiendasListPage'
 import VentasPerdidasListPage from './pages/VentasPerdidasListPage'
 import SelectStoresAdminPage from './pages/SelectStoresAdminPage';
 import TiendasCreateAdmin from './pages/TiendasCreateAdmin';
+import AportesCreate from './components/Aportes/AportesCreate';
 
 function App () {
   
@@ -65,6 +66,7 @@ function App () {
                           <Route path='/tiendas/create/' element={<TiendasCreateAdmin />}></Route>
                           <Route path='/tiendas/detail/' element={<HomePageTiendaInfo />} />
                           <Route path='/aportes/' element={<AportesListPage />} />
+                          <Route path='/aportes/create/' element={<AportesCreate />} />
                           <Route path='/gastos/' element={<GastosListPage />} />
                           <Route path='/utilidades/' element={<UtilidadesListPage />} />
                           <Route path='/ventas/' element={<VentasListPage />} />
