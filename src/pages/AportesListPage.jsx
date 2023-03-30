@@ -4,9 +4,7 @@ import { AportesContext } from "../context/AportesContext";
 import AportesListHeader from "../components/Aportes/AportesListHeader";
 import AlertMessage from "../components/Utils/AlertMessage";
 import AlertLoading from "../components/Utils/AlertLoading";
-// import AportesModalCreate from "../components/Aportes/AportesModalCreate";
-import AportesModalDelete from "../components/Aportes/AportesModalDelete";
-import AportesModalUpdate from "../components/Aportes/AportesModalUpdate";
+
 
 import { AuthContext } from "../context/AuthContext";
 import { useFilters } from "../hooks/useFilters";
@@ -20,7 +18,6 @@ const AportesListPage = () => {
   const {
     aportes,
     getAportes,
-    // openModalCreateAporte,
     aporteSeleccionado,
     loading,
   } = useContext(AportesContext);
@@ -77,10 +74,8 @@ const AportesListPage = () => {
               />
             </>
           )}
-
-          {/* <AportesModalCreate /> */}
-          <AportesModalUpdate />
-          <AportesModalDelete />
+          
+          
         </>
       )}
     </div>

@@ -22,9 +22,6 @@ const AportesProvider = ({ children }) => {
   });
   const [aporteId, setAporteId] = useState({});
 
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-
   const getAportes = async (tiendaId = null) => {
     try {
       setLoading(true)
@@ -126,8 +123,8 @@ const AportesProvider = ({ children }) => {
 
       if (response.status === 200) {
         setLoading(false)
-        setOpenModalUpdate(!setOpenModalUpdate);
         getAportes(tiendaId);
+        navigate('/aportes/')
       } else if (response.statusText === "Unauthorized") {
         logoutUser();
       }
@@ -153,7 +150,6 @@ const AportesProvider = ({ children }) => {
 
       if (response.status === 200) {
         setLoading(false)
-        setOpenModalDelete(!openModalDelete);
         getAportes(tiendaId);
         navigate("/aportes/");
       } else if (response.statusText === "Unauthorized") {
@@ -164,14 +160,6 @@ const AportesProvider = ({ children }) => {
     }
   };
 
-
-
-  const openModalUpdateAporte = () => {
-    setOpenModalUpdate(!openModalUpdate);
-  };
-  const openModalDeleteAporte = () => {
-    setOpenModalDelete(!openModalDelete);
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -191,33 +179,26 @@ const AportesProvider = ({ children }) => {
   const aporteSeleccionado = (aporte, option) => {
     setAporteId(aporte);
     if (option === "Editar") {
-      setOpenModalUpdate(!openModalUpdate);
+      navigate('/aportes/update/')
     } else {
-      setOpenModalDelete(!openModalDelete);
+      navigate('/aportes/delete/')
     }
   };
 
   const contextData = {
     aportes,
     newAporte,
-    aporteId,
-    openModalUpdate,
-    setOpenModalUpdate,
-    openModalDelete,
-    setOpenModalDelete,
+    aporteId,    
     aporteSeleccionado,
     handleChange,
     aporteCreateItem,
     handleChangeUpdate,
     aporteUpdateItem,
-    openModalUpdateAporte,
     aporteDeleteItem,
-    openModalDeleteAporte,
     getAportesFecha,
     loading,
     serverError,
     message,
-
     getAportes,
   };
 

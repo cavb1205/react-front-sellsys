@@ -12,7 +12,7 @@ const AportesCreate = () => {
   const { selectedStore } = useContext(TiendaContext);
 
   const { getTrabajadores, trabajadores } = useContext(TrabajadoresContext);
-  console.log(newAporte)
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     aporteCreateItem(selectedStore);
