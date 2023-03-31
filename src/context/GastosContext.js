@@ -8,7 +8,7 @@ const GastosProvider = ({ children }) => {
 
   const [tipoGastos, setTipoGastos] = useState([]);
   const [newTipoGasto, setNewTipoGasto] = useState({});
-  const [openModalTipoGasto, setOpenModalTipoGasto] = useState(false);
+  
 
   const [gastos, setGastos] = useState([]);
   const [gasto, setGasto] = useState({
@@ -200,12 +200,7 @@ const GastosProvider = ({ children }) => {
   
 
 
-  const openModalCreateTipoGasto = () => {
-    setOpenModalTipoGasto(!openModalTipoGasto);
-    setNewTipoGasto({
-      tipo_gasto: "",
-    });
-  };
+ 
 
   const gastoSelected = (gasto, option) => {
     setGasto(gasto);
@@ -244,8 +239,6 @@ const GastosProvider = ({ children }) => {
     gastoSelected,
     tipoGastoCreate,
     getGastosFecha,
-    openModalTipoGasto,
-    openModalCreateTipoGasto,
     setNewGasto,
   
     tipoGastos,

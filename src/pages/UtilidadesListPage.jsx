@@ -6,30 +6,27 @@ import AlertMessage from "../components/Utils/AlertMessage";
 
 import { UtilidadesContext } from "../context/UtilidadesContext";
 import UtilidadesListHeader from "../components/Utilidades/UtilidadesHeader";
-import UtilidadesModalCreate from "../components/Utilidades/UtilidadesModalCreate";
-import UtilidadesModalDelete from "../components/Utilidades/UtilidadesModalDelete";
-import UtilidadesModalUpdate from "../components/Utilidades/UtilidadesModalUpdate";
 import { AuthContext } from "../context/AuthContext";
 import { useFilters } from "../hooks/useFilters";
 import { UtilidadesListItem } from "../components/Utilidades/UtilidadesListItem";
 import Paginator from "../components/Utils/Paginator";
 import { TiendaContext } from "../context/TiendaContext";
+import { Link } from "react-router-dom";
 
 const UtilidadesListPage = () => {
   const {
     utilidades,
     Selected,
     getUtilidades,
-    openModalCreateUtilidad,
     loading,
   } = useContext(UtilidadesContext);
-  const {tienda} = useContext(TiendaContext)
+  const {tienda, selectedStore} = useContext(TiendaContext)
   const { query } = useContext(AuthContext);
 
   const { listFilter, prevPage, nextPage } = useFilters();
 
   useEffect(() => {
-    getUtilidades();
+    getUtilidades(selectedStore);
   }, []);
 
   return (
@@ -44,12 +41,11 @@ const UtilidadesListPage = () => {
             query={query}
           />
           <div className="my-2">
-            <button
-              onClick={openModalCreateUtilidad}
+            <Link to={'/utilidades/create/'}
               className="btn btn-success"
             >
               Crear Utilidad
-            </button>
+            </Link>
           </div>
           {utilidades.message ? (
             <AlertMessage message={"No se han creado utilidades."} />
@@ -74,10 +70,6 @@ const UtilidadesListPage = () => {
               />
             </>
           )}
-
-          <UtilidadesModalCreate />
-          <UtilidadesModalUpdate />
-          <UtilidadesModalDelete />
         </>
       )}
     </div>

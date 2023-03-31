@@ -3,20 +3,18 @@ import { AuthContext } from "./AuthContext";
 import { URL } from "../config";
 import { createUtcDateIso } from "../hooks/useDate";
 
+
+
 const UtilidadesProvider = ({ children }) => {
-  const { token, logoutUser } = useContext(AuthContext);
+  const { token, logoutUser, navigate } = useContext(AuthContext);
 
   const [aportantes, setAportantes] = useState([]);
 
   const [utilidades, setUtilidades] = useState([]);
   const [utilidad, setUtilidad] = useState({});
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
 
   const [newUtilidad, setNewUtilidad] = useState({
     fecha: createUtcDateIso(),
@@ -25,9 +23,13 @@ const UtilidadesProvider = ({ children }) => {
     trabajador: "",
   });
 
-  const getAportantes = async () => {
+  const getAportantes = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/trabajadores/`, {
+      let fullUrl = `${URL}/trabajadores/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/trabajadores/t/${tiendaId}/`;
+      }
+      const response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,9 +47,14 @@ const UtilidadesProvider = ({ children }) => {
     }
   };
 
-  const getUtilidades = async () => {
+  const getUtilidades = async (tiendaId = null) => {
     try {
-      let response = await fetch(`${URL}/utilidades/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/utilidades/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/utilidades/t/${tiendaId}/`;
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -56,8 +63,8 @@ const UtilidadesProvider = ({ children }) => {
       });
       let data = await response.json();
       if (response.status === 200) {
-        setUtilidades(data);
         setLoading(false);
+        setUtilidades(data);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -67,9 +74,13 @@ const UtilidadesProvider = ({ children }) => {
     }
   };
 
-  const getUtilidadesFecha = async (fecha) => {
+  const getUtilidadesFecha = async (fecha, tiendaId = null) => {
     try {
-      let response = await fetch(`${URL}/utilidades/list/${fecha}/`, {
+      let fullUrl = `${URL}/utilidades/list/${fecha}/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/utilidades/list/${fecha}/t/${tiendaId}/`;
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +90,6 @@ const UtilidadesProvider = ({ children }) => {
       let data = await response.json();
       if (response.status === 200) {
         setUtilidades(data);
-        setLoading(false);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -89,9 +99,14 @@ const UtilidadesProvider = ({ children }) => {
     }
   };
 
-  const utilidadCreateItem = async () => {
+  const utilidadCreateItem = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/utilidades/create/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/utilidades/create/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/utilidades/create/t/${tiendaId}/`;
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -101,8 +116,9 @@ const UtilidadesProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
-        getUtilidades();
+        setLoading(false);
+        getUtilidades(tiendaId);
+        navigate('/utilidades/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -111,9 +127,14 @@ const UtilidadesProvider = ({ children }) => {
     }
   };
 
-  const utilidadUpdateItem = async () => {
+  const utilidadUpdateItem = async (tiendaId = null) => {
     try {
-      let response = await fetch(`${URL}/utilidades/${utilidad.id}/update/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/utilidades/${utilidad.id}/update/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/utilidades/${utilidad.id}/update/t/${tiendaId}/`;
+      }
+      let response = await fetch(fullUrl, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -123,8 +144,9 @@ const UtilidadesProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalUpdate(!openModalUpdate);
-        getUtilidades();
+        setLoading(false);
+        getUtilidades(tiendaId);
+        navigate('/utilidades/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -134,9 +156,14 @@ const UtilidadesProvider = ({ children }) => {
     }
   };
 
-  const utilidadDeleteItem = async () => {
+  const utilidadDeleteItem = async (tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/utilidades/${utilidad.id}/delete/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/utilidades/${utilidad.id}/delete/`
+      if(tiendaId){
+        fullUrl = `${URL}/utilidades/${utilidad.id}/delete/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -145,8 +172,9 @@ const UtilidadesProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalDelete(!openModalDelete);
-        getUtilidades();
+        setLoading(false)
+        getUtilidades(tiendaId);
+        navigate('/utilidades/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -155,8 +183,6 @@ const UtilidadesProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
- 
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -177,36 +203,18 @@ const UtilidadesProvider = ({ children }) => {
   const Selected = (utilidad, option) => {
     setUtilidad(utilidad);
     if (option == "Editar") {
-      setOpenModalUpdate(!openModalUpdate);
+      navigate('/utilidades/update/')
     } else {
-      setOpenModalDelete(!openModalDelete);
+      navigate('/utilidades/delete/')
     }
-  };
-
-  const openModalCreateUtilidad = () => {
-    setOpenModalCreate(!openModalCreate);
-    setNewUtilidad({
-      fecha: createUtcDateIso(),
-      comentario: "",
-      valor: "",
-      trabajador: "",
-    });
-  };
-
-  const openModalUpdateUtilidad = () => {
-    setOpenModalUpdate(!openModalUpdate);
-  };
-
-  const openModalDeleteUtilidad = () => {
-    setOpenModalDelete(!openModalDelete);
   };
 
   const contextData = {
     utilidades,
     utilidad,
     newUtilidad,
+    setNewUtilidad,
     aportantes,
-    
     utilidadCreateItem,
     utilidadUpdateItem,
     utilidadDeleteItem,
@@ -214,17 +222,8 @@ const UtilidadesProvider = ({ children }) => {
     handleChangeUpdate,
     Selected,
     getUtilidadesFecha,
-    openModalCreate,
-    openModalDelete,
-    openModalUpdate,
-
-    openModalCreateUtilidad,
-    openModalUpdateUtilidad,
-    openModalDeleteUtilidad,
-
     getAportantes,
     getUtilidades,
-
     loading,
     serverError,
   };

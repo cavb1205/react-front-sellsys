@@ -43,6 +43,9 @@ import GastosCreate from './components/Gastos/GastosCreate'
 import GastosDelete from './components/Gastos/GastosDelete';
 import GastosUpdate from './components/Gastos/GastosUpdate';
 import TipoGastoCreate from './components/Gastos/TipoGastoCreate';
+import UtilidadesCreate from './components/Utilidades/UtilidadesCreate';
+import UtilidadesDelete from './components/Utilidades/UtilidadesDelete';
+import UtilidadesUpdate from './components/Utilidades/UtilidadesUpdate';
 
 function App () {
   
@@ -81,6 +84,9 @@ function App () {
                           <Route path='/gastos/delete/' element={<GastosDelete />} />
                           <Route path='/gastos/tipo/create/' element={<TipoGastoCreate />} />
                           <Route path='/utilidades/' element={<UtilidadesListPage />} />
+                          <Route path='/utilidades/create/' element={<UtilidadesCreate />} />
+                          <Route path='/utilidades/update/' element={<UtilidadesUpdate />} />
+                          <Route path='/utilidades/delete/' element={<UtilidadesDelete />} />
                           <Route path='/ventas/' element={<VentasListPage />} />
                           <Route path='/ventas/perdidas/' element={<VentasPerdidasListPage />} />
                           <Route path='/ventas/:ventaId/' element={<VentasDetailPage />} />
