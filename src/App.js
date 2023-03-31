@@ -39,6 +39,10 @@ import TiendasCreateAdmin from './pages/TiendasCreateAdmin';
 import AportesCreate from './components/Aportes/AportesCreate';
 import AportesUpdate from './components/Aportes/AportesUpdate';
 import AportesDelete from './components/Aportes/AportesDelete';
+import GastosCreate from './components/Gastos/GastosCreate'
+import GastosDelete from './components/Gastos/GastosDelete';
+import GastosUpdate from './components/Gastos/GastosUpdate';
+import TipoGastoCreate from './components/Gastos/TipoGastoCreate';
 
 function App () {
   
@@ -72,6 +76,10 @@ function App () {
                           <Route path='/aportes/update/' element={<AportesUpdate />} />
                           <Route path='/aportes/delete/' element={<AportesDelete />} />
                           <Route path='/gastos/' element={<GastosListPage />} />
+                          <Route path='/gastos/create/' element={<GastosCreate />} />
+                          <Route path='/gastos/update/' element={<GastosUpdate />} />
+                          <Route path='/gastos/delete/' element={<GastosDelete />} />
+                          <Route path='/gastos/tipo/create/' element={<TipoGastoCreate />} />
                           <Route path='/utilidades/' element={<UtilidadesListPage />} />
                           <Route path='/ventas/' element={<VentasListPage />} />
                           <Route path='/ventas/perdidas/' element={<VentasPerdidasListPage />} />

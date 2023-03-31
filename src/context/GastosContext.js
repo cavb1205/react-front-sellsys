@@ -24,18 +24,18 @@ const GastosProvider = ({ children }) => {
     comentario: "",
   });
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-
  
 
-  const getGastos = async () => {
+  const getGastos = async (tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/gastos/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/gastos/`
+      if(tiendaId){
+        fullUrl = `${URL}/gastos/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -93,9 +93,14 @@ const GastosProvider = ({ children }) => {
     }
   };
 
-  const gastoCreateItem = async () => {
+  const gastoCreateItem = async (tiendaId=null) => {
     try {
-      const response = await fetch(`${URL}/gastos/create/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/gastos/create/`
+      if(tiendaId){
+        fullUrl=`${URL}/gastos/create/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -105,8 +110,9 @@ const GastosProvider = ({ children }) => {
       });
       
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
-        getGastos();
+        setLoading(false)
+        getGastos(tiendaId);
+        navigate('/gastos/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -117,7 +123,9 @@ const GastosProvider = ({ children }) => {
 
   const tipoGastoCreate = async () => {
     try {
-      const response = await fetch(`${URL}/gastos/tipo/create/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/gastos/tipo/create/`
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,8 +135,9 @@ const GastosProvider = ({ children }) => {
       });
       
       if (response.status === 200) {
-        setOpenModalTipoGasto(!openModalTipoGasto);
+        setLoading(false)
         getTipoGastos();
+        navigate('/gastos/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -137,9 +146,14 @@ const GastosProvider = ({ children }) => {
     }
   };
 
-  const gastoUpdateItem = async () => {
+  const gastoUpdateItem = async (tiendaId=null) => {
     try {
-      const response = await fetch(`${URL}/gastos/${gasto.id}/update/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/gastos/${gasto.id}/update/`
+      if(tiendaId){
+        fullUrl = `${URL}/gastos/${gasto.id}/update/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -149,8 +163,9 @@ const GastosProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalUpdate(!openModalUpdate);
-        getGastos();
+        setLoading(false)
+        getGastos(tiendaId);
+        navigate('/gastos/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -159,8 +174,13 @@ const GastosProvider = ({ children }) => {
     }
   };
 
-  const gastoDeleteItem = async () => {
-    let response = await fetch(`${URL}/gastos/${gasto.id}/delete/`, {
+  const gastoDeleteItem = async (tiendaId=null) => {
+    setLoading(true)
+    let fullUrl = `${URL}/gastos/${gasto.id}/delete/`
+    if(tiendaId){
+      fullUrl=`${URL}/gastos/${gasto.id}/delete/t/${tiendaId}/`
+    }
+    let response = await fetch(fullUrl, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -169,30 +189,16 @@ const GastosProvider = ({ children }) => {
     });
     
     if (response.status === 200) {
-      setOpenModalDelete(!openModalDelete);
+      setLoading(false)
+      getGastos(tiendaId);
       navigate("/gastos/");
-      getGastos();
     } else if (response.statusText == "Unauthorized") {
       logoutUser();
     }
   };
 
-  const openModalCreateGasto = () => {
-    setOpenModalCreate(!openModalCreate);
-    setNewGasto({
-      fecha: createUtcDateIso(),
-      tipo_gasto: "",
-      valor: "",
-      comentario: "",
-    });
-  };
-  const openModalUpdateGasto = () => {
-    setOpenModalUpdate(!openModalUpdate);
-  };
+  
 
-  const openModalDeleteGasto = () => {
-    setOpenModalDelete(!openModalDelete);
-  };
 
   const openModalCreateTipoGasto = () => {
     setOpenModalTipoGasto(!openModalTipoGasto);
@@ -204,9 +210,9 @@ const GastosProvider = ({ children }) => {
   const gastoSelected = (gasto, option) => {
     setGasto(gasto);
     if (option == "Editar") {
-      setOpenModalUpdate(!openModalUpdate);
+      navigate('/gastos/update/')
     } else {
-      setOpenModalDelete(!openModalDelete);
+      navigate('/gastos/delete/')
     }
   };
   const handleChange = (event) => {
@@ -238,17 +244,14 @@ const GastosProvider = ({ children }) => {
     gastoSelected,
     tipoGastoCreate,
     getGastosFecha,
-    openModalUpdateGasto,
-    openModalCreateGasto,
-    openModalDeleteGasto,
     openModalTipoGasto,
     openModalCreateTipoGasto,
-    openModalCreate,
-    openModalUpdate,
+    setNewGasto,
+  
     tipoGastos,
     setNewTipoGasto,
     newTipoGasto,
-    openModalDelete,
+  
     loading,
     serverError,
     getTipoGastos,
