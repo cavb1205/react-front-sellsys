@@ -46,6 +46,7 @@ import TipoGastoCreate from './components/Gastos/TipoGastoCreate';
 import UtilidadesCreate from './components/Utilidades/UtilidadesCreate';
 import UtilidadesDelete from './components/Utilidades/UtilidadesDelete';
 import UtilidadesUpdate from './components/Utilidades/UtilidadesUpdate';
+import TrabajadoresPassword from './components/Trabajadores/TrabajadoresPassword';
 
 function App () {
   
@@ -98,6 +99,7 @@ function App () {
                           <Route path='/clientes/:clienteId/' element={<ClienteDetailItem />} />
                           <Route path='/trabajadores/' element={<TrabajadoresListPage />} />
                           <Route path='/trabajadores/:trabajadorId/' element={<TrabajadorDetail />} />
+                          <Route path='/trabajadores/password/' element={<TrabajadoresPassword />} />
 
                         </Routes>
 

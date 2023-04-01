@@ -1,38 +1,42 @@
-import React, { useContext } from "react";
-import {
-  FormGroup,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "reactstrap";
+import React, { useContext, useEffect } from "react";
+
+
 import { TrabajadoresContext } from "../../context/TrabajadoresContext";
 import AlertError from "../Utils/AlertError";
+import AlertLoading from "../Utils/AlertLoading";
 
-const TrabajadoresModalPassword = () => {
+const TrabajadoresPassword = () => {
   const {
-    openModalPassword,
-    openModalPasswordTrabajador,
+    trabajador,
     passwordUpdate,
+    setPasswordUpdate,
     error,
     handleChangePassword,
     trabajadorUpdatePassword,
+    loading,
   } = useContext(TrabajadoresContext);
 
+  useEffect(()=>{
+    setPasswordUpdate({'passwordNuevo':''})
+  },[])
+  
   const handleSubmit = (event) => {
     event.preventDefault();
-    trabajadorUpdatePassword();
+    trabajadorUpdatePassword(trabajador.id);
   };
 
   return (
-    <Modal isOpen={openModalPassword} toggle={openModalPasswordTrabajador}>
-      <ModalHeader toggle={openModalPasswordTrabajador}>
-        Cambiar Contraseña
+    <div className="container-sm">
+      {loading ? (
+        <AlertLoading />
+      ): (
+
+      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
+        <h3 className="card-header text-secondary text-center">Cambiar Contraseña de {trabajador.first_name}</h3>
         {error && <AlertError error={error} />}
-      </ModalHeader>
-      <ModalBody>
+      
         <form onSubmit={handleSubmit}>
-          <FormGroup>
+          <div className="my-3">
             <label>Nueva Contraseña</label>
             <input
               onChange={handleChangePassword}
@@ -42,16 +46,17 @@ const TrabajadoresModalPassword = () => {
               className="form-control"
               required
             />
-          </FormGroup>
-          <ModalFooter>
+          </div>
+          <div className="card-footer text-center">
             <button type="submit" className="btn btn-success">
               Cambiar Contraseña
             </button>
-          </ModalFooter>
+          </div>
         </form>
-      </ModalBody>
-    </Modal>
+      </div>
+      )}
+    </div>
   );
 };
 
-export default TrabajadoresModalPassword;
+export default TrabajadoresPassword;

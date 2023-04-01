@@ -4,10 +4,9 @@ import { Link, useParams } from "react-router-dom";
 import { TrabajadoresContext } from "../../context/TrabajadoresContext";
 import AlertLoading from "../Utils/AlertLoading";
 import AlertError from "../Utils/AlertError";
-import TrabajadorModalDelete from "./TrabajadorModalDelete";
-import TrabajadorModalUpdate from "./TrabajadorModalUpdate";
+
 import { AuthContext } from "../../context/AuthContext";
-import TrabajadoresModalPassword from "./TrabajadoresModalPassword";
+
 
 const TrabajadorDetail = () => {
   const { user } = useContext(AuthContext);
@@ -16,9 +15,6 @@ const TrabajadorDetail = () => {
     getTrabajador,
     loading,
     error,
-    openModalDeleteTrabajador,
-    openModalUpdateTrabajador,
-    openModalPasswordTrabajador,
   } = useContext(TrabajadoresContext);
 
   const { trabajadorId } = useParams();
@@ -26,7 +22,7 @@ const TrabajadorDetail = () => {
   useEffect(() => {
     getTrabajador(trabajadorId);
   }, []);
-  console.log(trabajador);
+  
   return (
     <div className="container-sm">
       {loading ? (
@@ -136,31 +132,25 @@ const TrabajadorDetail = () => {
               </div>
             </div>
           </div>
-          {user.username === trabajador.username ? (
+          
             <div className="text-center">
-              <button
-                onClick={openModalPasswordTrabajador}
+              <Link to={`/trabajadores/password/`}
+                
                 className="btn btn-outline-primary m-3"
               >
                 Cambiar Contraseña
-              </button>
-            </div>
-          ) : null}
-          {user.is_staff ? (
-            <div className="card-footer text-center">
-              <Link to="/trabajadores/">
-                <button className="btn btn-secondary m-1" color="secondary">
-                  Lista Trabajadores
-                </button>
               </Link>
+            </div>
+          
+          {user.is_staff ? (
+            <div className="card-footer text-center">              
               <button
-                onClick={openModalUpdateTrabajador}
                 className="btn btn-warning m-1"
               >
                 Actualizar
               </button>
               <button
-                onClick={openModalDeleteTrabajador}
+                
                 className="btn btn-danger m-1"
               >
                 Eliminar
@@ -169,9 +159,9 @@ const TrabajadorDetail = () => {
           ) : null}
         </div>
       )}
-      <TrabajadorModalUpdate />
-      <TrabajadorModalDelete />
-      <TrabajadoresModalPassword />
+      
+      
+      
     </div>
   );
 };

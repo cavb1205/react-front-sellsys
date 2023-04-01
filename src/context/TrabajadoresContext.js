@@ -3,7 +3,7 @@ import { AuthContext } from "./AuthContext";
 import { URL, ITEMS } from "../config";
 
 const TrabajadoresProvider = ({ children }) => {
-  const { token, logoutUser, navigate, query } = useContext(AuthContext);
+  const { token, logoutUser, navigate, query, user } = useContext(AuthContext);
 
   const [trabajadores, setTrabajadores] = useState([]);
   const [trabajador, setTrabajador] = useState({});
@@ -21,13 +21,7 @@ const TrabajadoresProvider = ({ children }) => {
   const [passwordUpdate, setPasswordUpdate] = useState({});
 
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-  const [openModalPassword, setOpenModalPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -101,7 +95,7 @@ const TrabajadoresProvider = ({ children }) => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
+        setLoading(false)
         getTrabajadores(tiendaId);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
@@ -130,7 +124,7 @@ const TrabajadoresProvider = ({ children }) => {
       );
       const data = await response.json();
       if (response.status === 200) {
-        setOpenModalUpdate(!setOpenModalUpdate);
+        setLoading(false)
         navigate(`/trabajadores/${trabajador.id}/`);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
@@ -158,7 +152,7 @@ const TrabajadoresProvider = ({ children }) => {
       );
       let data = await response.json();
       if (response.status === 200) {
-        setOpenModalDelete(!openModalDelete);
+        setLoading(false)
         navigate("/trabajadores/");
         getTrabajadores();
       } else if (response.statusText == "Unauthorized") {
@@ -172,10 +166,11 @@ const TrabajadoresProvider = ({ children }) => {
       setLoading(false);
     }
   };
-
-  const trabajadorUpdatePassword = async () => {
+  
+  const trabajadorUpdatePassword = async (trabajadorId) => {
     try {
-      const response = await fetch(`${URL}/trabajadores/password/`, {
+      setLoading(true)
+      const response = await fetch(`${URL}/trabajadores/password/${trabajadorId}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -185,9 +180,13 @@ const TrabajadoresProvider = ({ children }) => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        setOpenModalPassword(!openModalPassword);
+        setLoading(false)
         alert("Contraseña Cambiada con Éxito!");
-        logoutUser();
+        if(user.is_staff || user.is_superuser){
+          navigate(`/trabajadores/${trabajadorId}/`)
+        }else{
+          logoutUser();
+        }
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -199,32 +198,7 @@ const TrabajadoresProvider = ({ children }) => {
     }
   };
 
-  const openModalCreateTrabajador = () => {
-    setOpenModalCreate(!openModalCreate);
-    setNewTrabajador({
-      username: "",
-      first_name: "",
-      last_name: "",
-      password: "",
-      identificacion: "",
-      telefono: "",
-      direccion: "",
-    });
-  };
 
-  const openModalUpdateTrabajador = () => {
-    setOpenModalUpdate(!openModalUpdate);
-  };
-  const openModalDeleteTrabajador = () => {
-    setOpenModalDelete(!openModalDelete);
-  };
-
-  const openModalPasswordTrabajador = () => {
-    setOpenModalPassword(!openModalPassword);
-    setPasswordUpdate({
-      passwordNuevo: "",
-    });
-  };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -274,25 +248,14 @@ const TrabajadoresProvider = ({ children }) => {
   const contextData = {
     trabajadores,
     trabajador,
-
-    openModalCreate,
-    openModalUpdate,
-    openModalDelete,
-    openModalPassword,
-    openModalCreateTrabajador,
-    openModalUpdateTrabajador,
-    openModalDeleteTrabajador,
-    openModalPasswordTrabajador,
     trabajadorCreateItem,
     trabajadorUpdateItem,
     trabajadorDeleteItem,
     getTrabajador,
     trabajadorUpdatePassword,
-
     handleChange,
     handleChangeUpdate,
     handleChangePassword,
-
     error,
     loading,
     getTrabajadores,
@@ -301,6 +264,7 @@ const TrabajadoresProvider = ({ children }) => {
     currentPage,
     trabajadoresFiltrados,
     passwordUpdate,
+    setPasswordUpdate,
   };
 
   return (
