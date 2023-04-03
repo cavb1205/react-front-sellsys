@@ -37,18 +37,14 @@ const ClientesProvider = ({ children }) => {
   });
 
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const getClientes = async (tiendaId = null) => {
     try {
+      setLoading(true);
       let fullUrl = `${URL}/clientes/`;
-      if (tiendaId){
-        fullUrl = `${URL}/clientes/tienda/${tiendaId}/`
+      if (tiendaId) {
+        fullUrl = `${URL}/clientes/tienda/${tiendaId}/`;
       }
       const response = await fetch(fullUrl, {
         method: "GET",
@@ -71,9 +67,14 @@ const ClientesProvider = ({ children }) => {
     }
   };
 
-  const getClientesActivos = async () => {
+  const getClientesActivos = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/clientes/activos/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/clientes/activos/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/clientes/activos/t/${tiendaId}/`;
+      }
+      const response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -94,9 +95,14 @@ const ClientesProvider = ({ children }) => {
     }
   };
 
-  const getClientesDisponibles = async () => {
+  const getClientesDisponibles = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/clientes/disponibles/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/clientes/disponibles/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/clientes/disponibles/t/${tiendaId}/`;
+      }
+      const response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -145,9 +151,10 @@ const ClientesProvider = ({ children }) => {
 
   const clienteCreateItem = async (tiendaId = null) => {
     try {
+      setLoading(true);
       let fullUrl = `${URL}/clientes/create/`;
-      if (tiendaId){
-        fullUrl = `${URL}/clientes/create/t/${tiendaId}/`
+      if (tiendaId) {
+        fullUrl = `${URL}/clientes/create/t/${tiendaId}/`;
       }
       const response = await fetch(fullUrl, {
         method: "POST",
@@ -159,8 +166,9 @@ const ClientesProvider = ({ children }) => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
+        setLoading(false);
         getClientes(tiendaId);
+        navigate(`/clientes/`);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -174,6 +182,7 @@ const ClientesProvider = ({ children }) => {
 
   const clienteUpdateItem = async () => {
     try {
+      setLoading(true);
       const response = await fetch(`${URL}/clientes/${cliente.id}/update/`, {
         method: "PUT",
         headers: {
@@ -184,8 +193,8 @@ const ClientesProvider = ({ children }) => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        setOpenModalUpdate(!setOpenModalUpdate);
-        getClientes();
+        setLoading(false);
+        navigate(`/clientes/${cliente.id}/`);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -197,8 +206,9 @@ const ClientesProvider = ({ children }) => {
     }
   };
 
-  const clienteDeleteItem = async () => {
+  const clienteDeleteItem = async (tiendaId = null) => {
     try {
+      setLoading(true);
       let response = await fetch(`${URL}/clientes/${cliente.id}/delete/`, {
         method: "DELETE",
         headers: {
@@ -208,11 +218,12 @@ const ClientesProvider = ({ children }) => {
       });
       let data = await response.json();
       if (response.status === 200) {
-        setOpenModalDelete(!openModalDelete);
-        getClientes();
+        setLoading(false);
+        getClientes(tiendaId);
         navigate("/clientes/");
       } else if (response.status === 202) {
         setError(data);
+        setLoading(false)
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -226,6 +237,7 @@ const ClientesProvider = ({ children }) => {
 
   const getVentasActivasCliente = async (clienteId) => {
     try {
+      setLoading(true);
       let response = await fetch(`${URL}/ventas/activas/${clienteId}`, {
         method: "GET",
         headers: {
@@ -246,18 +258,6 @@ const ClientesProvider = ({ children }) => {
     }
   };
 
-  const openModalCreateCliente = () => {
-    setOpenModalCreate(!openModalCreate);
-  };
-
-  const openModalUpdateCliente = () => {
-    setError(null);
-    setOpenModalUpdate(!openModalUpdate);
-  };
-  const openModalDeleteCliente = () => {
-    setOpenModalDelete(!openModalDelete);
-  };
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewCliente({
@@ -273,16 +273,6 @@ const ClientesProvider = ({ children }) => {
     });
   };
 
-  const clienteSelected = (cliente, option) => {
-    setCliente(cliente);
-    if (option == "Detalle") {
-      navigate(`/clientes/${cliente.id}/`);
-    } else if (option == "Editar") {
-      setOpenModalUpdate(!openModalUpdate);
-    } else {
-      setOpenModalDelete(!openModalDelete);
-    }
-  };
 
   const contextData = {
     clientes,
@@ -299,19 +289,12 @@ const ClientesProvider = ({ children }) => {
     getClientesDisponibles,
     getClientesActivos,
     clientesActivos,
-    openModalCreate,
-
-    openModalUpdate,
-    openModalDelete,
-    openModalCreateCliente,
-    clienteSelected,
     handleChange,
     handleChangeUpdate,
-    openModalUpdateCliente,
-
-    openModalDeleteCliente,
     error,
     loading,
+    newCliente,
+    setNewCliente
   };
 
   return (

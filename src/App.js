@@ -50,6 +50,9 @@ import TrabajadoresPassword from './components/Trabajadores/TrabajadoresPassword
 import TrabajadorCreate from './components/Trabajadores/TrabajadorCreate';
 import TrabajadorDelete from './components/Trabajadores/TrabajadorDelete';
 import TrabajadorUpdate from './components/Trabajadores/TrabajadorUpdate';
+import ClienteCreate from './components/Clientes/ClienteCreate';
+import ClienteDelete from './components/Clientes/ClienteDelete';
+import ClienteUpdate from './components/Clientes/ClienteUpdate';
 
 function App () {
   
@@ -98,15 +101,17 @@ function App () {
                           <Route path='/recaudos/:recaudoId/' element={<RecaudosDetail />} />
                           <Route path='/liquidar/' element={<LiquidarVentasCardListPage />} />
                           <Route path='/clientes/' element={<ClientesListPage />} />
+                          <Route path='/clientes/create/' element={<ClienteCreate />} />
                           <Route path='/clientes/disponibles/' element={<ClientesDisponiblesListPage />} />
                           <Route path='/clientes/:clienteId/' element={<ClienteDetailItem />} />
+                          <Route path='/clientes/update/' element={<ClienteUpdate />} />
+                          <Route path='/clientes/delete/' element={<ClienteDelete />} />
                           <Route path='/trabajadores/' element={<TrabajadoresListPage />} />
                           <Route path='/trabajadores/create/' element={<TrabajadorCreate />} />
                           <Route path='/trabajadores/:trabajadorId/' element={<TrabajadorDetail />} />
                           <Route path='/trabajadores/update/' element={<TrabajadorUpdate />} />
                           <Route path='/trabajadores/delete/' element={<TrabajadorDelete />} />
                           <Route path='/trabajadores/password/' element={<TrabajadoresPassword />} />
-
                         </Routes>
 
                       </TiendaProvider>

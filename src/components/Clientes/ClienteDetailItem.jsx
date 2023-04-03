@@ -1,11 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ClientesContext } from "../../context/ClientesContext";
-
-import ClienteModalDelete from "./ClienteModalDelete";
-import ClienteModalUpdate from "./ClienteModalUpdate";
+import AlertLoading from "../Utils/AlertLoading";
 import AlertMessage from "../Utils/AlertMessage";
-
 import VentasClienteResume from "../Ventas/VentasClienteResume";
 import VentasClientHistoryList from "../Ventas/VentasClientHistoryList";
 
@@ -13,10 +10,9 @@ const ClienteDetailItem = () => {
   const {
     cliente,
     getCliente,
-    openModalUpdateCliente,
-    openModalDeleteCliente,
     getVentasActivasCliente,
     ventasActivas,
+    loading,
   } = useContext(ClientesContext);
 
   const { clienteId } = useParams();
@@ -28,7 +24,11 @@ const ClienteDetailItem = () => {
 
   return (
     <div className="container-sm">
-      <div className="card text center shadow">
+      {loading ? (
+        <AlertLoading />
+      ) : (
+
+      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
         <div className="card-header">
           <ul className="nav nav-tabs card-header-tabs">
             <li className="nav-item">
@@ -152,23 +152,22 @@ const ClienteDetailItem = () => {
           <Link to="/clientes/">
             <button className="btn btn-primary mb-1">Lista Clientes</button>
           </Link>
-          <button
-            onClick={openModalUpdateCliente}
+          <Link to={'/clientes/update/'}            
             className="btn btn-warning mb-1"
           >
             Actualizar
-          </button>
-          <button
-            onClick={openModalDeleteCliente}
+          </Link>
+          <Link to={'/clientes/delete/'}
             className="btn btn-danger mb-1"
           >
             Eliminar
-          </button>
+          </Link>
         </div>
       </div>
+      )}
 
-      <ClienteModalUpdate />
-      <ClienteModalDelete />
+      
+      
     </div>
   );
 };
