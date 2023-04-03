@@ -7,22 +7,17 @@ import AlertError from "../Utils/AlertError";
 
 import { AuthContext } from "../../context/AuthContext";
 
-
 const TrabajadorDetail = () => {
   const { user } = useContext(AuthContext);
-  const {
-    trabajador,
-    getTrabajador,
-    loading,
-    error,
-  } = useContext(TrabajadoresContext);
+  const { trabajador, getTrabajador, loading, error } =
+    useContext(TrabajadoresContext);
 
   const { trabajadorId } = useParams();
 
   useEffect(() => {
     getTrabajador(trabajadorId);
   }, []);
-  
+
   return (
     <div className="container-sm">
       {loading ? (
@@ -132,36 +127,24 @@ const TrabajadorDetail = () => {
               </div>
             </div>
           </div>
-          
-            <div className="text-center">
-              <Link to={`/trabajadores/password/`}
-                
-                className="btn btn-outline-primary m-3"
-              >
-                Cambiar Contraseña
-              </Link>
-            </div>
-          
+
+          <div className="text-center">
+            <Link
+              to={`/trabajadores/password/`}
+              className="btn btn-outline-primary m-3"
+            >
+              Cambiar Contraseña
+            </Link>
+          </div>
+
           {user.is_staff ? (
-            <div className="card-footer text-center">              
-              <button
-                className="btn btn-warning m-1"
-              >
-                Actualizar
-              </button>
-              <button
-                
-                className="btn btn-danger m-1"
-              >
-                Eliminar
-              </button>
+            <div className="card-footer d-flex justify-content-evenly">
+              <Link to={'/trabajadores/update/'} className="btn btn-warning m-1">Actualizar</Link>
+              <Link to={'/trabajadores/delete/'} className="btn btn-danger m-1">Eliminar</Link>
             </div>
           ) : null}
         </div>
       )}
-      
-      
-      
     </div>
   );
 };

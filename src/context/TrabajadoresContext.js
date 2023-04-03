@@ -27,6 +27,7 @@ const TrabajadoresProvider = ({ children }) => {
 
   const getTrabajadores = async (tiendaId = null) => {
     try {
+      setLoading(true)
       let fullUrl = `${URL}/trabajadores/`;
       if (tiendaId){
         fullUrl = `${URL}/trabajadores/t/${tiendaId}/`
@@ -56,6 +57,7 @@ const TrabajadoresProvider = ({ children }) => {
 
   const getTrabajador = async (trabajadorId) => {
     try {
+      setLoading(true)
       const response = await fetch(`${URL}/trabajadores/${trabajadorId}/`, {
         method: "GET",
         headers: {
@@ -81,6 +83,7 @@ const TrabajadoresProvider = ({ children }) => {
 
   const trabajadorCreateItem = async (tiendaId = null) => {
     try {
+      setLoading(true)
       let fullUrl = `${URL}/trabajadores/create/`
       if (tiendaId){
         fullUrl = `${URL}/trabajadores/create/t/${tiendaId}/`
@@ -97,6 +100,7 @@ const TrabajadoresProvider = ({ children }) => {
       if (response.status === 200) {
         setLoading(false)
         getTrabajadores(tiendaId);
+        navigate('/trabajadores/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -111,6 +115,7 @@ const TrabajadoresProvider = ({ children }) => {
 
   const trabajadorUpdateItem = async () => {
     try {
+      setLoading(true)
       const response = await fetch(
         `${URL}/trabajadores/${trabajador.id}/update/`,
         {
@@ -138,8 +143,9 @@ const TrabajadoresProvider = ({ children }) => {
     }
   };
 
-  const trabajadorDeleteItem = async () => {
+  const trabajadorDeleteItem = async (tiendaId = null) => {
     try {
+      setLoading(true)
       let response = await fetch(
         `${URL}/trabajadores/${trabajador.id}/delete/`,
         {
@@ -153,8 +159,8 @@ const TrabajadoresProvider = ({ children }) => {
       let data = await response.json();
       if (response.status === 200) {
         setLoading(false)
+        getTrabajadores(tiendaId);
         navigate("/trabajadores/");
-        getTrabajadores();
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -171,7 +177,7 @@ const TrabajadoresProvider = ({ children }) => {
     try {
       setLoading(true)
       const response = await fetch(`${URL}/trabajadores/password/${trabajadorId}/`, {
-        method: "POST",
+        method: "POST", 
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -265,6 +271,8 @@ const TrabajadoresProvider = ({ children }) => {
     trabajadoresFiltrados,
     passwordUpdate,
     setPasswordUpdate,
+    newTrabajador,
+    setNewTrabajador
   };
 
   return (

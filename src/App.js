@@ -47,6 +47,9 @@ import UtilidadesCreate from './components/Utilidades/UtilidadesCreate';
 import UtilidadesDelete from './components/Utilidades/UtilidadesDelete';
 import UtilidadesUpdate from './components/Utilidades/UtilidadesUpdate';
 import TrabajadoresPassword from './components/Trabajadores/TrabajadoresPassword';
+import TrabajadorCreate from './components/Trabajadores/TrabajadorCreate';
+import TrabajadorDelete from './components/Trabajadores/TrabajadorDelete';
+import TrabajadorUpdate from './components/Trabajadores/TrabajadorUpdate';
 
 function App () {
   
@@ -98,7 +101,10 @@ function App () {
                           <Route path='/clientes/disponibles/' element={<ClientesDisponiblesListPage />} />
                           <Route path='/clientes/:clienteId/' element={<ClienteDetailItem />} />
                           <Route path='/trabajadores/' element={<TrabajadoresListPage />} />
+                          <Route path='/trabajadores/create/' element={<TrabajadorCreate />} />
                           <Route path='/trabajadores/:trabajadorId/' element={<TrabajadorDetail />} />
+                          <Route path='/trabajadores/update/' element={<TrabajadorUpdate />} />
+                          <Route path='/trabajadores/delete/' element={<TrabajadorDelete />} />
                           <Route path='/trabajadores/password/' element={<TrabajadoresPassword />} />
 
                         </Routes>
