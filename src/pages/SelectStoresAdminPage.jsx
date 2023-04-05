@@ -9,16 +9,20 @@ const SelectStoresAdminPage = () => {
     getStoresAdmin();
   }, []);
   return (
-    <div className="text-center">
-      <h2 className="text-secondary mb-2">Seleccione Ruta a Supervisar</h2>
-      <SelectStore />
-      <Link className="btn btn-success mt-4" to="/">
-        Ver Ruta
-      </Link>
-      <div className="m-4">
-        <Link className="btn btn-outline-success" to="/tiendas/create/">
-            Crear Ruta
-        </Link>
+    <div className="container-sm">
+      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
+        <h2 className=" card-header text-center text-secondary mb-2">Seleccione Ruta a Supervisar</h2> 
+        <div className="card-body text-center">
+          <SelectStore />
+          <Link className="btn btn-success mt-4" to="/">
+            Ver Ruta
+          </Link>
+        </div>
+        <div className="card-footer m-4 text-center">
+          <Link className="btn btn-outline-success" to="/tiendas/create/">
+              Crear Ruta
+          </Link>
+        </div>
       </div>
     </div>
   );

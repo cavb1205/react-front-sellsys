@@ -4,11 +4,13 @@ import { TiendaContext } from "../context/TiendaContext";
 import { AportesContext } from "../context/AportesContext";
 import { GastosContext } from "../context/GastosContext";
 import { UtilidadesContext } from "../context/UtilidadesContext";
+import { VentasContext } from "../context/VentasContext";
 const Caja = () => {
   const { tienda, getTienda, selectedStore } = useContext(TiendaContext);
   const { aportes } = useContext(AportesContext);
   const { gastos } = useContext(GastosContext);
   const { utilidades } = useContext(UtilidadesContext)
+  const { ventasActivas } = useContext(VentasContext)
 
   useEffect(() => {
     getTienda(selectedStore);
@@ -16,7 +18,7 @@ const Caja = () => {
 
   useEffect(() => {
     getTienda(selectedStore);
-  }, [aportes, gastos, utilidades]);
+  }, [aportes, gastos, utilidades, ventasActivas]);
   console.log(tienda);
   return tienda.tienda?.caja > 0 ? (
     <span className="badge text-bg-success">{tienda.tienda?.caja}</span>

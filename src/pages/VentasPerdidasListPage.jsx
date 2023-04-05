@@ -4,18 +4,19 @@ import AlertMessage from "../components/Utils/AlertMessage";
 import Paginator from "../components/Utils/Paginator";
 import VentasListHeader from "../components/Ventas/VentasListHeader";
 import VentasListItem from "../components/Ventas/VentasListItem";
+import { TiendaContext } from "../context/TiendaContext";
 import { VentasContext } from "../context/VentasContext";
 import { useFilters } from "../hooks/useFilters";
 
 const VentasPerdidasListPage = () => {
   const { ventasPerdidas, loading, getVentasPerdidas } =
     useContext(VentasContext);
-
+  const {selectedStore}=useContext(TiendaContext)
 
   const { listFilter, prevPage, nextPage } = useFilters();
 
   useEffect(() => {
-    getVentasPerdidas();
+    getVentasPerdidas(selectedStore);
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ClientesContext } from "../../context/ClientesContext";
+import { TiendaContext } from "../../context/TiendaContext";
 import AlertLoading from "../Utils/AlertLoading";
 import AlertMessage from "../Utils/AlertMessage";
 import VentasClienteResume from "../Ventas/VentasClienteResume";
@@ -15,11 +16,13 @@ const ClienteDetailItem = () => {
     loading,
   } = useContext(ClientesContext);
 
+  const {selectedStore} = useContext(TiendaContext)
+
   const { clienteId } = useParams();
 
   useEffect(() => {
     getCliente(clienteId);
-    getVentasActivasCliente(clienteId);
+    getVentasActivasCliente(clienteId,selectedStore);
   }, []);
 
   return (

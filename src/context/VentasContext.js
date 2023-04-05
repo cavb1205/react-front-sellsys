@@ -9,30 +9,21 @@ const VentasProvider = ({ children }) => {
 
   const [allVentas, setAllVentas] = useState([]);
   const [ventas, setVentas] = useState([]);
-  const [venta, setVenta] = useState({});
+  
   const [ventaDetail, setVentaDetail] = useState({});
   const [ventasActivas, setVentasActivas] = useState([]);
-  const [ventasPagas, setVentasPagas] = useState([]);
+  
   const [ventasPerdidas, setVentasPerdidas] = useState([]);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [serverError, setServerError] = useState(false);
   const [error, setError] = useState(null);
-  const [response, setResponse] = useState({});
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-  const [openModalResponse, setOpenModalResponse] = useState(false);
-
-  const [openModalDetailRecaudoItem, setOpenModalDetailRecaudoItem] =
-    useState(false);
 
   const [newVenta, setNewVenta] = useState({
     fecha_venta: createUtcDateIso(),
     valor_venta: "",
-    interes: "",
-    cuotas: "",
+    interes: 20,
+    cuotas: 20,
     comentario: "",
     cliente: "",
     fecha_vencimiento: "",
@@ -41,6 +32,7 @@ const VentasProvider = ({ children }) => {
 
   const getVentasFecha = async (fecha) => {
     try {
+      setLoading(true)
       let response = await fetch(`${URL}/ventas/list/${fecha}/`, {
         method: "GET",
         headers: {
@@ -61,9 +53,14 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const getVentasActivas = async () => {
+  const getVentasActivas = async (tiendaId = null) => {
     try {
-      let response = await fetch(`${URL}/ventas/activas/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/activas/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/activas/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -105,29 +102,16 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const getVentasPagas = async () => {
-    try {
-      let response = await fetch(`${URL}/ventas/pagas/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let data = await response.json();
-      if (response.status === 200) {
-        setVentasPagas(data);
-      } else if (response.statusText == "Unauthorized") {
-        logoutUser();
-      }
-    } catch {
-      setServerError(true);
-    }
-  };
+  
 
-  const getVentasPerdidas = async () => {
+  const getVentasPerdidas = async (tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/ventas/perdidas/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/perdidas/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/perdidas/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -136,9 +120,10 @@ const VentasProvider = ({ children }) => {
       });
       let data = await response.json();
       if (response.status === 200) {
-        setVentasPerdidas(data);
         setLoading(false);
+        setVentasPerdidas(data);
       } else if (response.statusText == "Unauthorized") {
+        setLoading(false)
         logoutUser();
       }
     } catch {
@@ -147,9 +132,14 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const ventasCreateItem = async () => {
+  const ventasCreateItem = async (tiendaId=null) => {
     try {
-      const response = await fetch(`${URL}/ventas/create/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/create/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/create/t/${tiendaId}/`
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,10 +149,8 @@ const VentasProvider = ({ children }) => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
-        alert("Venta creada...");
+        getVentasActivas(tiendaId);
         navigate("/ventas/");
-        getVentasActivas();
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -189,6 +177,7 @@ const VentasProvider = ({ children }) => {
         setVentaDetail(data);
         setLoading(false);
       } else if (response.statusText == "Unauthorized") {
+        setLoading(false)
         logoutUser();
       }
     } catch {
@@ -197,9 +186,14 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const ventaUpdateItem = async () => {
+  const ventaUpdateItem = async (tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/ventas/${ventaDetail.id}/update/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/${ventaDetail.id}/update/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/${ventaDetail.id}/update/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -209,10 +203,10 @@ const VentasProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalUpdate(!openModalUpdate);
-        navigate("/ventas/");
-        getVentasActivas();
+        setLoading(false)
+        navigate(`/ventas/${ventaDetail.id}/`);
       } else if (response.statusText == "Unauthorized") {
+        setLoading(false)
         logoutUser();
       }
     } catch {
@@ -221,9 +215,14 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const ventaDeleteItem = async () => {
+  const ventaDeleteItem = async (tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/ventas/${ventaDetail.id}/delete/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/${ventaDetail.id}/delete/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/${ventaDetail.id}/delete/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -233,16 +232,14 @@ const VentasProvider = ({ children }) => {
       let data = await response.json();
 
       if (response.status === 200) {
-        setResponse(data);
-        setOpenModalDelete(!openModalDelete);
+        setLoading(false)
+        getVentasActivas(tiendaId);
         navigate("/ventas/");
-        getVentasActivas();
       } else if (response.status === 406) {
-        setResponse(data);
-
-        setOpenModalDelete(!openModalDelete);
         alert(data.message);
+        setLoading(false)
       } else if (response.statusText == "Unauthorized") {
+        setLoading(false)
         logoutUser();
       }
     } catch {
@@ -253,6 +250,7 @@ const VentasProvider = ({ children }) => {
 
   const ventaPerdida = async () => {
     try {
+      setLoading(true)
       let response = await fetch(`${URL}/ventas/${ventaDetail.id}/perdida/`, {
         method: "PUT",
         headers: {
@@ -263,9 +261,10 @@ const VentasProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        alert("La venta se envío como pérdida.");
-        getVentasPerdidas();
+        setLoading(false)
+        navigate(`/ventas/${ventaDetail.id}/`)
       } else if (response.statusText == "Unauthorized") {
+        setLoading(false)
         logoutUser();
       }
     } catch {
@@ -274,15 +273,7 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const Selected = (venta, option) => {
-    setVenta(venta);
-
-    if (option == "Editar") {
-      setOpenModalUpdate(!openModalUpdate);
-    } else {
-      setOpenModalDelete(!openModalDelete);
-    }
-  };
+  
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -317,83 +308,30 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  
-
-  const openModalCreateVenta = () => {
-    setOpenModalCreate(!openModalCreate);
-    setNewVenta({
-      fecha_venta: createUtcDateIso(),
-      valor_venta: "",
-      interes: 20,
-      cuotas: 20,
-      comentario: "",
-      cliente: "",
-    });
-  };
-
-  const openModalUpdateVenta = () => {
-    setOpenModalUpdate(!openModalUpdate);
-  };
-
-  const openModalDeleteVenta = () => {
-    setOpenModalDelete(!openModalDelete);
-  };
-
-  const openModalDetailRecaudo = () => {
-    setOpenModalDetailRecaudoItem(!openModalDetailRecaudoItem);
-  };
-
   const contextData = {
     newVenta,
+    setNewVenta,
     allVentas,
     ventas,
-    venta,
     ventaDetail,
-
     getVentasLiquidar,
     getVentasFecha,
-    ventasPagas,
-
     ventasCreateItem,
     ventaDeleteItem,
     ventaUpdateItem,
     getVenta,
-
-    getVentasPagas,
     totalRecaudar,
-    
-
     handleChange,
     handleChangeUpdate,
-    Selected,
-
     handleSearch,
-
-    openModalCreate,
-
-    openModalUpdate,
-    openModalDelete,
-    openModalCreateVenta,
     ventaPerdida,
     ventasPerdidas,
     ventasActivas,
     getVentasPerdidas,
     getVentasActivas,
-    openModalDeleteVenta,
-
-    openModalUpdateVenta,
-
-    openModalResponse,
-    setOpenModalResponse,
-
-    openModalDetailRecaudoItem,
-    setOpenModalDetailRecaudoItem,
-    openModalDetailRecaudo,
-
     loading,
     serverError,
     error,
-    response,
     query,
   };
 

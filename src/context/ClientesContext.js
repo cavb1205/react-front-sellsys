@@ -235,10 +235,14 @@ const ClientesProvider = ({ children }) => {
     }
   };
 
-  const getVentasActivasCliente = async (clienteId) => {
+  const getVentasActivasCliente = async (clienteId, tiendaId=null) => {
     try {
       setLoading(true);
-      let response = await fetch(`${URL}/ventas/activas/${clienteId}`, {
+      let fullUrl = `${URL}/ventas/activas/${clienteId}/`
+      if (tiendaId){
+        fullUrl = `${URL}/ventas/activas/${clienteId}/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

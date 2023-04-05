@@ -53,6 +53,10 @@ import TrabajadorUpdate from './components/Trabajadores/TrabajadorUpdate';
 import ClienteCreate from './components/Clientes/ClienteCreate';
 import ClienteDelete from './components/Clientes/ClienteDelete';
 import ClienteUpdate from './components/Clientes/ClienteUpdate';
+import VentasCreate from './components/Ventas/VentasCreate';
+import VentasDelete from './components/Ventas/VentasDelete';
+import VentasUpdate from './components/Ventas/VentasUpdate';
+import VentasPerdida from './components/Ventas/VentasPerdida';
 
 function App () {
   
@@ -97,6 +101,10 @@ function App () {
                           <Route path='/ventas/' element={<VentasListPage />} />
                           <Route path='/ventas/perdidas/' element={<VentasPerdidasListPage />} />
                           <Route path='/ventas/:ventaId/' element={<VentasDetailPage />} />
+                          <Route path='/ventas/create/' element={<VentasCreate />} />
+                          <Route path='/ventas/update/' element={<VentasUpdate />} />
+                          <Route path='/ventas/delete/' element={<VentasDelete />} />
+                          <Route path='/ventas/perdida/' element={<VentasPerdida />} />
                           <Route path='/recaudos/' element={<RecaudosListPage />} />
                           <Route path='/recaudos/:recaudoId/' element={<RecaudosDetail />} />
                           <Route path='/liquidar/' element={<LiquidarVentasCardListPage />} />

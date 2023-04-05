@@ -3,21 +3,22 @@ import React, { useContext, useEffect } from "react";
 import AlertMessage from "../components/Utils/AlertMessage";
 import AlertLoading from "../components/Utils/AlertLoading";
 import VentasListHeader from "../components/Ventas/VentasListHeader";
-import VentasModalCreate from "../components/Ventas/VentasModalCreate";
 import { VentasContext } from "../context/VentasContext";
 
 import { useFilters } from "../hooks/useFilters";
 import Paginator from "../components/Utils/Paginator";
 import VentasListItem from "../components/Ventas/VentasListItem";
+import { TiendaContext } from "../context/TiendaContext";
+import { Link } from "react-router-dom";
 
 const VentasListPage = () => {
-  const { ventasActivas, getVentasActivas, openModalCreateVenta, loading } =
+  const { ventasActivas, getVentasActivas, loading } =
     useContext(VentasContext);
-
+  const {selectedStore} = useContext(TiendaContext)
   const { listFilter, prevPage, nextPage } = useFilters();
 
   useEffect(() => {
-    getVentasActivas();
+    getVentasActivas(selectedStore);
   }, []);
 
   return (
@@ -28,9 +29,9 @@ const VentasListPage = () => {
         <>
           <VentasListHeader titulo="Ventas Activas" ventas={ventasActivas} />
           <div className="my-2">
-            <button onClick={openModalCreateVenta} className="btn btn-success">
+            <Link to={'/ventas/create/'} className="btn btn-success">
               Crear Venta
-            </button>
+            </Link>
           </div>
           {ventasActivas.message ? (
             <AlertMessage message="No hay ventas activas para mostrar" />
@@ -45,8 +46,6 @@ const VentasListPage = () => {
               <Paginator nextPage={nextPage} prevPage={prevPage} />
             </>
           )}
-
-          <VentasModalCreate />
         </>
       )}
     </div>
