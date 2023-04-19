@@ -5,12 +5,14 @@ import { AportesContext } from "../context/AportesContext";
 import { GastosContext } from "../context/GastosContext";
 import { UtilidadesContext } from "../context/UtilidadesContext";
 import { VentasContext } from "../context/VentasContext";
+import { RecaudosContext } from "../context/RecaudosContext";
 const Caja = () => {
   const { tienda, getTienda, selectedStore } = useContext(TiendaContext);
   const { aportes } = useContext(AportesContext);
   const { gastos } = useContext(GastosContext);
   const { utilidades } = useContext(UtilidadesContext)
   const { ventasActivas } = useContext(VentasContext)
+  const { recaudos } = useContext(RecaudosContext)
 
   useEffect(() => {
     getTienda(selectedStore);
@@ -18,8 +20,8 @@ const Caja = () => {
 
   useEffect(() => {
     getTienda(selectedStore);
-  }, [aportes, gastos, utilidades, ventasActivas]);
-  console.log(tienda);
+  }, [aportes, gastos, utilidades, ventasActivas, recaudos]);
+  
   return tienda.tienda?.caja > 0 ? (
     <span className="badge text-bg-success">{tienda.tienda?.caja}</span>
   ) : (

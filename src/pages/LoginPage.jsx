@@ -8,9 +8,9 @@ const LoginPage = () => {
 
   return (
     <div className="container-sm">
-      <div className="m-4">
-        <form onSubmit={loginUser}>
-          <h1 className="text-center">Ingreso al Sistema</h1>
+      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
+        <form onSubmit={loginUser} className='m-4'>
+          <h1 className="text-center text-secondary">Ingreso al Sistema</h1>
           {error && <AlertError error={"Usuario o contraseña incorrectos."} />}
           <div className="form-floating mb-3">
             <input
@@ -33,21 +33,21 @@ const LoginPage = () => {
             <label>Contraseña</label>
           </div>
           <div className="text-center mt-3">
-            <button type="submmit" className="btn btn-primary">
+            <button type="submmit" className="btn btn-success btn-lg">
               Ingresar
             </button>
           </div>
         </form>
+        <div className="text-center m-4">
+          <p className="text-secondary">No tienes una cuenta?</p>
+          <Link to={"/register/"}>
+            <button type="button" className="btn btn-outline-primary">
+              Crear Cuenta
+            </button>
+          </Link>
+        </div>
       </div>
 
-      <div className="text-center m-2">
-        <p>No tienes una cuenta?</p>
-        <Link to={"/register/"}>
-          <button type="button" className="btn btn-outline-primary">
-            Crear Cuenta
-          </button>
-        </Link>
-      </div>
     </div>
   );
 };

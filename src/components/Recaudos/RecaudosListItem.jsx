@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { Badge, Card, CardBody } from 'reactstrap'
+import { RecaudosContext } from '../../context/RecaudosContext'
 
 
-const RecaudosListItem = ({ venta, selectedNoPago, SelectedRecaudo }) => {
-  
+
+const RecaudosListItem = ({ venta }) => {
+  const {selectedNoPago, SelectedRecaudo} = useContext(RecaudosContext)
   return (
-    <Card className='mb-3 shadow rounder'>
-
-      <CardBody>
+    <div className='shadow p-3 mb-3 bg-body rounded'>
+      <div className='card-body'>
         <Link className='text-decoration-none' to={`/ventas/${venta.id}/`}>
           <div className='d-flex flex-wrap justify-content-around'>
 
@@ -17,7 +17,7 @@ const RecaudosListItem = ({ venta, selectedNoPago, SelectedRecaudo }) => {
                 <h2 className='text-capitalize text-secondary'>  {venta.cliente?.nombres} {venta.cliente?.apellidos}</h2>
               </div>
               <div className='p-2'>
-                <Badge color={venta.estado_venta === 'Vencido' ? 'danger' : venta.estado_venta === 'Atrasado' ? 'warning' : 'success'} pill>{venta.estado_venta}</Badge>
+                <span className={venta.estado_venta === 'Vencido' ? 'badge rounded-pill text-bg-danger' : venta.estado_venta === 'Atrasado' ? 'badge rounded-pill text-bg-warning' : 'badge rounded-pill text-bg-success'} >{venta.estado_venta}</span>
               </div>
             </div>
             <div>
@@ -47,8 +47,8 @@ const RecaudosListItem = ({ venta, selectedNoPago, SelectedRecaudo }) => {
           <button onClick={() => selectedNoPago(venta)} className='btn btn-danger mb-2'>No Pagó</button>
           <button onClick={() => SelectedRecaudo(venta)} className='btn btn-success mb-2'>Abonar</button>
         </div>
-      </CardBody>
-    </Card>
+      </div>
+    </div>
   )
 }
 

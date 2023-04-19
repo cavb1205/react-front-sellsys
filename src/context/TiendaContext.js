@@ -6,33 +6,22 @@ import { URL } from "../config";
 
 const TiendaProvider = ({ children }) => {
 
-  let { token, logoutUser } = useContext(AuthContext);
+  let { token, logoutUser, navigate } = useContext(AuthContext);
 
   const [tienda, setTienda] = useState([]);
   const [tiendas, setTiendas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  
   const [error, setError] = useState('')
   const [cajaAnterior, setCajaAnterior] = useState({});
   const [cierresCaja, setCierresCaja] = useState([]);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-
-  const [cierre, setCierre] = useState({});
+  
   const [stores, setStores] = useState([])
   const [selectedStore, setSelectedStore] = useState('')
-
   
 
-  const openModalCierreCaja = () => {
-    setOpenModal(!openModal);
-  };
-
-  const openModalDeleteCierre = (cierre) => {
-    setCierre(cierre);
-    setOpenModalDelete(!openModalDelete);
-  };
-
     const getStoresAdmin = async ()=>{
+      setLoading(true)
       let response = await fetch(`${URL}/tiendas/list/admin/`, {
       method: "GET",
       headers: {
@@ -50,6 +39,7 @@ const TiendaProvider = ({ children }) => {
     }
 
   const getAllTiendas = async () => {
+    setLoading(true)
     let response = await fetch(`${URL}/tiendas/list/`, {
       method: "GET",
       headers: {
@@ -67,6 +57,7 @@ const TiendaProvider = ({ children }) => {
   };
 
   const getTienda = async (tiendaId = null) => {
+    setLoading(true)
     let fullUrl = `${URL}/tiendas/detail/`
     if(tiendaId){
       fullUrl = `${URL}/tiendas/detail/admin/${tiendaId}/`
@@ -88,6 +79,7 @@ const TiendaProvider = ({ children }) => {
   };
 
   const getTiendaMembresia = async () => {
+    setLoading(true)
     let response = await fetch(`${URL}/tiendas/detail/`, {
       method: "GET",
       headers: {
@@ -105,6 +97,7 @@ const TiendaProvider = ({ children }) => {
   };
 
   const getTiendaMembresiaAdmin = async () => {
+    setLoading(true)
     let response = await fetch(`${URL}/tiendas/detail/admin/${selectedStore}`, {
       method: "GET",
       headers: {
@@ -122,9 +115,14 @@ const TiendaProvider = ({ children }) => {
   };
 
 
-  const getCierresCaja = async () => {
+  const getCierresCaja = async (tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/tiendas/cierres/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/tiendas/cierres/`
+      if(tiendaId){
+        fullUrl = `${URL}/tiendas/cierres/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -146,8 +144,13 @@ const TiendaProvider = ({ children }) => {
     }
   };
 
-  const getCierreCaja = async (fecha) => {
-    let response = await fetch(`${URL}/tiendas/cierre/${fecha}/`, {
+  const getCierreCaja = async (fecha, tiendaId=null) => {
+    setLoading(true)
+    let fullUrl = `${URL}/tiendas/cierre/${fecha}/`
+    if(tiendaId){
+      fullUrl = `${URL}/tiendas/cierre/${fecha}/t/${tiendaId}/`
+    }
+    let response = await fetch(fullUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -163,8 +166,9 @@ const TiendaProvider = ({ children }) => {
     }
   };
 
-  const deleteCierresCaja = async (cierreId) => {
+  const deleteCierresCaja = async (cierreId, tiendaId=null) => {
     try {
+      setLoading(true)
       let response = await fetch(`${URL}/tiendas/cierre/delete/${cierreId}/`, {
         method: "DELETE",
         headers: {
@@ -173,10 +177,10 @@ const TiendaProvider = ({ children }) => {
         },
       });
       let data = await response.json();
-      if (response.status === 200) {
-        setOpenModalDelete(!openModalDelete);
-        getCierresCaja();
+      if (response.status === 200) {        
         setLoading(false);
+        getCierresCaja(tiendaId);
+        navigate('/cierre/delete/confirm/')
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       } else {
@@ -188,9 +192,13 @@ const TiendaProvider = ({ children }) => {
     }
   };
 
-  const postCierreCaja = async (fecha) => {
-    console.log("ingresa a post cierre caja");
-    let response = await fetch(`${URL}/tiendas/cierre/post/${fecha}/`, {
+  const postCierreCaja = async (fecha, tiendaId=null) => {
+    setLoading(true)
+    let fullUrl = `${URL}/tiendas/cierre/post/${fecha}/`
+    if (tiendaId){
+      fullUrl = `${URL}/tiendas/cierre/post/${fecha}/t/${tiendaId}/`
+    }
+    let response = await fetch(fullUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -198,8 +206,9 @@ const TiendaProvider = ({ children }) => {
       },
     });
     if (response.status === 200) {
-      setOpenModal(!openModal);
+      setLoading(false)
       alert("Cierre de Caja Exitoso");
+      navigate('/liquidar/')
     } else if (response.statusText == "Unauthorized") {
       logoutUser();
     }
@@ -209,16 +218,11 @@ const TiendaProvider = ({ children }) => {
     tienda,
     loading,
     getTienda,
-    openModalCierreCaja,
-    openModal,
     getCierreCaja,
     cajaAnterior,
     postCierreCaja,
     getCierresCaja,
     cierresCaja,
-    openModalDeleteCierre,
-    openModalDelete,
-    cierre,
     deleteCierresCaja,
     getAllTiendas,
     tiendas,

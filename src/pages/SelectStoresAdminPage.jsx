@@ -9,7 +9,7 @@ const SelectStoresAdminPage = () => {
     getStoresAdmin();
   }, []);
   return (
-    <div className="container-sm">
+    <div className="container-sm">      
       <div className="card shadow-lg p-3 mb-5 bg-body rounded">
         <h2 className=" card-header text-center text-secondary mb-2">Seleccione Ruta a Supervisar</h2> 
         <div className="card-body text-center">

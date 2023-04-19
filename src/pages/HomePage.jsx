@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import HomePageHeader from "../components/HomePage/HomePageHeader";
 import HomePageTiendaCaja from "../components/HomePage/HomePageTiendaCaja";
@@ -9,14 +10,14 @@ import AlertLoading from "../components/Utils/AlertLoading";
 
 import { TiendaContext } from "../context/TiendaContext";
 
-import CierreCajaModal from "../components/Informes/CierreCajaModal";
+
 
 
 
 
 const HomePage = () => {
   
-  const { tienda, loading, openModalCierreCaja } = useContext(TiendaContext);
+  const { tienda, loading } = useContext(TiendaContext);
 
   const infoTienda = { ...tienda.tienda };
 
@@ -30,13 +31,13 @@ const HomePage = () => {
           <HomePageHeader tienda={infoTienda} />
 
           <div className="m-2 text-center">
-            <button
-              onClick={openModalCierreCaja}
+            <Link
+              to={'/caja/'}
               type="button"
               className="btn btn-outline-danger btn-sm"
             >
               Cierre Caja
-            </button>
+            </Link>
           </div>
 
           <div>
@@ -89,8 +90,6 @@ const HomePage = () => {
           </div>
         </>
       )}
-
-      <CierreCajaModal />
     </div>
   );
 };

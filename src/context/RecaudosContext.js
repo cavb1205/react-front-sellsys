@@ -8,8 +8,6 @@ const RecaudosProvider = ({ children }) => {
 
   const [venta, setVenta] = useState({});
 
-  const [ventaDetail, setVentaDetail] = useState({});
-
   const [recaudos, setRecaudos] = useState([]);
   const [recaudo, setRecaudo] = useState({});
 
@@ -20,19 +18,7 @@ const RecaudosProvider = ({ children }) => {
     tienda: "",
   });
 
-  
-
-  const [openModalNoPago, setOpenModalNoPago] = useState(false);
-
-  const [loading, setLoading] = useState(true);
-
-  const [openModalCreate, setOpenModalCreate] = useState(false);
-  const [openModalDetail, setOpenModalDetail] = useState(false);
-  const [openModalUpdate, setOpenModalUpdate] = useState(false);
-  const [openModalDelete, setOpenModalDelete] = useState(false);
-
-  const [openModalDetailRecaudoItem, setOpenModalDetailRecaudoItem] =
-    useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [liquidarDate, setLiquidarDate] = useState({
     fecha_liquidar: createUtcDateIso(),
@@ -45,9 +31,14 @@ const RecaudosProvider = ({ children }) => {
     tienda: "",
   });
 
-  const recaudosCreateItem = async () => {
+  const recaudosCreateItem = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/recaudos/create/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/recaudos/create/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/recaudos/create/t/${tiendaId}/`;
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,8 +48,9 @@ const RecaudosProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalCreate(!openModalCreate);
+        setLoading(false);
         setNewRecaudo({});
+        navigate("/liquidar/");
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -67,9 +59,14 @@ const RecaudosProvider = ({ children }) => {
     }
   };
 
-  const recaudosCreateNoPago = async () => {
+  const recaudosCreateNoPago = async (tiendaId = null) => {
     try {
-      const response = await fetch(`${URL}/recaudos/create/nopay/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/recaudos/create/nopay/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/recaudos/create/nopay/t/${tiendaId}/`;
+      }
+      const response = await fetch(fullUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,36 +76,14 @@ const RecaudosProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalNoPago(!openModalNoPago);
-        setNewRecaudo({});
-      } else if (response.statusText == "Unauthorized") {
-        logoutUser();
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const getVenta = async (ventaId) => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${URL}/ventas/${ventaId}/`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await response.json();
-      if (response.status === 200) {
-        setVentaDetail(data);
         setLoading(false);
+        setNewRecaudo({});
+        navigate("/liquidar/");
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
     } catch (error) {
       console.error(error);
-      setLoading(false);
     }
   };
 
@@ -136,6 +111,7 @@ const RecaudosProvider = ({ children }) => {
 
   const getRecaudo = async (recaudoId) => {
     try {
+      setLoading(true);
       let response = await fetch(`${URL}/recaudos/${recaudoId}/`, {
         method: "GET",
         headers: {
@@ -147,7 +123,6 @@ const RecaudosProvider = ({ children }) => {
       if (response.status === 200) {
         setRecaudo(data);
         setLoading(false);
-        navigate(`/recaudos/${recaudoId}/`);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
       }
@@ -157,9 +132,14 @@ const RecaudosProvider = ({ children }) => {
     }
   };
 
-  const getRecaudosFecha = async (date) => {
+  const getRecaudosFecha = async (date, tiendaId = null) => {
     try {
-      let response = await fetch(`${URL}/recaudos/list/${date}`, {
+      setLoading(true);
+      let fullUrl = `${URL}/recaudos/list/${date}/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/recaudos/list/${date}/t/${tiendaId}/`;
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -179,11 +159,14 @@ const RecaudosProvider = ({ children }) => {
     }
   };
 
- 
-
-  const recaudoUpdateItem = async (recaudoId) => {
+  const recaudoUpdateItem = async (recaudoId, tiendaId = null) => {
     try {
-      let response = await fetch(`${URL}/recaudos/${recaudoId}/update/`, {
+      setLoading(true);
+      let fullUrl = `${URL}/recaudos/${recaudoId}/update/`;
+      if (tiendaId) {
+        fullUrl = `${URL}/recaudos/${recaudoId}/update/t/${tiendaId}/`;
+      }
+      let response = await fetch(fullUrl, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -193,7 +176,7 @@ const RecaudosProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalUpdate(!openModalUpdate);
+        setLoading(false);
         navigate(`/recaudos/${recaudoId}/`);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
@@ -205,7 +188,7 @@ const RecaudosProvider = ({ children }) => {
 
   const recaudoDeleteItem = async (recaudoId, ventaId) => {
     try {
-      console.log(ventaId);
+      setLoading(true);
       let response = await fetch(`${URL}/recaudos/${recaudoId}/delete/`, {
         method: "DELETE",
         headers: {
@@ -215,10 +198,7 @@ const RecaudosProvider = ({ children }) => {
       });
 
       if (response.status === 200) {
-        setOpenModalDelete(false);
-        setOpenModalDetailRecaudoItem(false);
-        getVenta(ventaId);
-        getRecaudos(ventaId);
+        setLoading(false);
         if (ventaId) {
           navigate(`/ventas/${ventaId}/`);
         } else {
@@ -230,26 +210,6 @@ const RecaudosProvider = ({ children }) => {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  const openModalDetailVenta = () => {
-    setOpenModalDetail(!openModalDetail);
-  };
-
-  const openModalCreateRecaudo = () => {
-    setOpenModalCreate(!openModalCreate);
-  };
-
-  const openModalDetailRecaudo = () => {
-    setOpenModalDetailRecaudoItem(!openModalDetailRecaudoItem);
-  };
-
-  const openModalUpdateRecaudo = () => {
-    setOpenModalUpdate(!openModalUpdate);
-  };
-
-  const openModalDeleteRecaudo = () => {
-    setOpenModalDelete(!openModalDelete);
   };
 
   const handleChange = (event) => {
@@ -264,6 +224,7 @@ const RecaudosProvider = ({ children }) => {
     comentario: "",
     tipo_falla: "Casa o Local Cerrado",
   });
+
   const handleChangeNoPago = (event) => {
     const { name, value } = event.target;
     setTipoFalla({
@@ -292,21 +253,9 @@ const RecaudosProvider = ({ children }) => {
     setLiquidarDate({ ...liquidarDate, [name]: value });
   };
 
-  const Selected = (venta, option) => {
-    setVenta(venta);
-    if (option == "Detalle") {
-      setOpenModalDetail(!openModalDetail);
-    } else if (option == "Editar") {
-      setOpenModalUpdate(!openModalUpdate);
-    } else {
-      setOpenModalDelete(!openModalDelete);
-    }
-  };
-
   //boton abonar de liquidar ventas
   const SelectedRecaudo = (venta) => {
     setVenta(venta);
-
     if (venta.saldo_actual < venta.valor_cuota) {
       setNewRecaudo({
         fecha_recaudo: liquidarDate.fecha_liquidar,
@@ -322,13 +271,12 @@ const RecaudosProvider = ({ children }) => {
         tienda: "",
       });
     }
-    setOpenModalCreate(!openModalCreate);
+    navigate("/liquidar/pay/");
   };
 
   //boton no pago de liquidar ventas
   const selectedNoPago = (venta) => {
     setVenta(venta);
-    setOpenModalNoPago(!openModalNoPago);
     setTipoFalla({
       comentario: "",
       tipo_falla: "Casa o Local Cerrado",
@@ -343,11 +291,7 @@ const RecaudosProvider = ({ children }) => {
         tipo_falla: "Casa o Local Cerrado",
       },
     });
-  };
-
-  const SelectedRecaudoItem = (recaudo) => {
-    setRecaudo(recaudo);
-    openModalDetailRecaudo();
+    navigate("/liquidar/nopay/");
   };
 
   const totalRecaudosVenta = () => {
@@ -372,27 +316,14 @@ const RecaudosProvider = ({ children }) => {
   };
 
   const contextData = {
-    openModalCreate,
-    openModalCreateRecaudo,
-    openModalDetail,
-    openModalDetailVenta,
-    openModalDetailRecaudo,
-    openModalDetailRecaudoItem,
-    openModalUpdateRecaudo,
-    openModalUpdate,
-    openModalDeleteRecaudo,
-    openModalDelete,
-    setOpenModalDetailRecaudoItem,
     venta,
-    ventaDetail,
     handleChangeDate,
     liquidarDate,
+    setLiquidarDate,
     recaudos,
     recaudo,
     newRecaudo,
     SelectedRecaudo,
-    SelectedRecaudoItem,
-    Selected,
     handleChange,
     handleChangeUpdate,
     getRecaudos,
@@ -401,17 +332,12 @@ const RecaudosProvider = ({ children }) => {
     recaudoDeleteItem,
     totalRecaudosVenta,
     selectedNoPago,
-    noPago,
-    openModalNoPago,
-    setOpenModalNoPago,
     handleChangeNoPago,
     recaudosCreateNoPago,
-
     getRecaudosFecha,
     loading,
     getRecaudo,
     totalRecaudosFecha,
-    
   };
   return (
     <RecaudosContext.Provider value={contextData}>

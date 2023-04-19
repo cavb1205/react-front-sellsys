@@ -30,10 +30,14 @@ const VentasProvider = ({ children }) => {
     saldo_actual: "",
   });
 
-  const getVentasFecha = async (fecha) => {
+  const getVentasFecha = async (fecha, tiendaId=null) => {
     try {
       setLoading(true)
-      let response = await fetch(`${URL}/ventas/list/${fecha}/`, {
+      let fullUrl = `${URL}/ventas/list/${fecha}/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/list/${fecha}/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -80,9 +84,14 @@ const VentasProvider = ({ children }) => {
     }
   };
 
-  const getVentasLiquidar = async (date) => {
+  const getVentasLiquidar = async (date, tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/ventas/activas/liquidar/${date}/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/activas/liquidar/${date}/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/activas/liquidar/${date}/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

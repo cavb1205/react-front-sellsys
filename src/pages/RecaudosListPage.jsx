@@ -8,18 +8,20 @@ import AlertMessage from "../components/Utils/AlertMessage";
 import FechaInput from "../components/Utils/FechaInput";
 import Paginator from "../components/Utils/Paginator";
 import { RecaudosContext } from "../context/RecaudosContext";
+import { TiendaContext } from "../context/TiendaContext";
 import useDateFilter from "../hooks/useDateFilter";
 import { useFilters } from "../hooks/useFilters";
 
 const RecaudosListPage = () => {
   const { recaudos, getRecaudosFecha, totalRecaudosFecha, loading } =
     useContext(RecaudosContext);
+  const {selectedStore}=useContext(TiendaContext)
 
   const { fecha, dateChange } = useDateFilter();
   const { nextPage, prevPage, listFilter } = useFilters();
 
   useEffect(() => {
-    getRecaudosFecha(fecha);
+    getRecaudosFecha(fecha, selectedStore);
   }, [fecha]);
   
   return (

@@ -55,9 +55,14 @@ const GastosProvider = ({ children }) => {
     }
   };
 
-  const getGastosFecha = async (fecha) => {
+  const getGastosFecha = async (fecha, tiendaId=null) => {
     try {
-      let response = await fetch(`${URL}/gastos/list/${fecha}/`, {
+      setLoading(true)
+      let fullUrl = `${URL}/gastos/list/${fecha}/`
+      if(tiendaId){
+        fullUrl = `${URL}/gastos/list/${fecha}/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

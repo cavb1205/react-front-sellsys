@@ -2,9 +2,7 @@ import React from "react";
 import { useEffect } from "react";
 import { useContext } from "react";
 import LiquidarVentasListHeader from "../components/Recaudos/LiquidarVentasListHeader";
-import RecaudosModalCreate from "../components/Recaudos/RecaudosModalCreate";
-import RecaudosModalNoPago from "../components/Recaudos/RecaudosModalNoPago";
-import AlertMessage from "../components/Utils/AlertMessage";
+import AlertMessage from "../components/Utils/AlertMessage"; 
 import AlertLoading from "../components/Utils/AlertLoading";
 import { RecaudosContext } from "../context/RecaudosContext";
 import { VentasContext } from "../context/VentasContext";
@@ -12,9 +10,10 @@ import { VentasContext } from "../context/VentasContext";
 import { useFilters } from "../hooks/useFilters";
 import RecaudosListItem from "../components/Recaudos/RecaudosListItem";
 import Paginator from "../components/Utils/Paginator";
+import { TiendaContext } from "../context/TiendaContext";
 
 const LiquidarVentasCardListPage = () => {
-  // const { getTienda } = useContext(TiendaContext);
+  
   const {
     getVentasLiquidar,
     handleSearch,
@@ -25,19 +24,19 @@ const LiquidarVentasCardListPage = () => {
   } = useContext(VentasContext);
 
   const {
-    SelectedRecaudo,
-    selectedNoPago,
     recaudos,
     newRecaudo,
     liquidarDate,
     getRecaudosFecha,
   } = useContext(RecaudosContext);
 
+  const {selectedStore} = useContext(TiendaContext)
+
   const { listFilter, prevPage, nextPage } = useFilters();
 
   useEffect(() => {
-    getVentasActivas();
-    getVentasLiquidar(liquidarDate.fecha_liquidar);
+    getVentasActivas(selectedStore);
+    getVentasLiquidar(liquidarDate.fecha_liquidar, selectedStore);
   }, [recaudos, newRecaudo, liquidarDate]);
 
   useEffect(() => {
@@ -56,7 +55,7 @@ const LiquidarVentasCardListPage = () => {
             ventasActivas={ventasActivas}
           />
           {ventas.message ? (
-            <AlertMessage
+            <AlertMessage 
               message={"No hay ventas para liquidar el día de hoy"}
             />
           ) : (
@@ -65,8 +64,6 @@ const LiquidarVentasCardListPage = () => {
                 <RecaudosListItem
                   key={venta.id}
                   venta={venta}
-                  SelectedRecaudo={SelectedRecaudo}
-                  selectedNoPago={selectedNoPago}
                 />
               ))}
               {listFilter(ventas, "liquidar").length === 0 ? (
@@ -79,10 +76,7 @@ const LiquidarVentasCardListPage = () => {
                 prevPage={prevPage}
               />
             </>
-          )}
-
-          <RecaudosModalCreate />
-          <RecaudosModalNoPago />
+          )}                    
         </>
       )}
     </div>

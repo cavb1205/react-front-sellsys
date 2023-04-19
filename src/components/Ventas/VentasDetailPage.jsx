@@ -283,9 +283,7 @@ const VentasDetailPage = () => {
 
                     <div className="card-footer d-flex flex-wrap justify-content-around">
                       {recaudos.length > 0 ? (
-                        <Link to={'/ventas/update/'} className="btn btn-warning mb-2" disabled>
-                          Actualizar
-                        </Link>
+                        null
                       ) : (
                         <Link to={'/ventas/update/'} className="btn btn-warning mb-2">
                           Actualizar

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, CardBody } from "reactstrap";
 
 const RecaudosVentaDetailListItem = ({ recaudo }) => {
   return (
@@ -9,8 +8,8 @@ const RecaudosVentaDetailListItem = ({ recaudo }) => {
       className="text-decoration-none"
       to={`/recaudos/${recaudo.id}/`}
     >
-      <Card className="mb-2 shadow rounder">
-        <CardBody>
+      <div className="card shadow-lg p-3 mb-3 bg-body rounded">
+        <div className="card-body">
           <div className="d-flex flex-wrap justify-content-around">
             <small className="text-secondary">{recaudo.fecha_recaudo}</small>
             <h2 className="text-capitalize text-success">
@@ -26,8 +25,8 @@ const RecaudosVentaDetailListItem = ({ recaudo }) => {
               <br />
             </div>
           ) : null}
-        </CardBody>
-      </Card>
+        </div>
+      </div>
     </Link>
   );
 };

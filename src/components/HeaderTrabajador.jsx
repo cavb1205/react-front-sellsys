@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -8,13 +8,12 @@ import {
   NavbarToggler,
   NavItem,
 } from "reactstrap";
-import { TiendaContext } from "../context/TiendaContext";
+
 
 import Caja from "./Caja";
-import CierreCajaModal from "./Informes/CierreCajaModal";
 
 const HeaderTrabajador = ({ user, isOpen, toggle, perfil, logoutUser }) => {
-    const {openModalCierreCaja} = useContext(TiendaContext)
+    
   return (
     <Navbar className="fixed-top navbar-expand-lg bg-light">
       <NavbarBrand href="#">
@@ -22,9 +21,8 @@ const HeaderTrabajador = ({ user, isOpen, toggle, perfil, logoutUser }) => {
           <Caja />
         </span>
         <span>
-            <button onClick={openModalCierreCaja} className="btn btn-outline-danger btn-sm">Cierre Caja</button>
+            <Link to={'/caja/'} className="btn btn-outline-danger btn-sm">Cierre Caja</Link>
         </span>
-        <CierreCajaModal />
       </NavbarBrand>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>

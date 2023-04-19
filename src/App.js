@@ -57,6 +57,12 @@ import VentasCreate from './components/Ventas/VentasCreate';
 import VentasDelete from './components/Ventas/VentasDelete';
 import VentasUpdate from './components/Ventas/VentasUpdate';
 import VentasPerdida from './components/Ventas/VentasPerdida';
+import RecaudosNoPago from './components/Recaudos/RecaudosNoPago';
+import RecaudosCreate from './components/Recaudos/RecaudosCreate';
+import RecaudosDelete from './components/Recaudos/RecaudosDelete';
+import RecaudosUpdate from './components/Recaudos/RecaudosUpdate';
+import CierreCaja from './components/Informes/CierreCaja';
+import CierreDeleteConfirm from './components/Informes/CierreDeleteConfirm';
 
 function App () {
   
@@ -78,7 +84,9 @@ function App () {
                         <br /><br />
                         <Routes>
                           <Route path='/register/' element={<RegisterPage />} />
+                          <Route path='/caja/' element={<CierreCaja />} />
                           <Route path='/cierres/' element={<CierresCajaPage />} />
+                          <Route path='/cierre/delete/confirm/' element={<CierreDeleteConfirm />} />
                           <Route path='/login/' element={<LoginPage />} />
                           <Route path='/' element={<HomePage />} />
                           <Route path='/select/' element={<SelectStoresAdminPage />} />
@@ -107,7 +115,11 @@ function App () {
                           <Route path='/ventas/perdida/' element={<VentasPerdida />} />
                           <Route path='/recaudos/' element={<RecaudosListPage />} />
                           <Route path='/recaudos/:recaudoId/' element={<RecaudosDetail />} />
+                          <Route path='/recaudos/update/' element={<RecaudosUpdate />} />
+                          <Route path='/recaudos/delete/' element={<RecaudosDelete />} />
                           <Route path='/liquidar/' element={<LiquidarVentasCardListPage />} />
+                          <Route path='/liquidar/pay/' element={<RecaudosCreate />} />
+                          <Route path='/liquidar/nopay/' element={<RecaudosNoPago />} />
                           <Route path='/clientes/' element={<ClientesListPage />} />
                           <Route path='/clientes/create/' element={<ClienteCreate />} />
                           <Route path='/clientes/disponibles/' element={<ClientesDisponiblesListPage />} />
