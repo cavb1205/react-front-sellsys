@@ -6,8 +6,9 @@ const HomePageTiendaInfo = () => {
 
   return (
     <div className="container-sm">
-      <div className="card shadow">
-        <div className="card-header">Información de la Ruta</div>
+      
+      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
+        <h3 className="card-header text-center text-secondary">Información de la Ruta</h3>
         <div className="card-body">
           <div className="alert alert-light">
             <h2 className="text-secondary text-center">
@@ -19,9 +20,9 @@ const HomePageTiendaInfo = () => {
             <p className="card-text">
               Estado:{" "}
               {tienda.tienda?.estado ? (
-                <span>Activa</span>
+                <span className="badge rounded-pill text-bg-success">Activa</span>
               ) : (
-                <span>Inactiva</span>
+                <span className="badge rounded-pill text-bg-danger">Inactiva</span>
               )}
             </p>
           </div>
@@ -67,7 +68,7 @@ const HomePageTiendaInfo = () => {
             </p>
           </div>
         </div>
-        <div className="card-footer text-muted">
+        <div className="card-footer text-muted text-center">
           Fecha Creación {tienda.tienda?.fecha_registro}
         </div>
       </div>

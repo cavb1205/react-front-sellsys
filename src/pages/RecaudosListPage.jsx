@@ -5,6 +5,7 @@ import { useContext } from "react";
 import InformeRecaudosListItem from "../components/Informes/InformeRecaudosListItem";
 import AlertLoading from "../components/Utils/AlertLoading";
 import AlertMessage from "../components/Utils/AlertMessage";
+import AlertWaitPayment from "../components/Utils/AlertWaitPayment";
 import FechaInput from "../components/Utils/FechaInput";
 import Paginator from "../components/Utils/Paginator";
 import { RecaudosContext } from "../context/RecaudosContext";
@@ -15,7 +16,7 @@ import { useFilters } from "../hooks/useFilters";
 const RecaudosListPage = () => {
   const { recaudos, getRecaudosFecha, totalRecaudosFecha, loading } =
     useContext(RecaudosContext);
-  const {selectedStore}=useContext(TiendaContext)
+  const {selectedStore, tienda}=useContext(TiendaContext)
 
   const { fecha, dateChange } = useDateFilter();
   const { nextPage, prevPage, listFilter } = useFilters();
@@ -26,6 +27,7 @@ const RecaudosListPage = () => {
   
   return (
     <div className="container-sm">
+      {tienda.estado == 'Pendiente Pago' && <AlertWaitPayment/>}
       <div className="text-center mb-1">
         <h1>Informe Recaudos</h1>
         {recaudos.message ? (

@@ -11,9 +11,10 @@ import { useFilters } from "../hooks/useFilters";
 import RecaudosListItem from "../components/Recaudos/RecaudosListItem";
 import Paginator from "../components/Utils/Paginator";
 import { TiendaContext } from "../context/TiendaContext";
+import AlertWaitPayment from "../components/Utils/AlertWaitPayment";
 
 const LiquidarVentasCardListPage = () => {
-  
+  const {tienda}=useContext(TiendaContext)
   const {
     getVentasLiquidar,
     handleSearch,
@@ -45,6 +46,7 @@ const LiquidarVentasCardListPage = () => {
 
   return (
     <div className="container-sm ">
+      {tienda.estado == 'Pendiente Pago' && <AlertWaitPayment/>}
       {loading ? (
         <AlertLoading />
       ) : (

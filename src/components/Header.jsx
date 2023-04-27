@@ -84,7 +84,7 @@ const Header = () => {
                       Cierres Caja
                     </Link>
                   </DropdownItem>
-                  {user.is_superuser ? (
+                  {user.username === 'root' ? (
                     <DropdownItem>
                       <Link
                         className="dropdown-item"

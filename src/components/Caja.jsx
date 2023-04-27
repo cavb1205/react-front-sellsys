@@ -6,6 +6,7 @@ import { GastosContext } from "../context/GastosContext";
 import { UtilidadesContext } from "../context/UtilidadesContext";
 import { VentasContext } from "../context/VentasContext";
 import { RecaudosContext } from "../context/RecaudosContext";
+import { useNavigate } from "react-router";
 const Caja = () => {
   const { tienda, getTienda, selectedStore } = useContext(TiendaContext);
   const { aportes } = useContext(AportesContext);
@@ -14,12 +15,17 @@ const Caja = () => {
   const { ventasActivas } = useContext(VentasContext)
   const { recaudos } = useContext(RecaudosContext)
 
-  useEffect(() => {
-    getTienda(selectedStore);
-  }, []);
+  const navigate = useNavigate()
 
   useEffect(() => {
     getTienda(selectedStore);
+  }, []);
+  console.log(tienda)
+  useEffect(() => {
+    getTienda(selectedStore);
+    if(tienda.estado === "Vencida"){
+      navigate('/expired/')
+    }
   }, [aportes, gastos, utilidades, ventasActivas, recaudos]);
   
   return tienda.tienda?.caja > 0 ? (

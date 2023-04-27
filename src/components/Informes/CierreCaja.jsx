@@ -9,6 +9,7 @@ import { VentasContext } from "../../context/VentasContext";
 import useDateFilter from "../../hooks/useDateFilter";
 import useTotalResume from "../../hooks/useTotalResume";
 import AlertLoading from "../Utils/AlertLoading";
+import AlertWaitPayment from "../Utils/AlertWaitPayment";
 
 const CierreCaja = () => {
   const {
@@ -17,6 +18,7 @@ const CierreCaja = () => {
     postCierreCaja,
     selectedStore,
     loading,
+    tienda
   } = useContext(TiendaContext);
 
   const { aportes, getAportesFecha } = useContext(AportesContext);
@@ -50,6 +52,7 @@ const CierreCaja = () => {
   
   return (
     <div className="container-sm">
+      {tienda.estado == 'Pendiente Pago' && <AlertWaitPayment/>}
       {loading ? (
         <AlertLoading />
       ) : (

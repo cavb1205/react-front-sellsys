@@ -214,6 +214,48 @@ const TiendaProvider = ({ children }) => {
     }
   };
 
+  const activateSuscriptionMounth = async (tiendaId) => {
+    setLoading(true)
+    let fullUrl = `${URL}/tiendas/activate/mounth/${tiendaId}/`
+    let response = await fetch(fullUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let data = await response.json();
+    if (response.status === 200) {
+      setLoading(false)
+      alert(data.message);
+      getAllTiendas()
+      navigate('/tiendas/')
+    } else if (response.statusText == "Unauthorized") {
+      logoutUser();
+    }
+  };
+
+  const activateSuscriptionYear = async (tiendaId) => {
+    setLoading(true)
+    let fullUrl = `${URL}/tiendas/activate/year/${tiendaId}/`
+    let response = await fetch(fullUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    let data = await response.json();
+    if (response.status === 200) {
+      setLoading(false)
+      alert(data.message);
+      getAllTiendas()
+      navigate('/tiendas/')
+    } else if (response.statusText == "Unauthorized") {
+      logoutUser();
+    }
+  };
+
   const contextData = {
     tienda,
     loading,
@@ -233,6 +275,8 @@ const TiendaProvider = ({ children }) => {
     selectedStore,
     setSelectedStore,
     getTiendaMembresiaAdmin,
+    activateSuscriptionMounth,
+    activateSuscriptionYear,
   };
   return (
     <TiendaContext.Provider value={contextData}>

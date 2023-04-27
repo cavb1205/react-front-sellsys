@@ -12,6 +12,7 @@ import AportesListItem from "../components/Aportes/AportesListItem";
 import Paginator from "../components/Utils/Paginator";
 import { TiendaContext } from "../context/TiendaContext";
 import { Link } from "react-router-dom";
+import AlertWaitPayment from "../components/Utils/AlertWaitPayment";
 
 
 const AportesListPage = () => {
@@ -35,6 +36,7 @@ const AportesListPage = () => {
 
   return (
     <div className="container-sm">
+      {tienda.estado == 'Pendiente Pago' && <AlertWaitPayment/>}
       {loading ? (
         <AlertLoading />
       ) : (

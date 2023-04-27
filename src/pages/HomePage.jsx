@@ -7,6 +7,7 @@ import HomePageTiendaCardItem from "../components/HomePage/HomePageTiendaCardIte
 import HomePageTiendaGraphip from "../components/HomePage/HomePageTiendaGraphip";
 
 import AlertLoading from "../components/Utils/AlertLoading";
+import AlertWaitPayment from "../components/Utils/AlertWaitPayment";
 
 import { TiendaContext } from "../context/TiendaContext";
 
@@ -24,6 +25,7 @@ const HomePage = () => {
   
   return (
     <div className="container-sm">
+      {tienda.estado == 'Pendiente Pago' && <AlertWaitPayment/>}
       {loading ? (
         <AlertLoading />
       ) : (

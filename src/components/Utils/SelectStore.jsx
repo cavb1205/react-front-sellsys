@@ -10,7 +10,7 @@ const SelectStore = () => {
     getTiendaMembresiaAdmin,
   } = useContext(TiendaContext);
 
-
+console.log(selectedStore)
 
   useEffect(() => {
     if (stores.length > 0) {

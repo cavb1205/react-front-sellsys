@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
   );
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  //const [membresia, setMembresia] = useState(null);
+  const [membresia, setMembresia] = useState(null);
 
   const navigate = useNavigate();
 
@@ -45,38 +45,24 @@ const AuthProvider = ({ children }) => {
       }),
     });
     const data = await response.json();
-    console.log(data.user)
     if (response.status === 200) {
       setToken(data.token);
       setRefresh(data.refresh);
       setUser(data.user);
       setPerfil(data.perfil);
-      //setMembresia(data.membresia);
+      setMembresia(data.membresia);
       localStorage.setItem("token", JSON.stringify(data.token));
       localStorage.setItem("refresh", JSON.stringify(data.refresh));
       localStorage.setItem("user", JSON.stringify(data.user));
       localStorage.setItem("perfil", JSON.stringify(data.perfil));
-      navigate("/liquidar/");
-      // if (membresia == 'Vencida'){
-      //     navigate("/")
-      //     alert(membresia)
-      // }
-      // if (membresia == 'Pendiente Pago'){
-      //     navigate("/")
-      //     alert(membresia)
-      // }
-
-      // if (data.user.is_superuser){
-      //     navigate("/tiendas/")
-      // }else if(data.user.is_active){
-      //     navigate("/liquidar/");
-      // }
-      // else {
-      //     alert('Usuario no esta activo!')
-      //     logoutUser()
-      // }
-    } 
-    else {
+      if (data.user?.username == "root") {        
+        navigate("/tiendas/");
+      } else if (data.user.is_superuser) {        
+        navigate("/select/");
+      } else {
+        navigate("/liquidar/");
+      }
+    } else {
       setError(!error);
     }
   };
@@ -131,13 +117,14 @@ const AuthProvider = ({ children }) => {
     handleSearch,
     setQuery,
     perfil,
+    membresia,
   };
 
   useEffect(() => {
     if (loading) {
       updateToken();
     }
-    let minutes = 4;
+    let minutes = 10;
     let calc_time = 1000 * 60 * minutes;
     let interval = setInterval(() => {
       if (token) {

@@ -9,11 +9,13 @@ import { ClientesContext } from "../context/ClientesContext";
 import { useFilters } from "../hooks/useFilters";
 import ClienteListItem from "../components/Clientes/ClienteListItem";
 import { TiendaContext } from "../context/TiendaContext";
+import AlertWaitPayment from "../components/Utils/AlertWaitPayment";
 
 const ClientesListPage = () => {
+  
   const { loading, clientes, getClientes } = useContext(ClientesContext);
 
-  const { selectedStore } = useContext(TiendaContext);
+  const { tienda,selectedStore } = useContext(TiendaContext);
 
   const { nextPage, prevPage, listFilter } = useFilters();
 
@@ -23,6 +25,7 @@ const ClientesListPage = () => {
 
   return (
     <div className="container-sm">
+      {tienda.estado == 'Pendiente Pago' && <AlertWaitPayment/>}
       {!loading ? (
         <>
           <ClientesHeaderListPage clientes={clientes} />
