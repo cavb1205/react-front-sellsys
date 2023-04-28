@@ -41,7 +41,7 @@ const LiquidarVentasCardListPage = () => {
   }, [recaudos, newRecaudo, liquidarDate]);
 
   useEffect(() => {
-    getRecaudosFecha(liquidarDate.fecha_liquidar);
+    getRecaudosFecha(liquidarDate.fecha_liquidar, selectedStore);
   }, [liquidarDate, newRecaudo]);
 
   return (

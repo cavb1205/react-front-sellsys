@@ -11,22 +11,23 @@ const AlertMembershipExpiration = () => {
                 </p>
                 <div className='text-center'>
                     <h5 className='text-secondary'>Planes:</h5>
+                    <p className='text-center text-secondary'>Para pagar onlinecon Mercado Pago selecciona el plan de preferencia:</p>
                     <div className='d-flex justify-content-evenly'>
-                        <div className='card shadow-lg p-3 mb-4 bg-body rounded'>
+                        <a href='https://mpago.la/1HxUBxW' target="_blank" className='card shadow-lg p-3 mb-4 bg-body rounded text-decoration-none' rel="noreferrer">
                             <h6 className='text-primary'>Mensual</h6>
-                            <h6 className='text-secondary'>20 USD</h6>
-                        </div>
-                        <div className='card shadow-lg p-3 mb-4 bg-body rounded'>
+                            <h6 className='text-secondary'>20000 CLP</h6>
+                        </a>
+                        <a href='https://mpago.la/1XYGqqS' target='_blank' className='card shadow-lg p-3 mb-4 bg-body rounded text-decoration-none' rel="noreferrer">
                             <h6 className='text-success'>Anual</h6>
-                            <h6 className='text-secondary'>180 USD</h6>
-                        </div>
+                            <h6 className='text-secondary'>180000 CLP</h6>
+                        </a>
                     </div>
                 </div>
                 <p className='text-secondary'>
                     Para continuar utilidando el sistema realice el pago correspondiente a su suscripción y envíe el comprobante de pago al siguiente whatsapp
                 </p>
                 <div className='text-center'>
-                    <a href='https://api.whatsapp.com/send?phone=56963511337' target="_blank" className='btn btn-success btn-lg' rel="noreferrer">Whatsapp</a>
+                    <a href='https://api.whatsapp.com/send?phone=56963511337' target="_blank" className='btn btn-outline-success btn-lg' rel="noreferrer">Whatsapp</a>
                 </div>
             </div>
         </div>

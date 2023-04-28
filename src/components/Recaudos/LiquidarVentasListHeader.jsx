@@ -6,8 +6,10 @@ import Search from "../Utils/Search";
 const LiquidarVentasListHeader = (props) => {
   const { ventas, ventasActivas } = props;
 
-  const { handleChangeDate, liquidarDate, totalRecaudosFecha } =
+  const { handleChangeDate, liquidarDate, recaudos } =
     useContext(RecaudosContext);
+  
+    console.log(recaudos)
 
   const totalRecaudar = () => {
     if (ventas.message) {
@@ -25,6 +27,17 @@ const LiquidarVentasListHeader = (props) => {
     } else {
       return ventasActivas
         .map((venta) => parseFloat(venta.valor_cuota))
+        .reduce((a, b) => a + b, 0);
+    }
+  };
+
+  const totalRecaudosFecha = () => {
+    if (recaudos.message) {
+      return 0;
+    } else {
+      // liquidarDate
+      return recaudos
+        .map((recaudo) => parseFloat(recaudo.valor_recaudo))
         .reduce((a, b) => a + b, 0);
     }
   };
