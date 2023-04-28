@@ -65,6 +65,7 @@ import CierreCaja from './components/Informes/CierreCaja';
 import CierreDeleteConfirm from './components/Informes/CierreDeleteConfirm';
 import AlertMembershipExpiration from './components/Utils/AlertMembershipExpiration';
 
+
 function App () {
   
   
@@ -83,7 +84,7 @@ function App () {
                           <Header />
                         </div>
                         <br /><br />
-                        <Routes>
+                        <Routes>                          
                           <Route path='/expired/' element={<AlertMembershipExpiration />} />
                           <Route path='/register/' element={<RegisterPage />} />
                           <Route path='/caja/' element={<CierreCaja />} />
