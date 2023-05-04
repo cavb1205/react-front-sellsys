@@ -1,7 +1,7 @@
 import React from "react";
 import Search from "../Utils/Search";
 
-const GastosListHeader = ({ gastos, totalGastos, query }) => {
+const GastosListHeader = ({ gastos, totalGastos, query, user }) => {
   return (
     <>
       <div className="text-center">
@@ -22,11 +22,15 @@ const GastosListHeader = ({ gastos, totalGastos, query }) => {
             </span>
           </span>
         )}
-        <p>
-          Total Gastos: <span className="badge bg-danger">{totalGastos}</span>
-        </p>
+        {user.is_staff || user.is_superuser?(
+          <p>
+            Total Gastos: <span className="badge bg-danger">{totalGastos}</span>
+          </p>
+        ):(
+          null
+        )}
       </div>
-      <div className="text-center">
+      <div className="text-center m-2">
         <Search />
       </div>
     </>

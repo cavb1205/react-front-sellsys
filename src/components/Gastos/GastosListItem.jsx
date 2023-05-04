@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, CardBody } from "reactstrap";
 
-const GastosListItem = ({ gasto, index, gastoSelected }) => {
+const GastosListItem = ({ gasto, index, gastoSelected,user }) => {
+  console.log(user)
   return (
     <Card className="mb-3 shadow rounder">
       <CardBody>
@@ -21,13 +22,15 @@ const GastosListItem = ({ gasto, index, gastoSelected }) => {
             Comentario: {gasto.comentario}
           </p>
         </div>
+        {user.is_staff || user.is_superuser ?(
+
         <div className="d-flex flex-wrap justify-content-around mt-1">
           <button
             onClick={() => gastoSelected(gasto, "Editar")}
             className="btn btn-warning"
           >
             Actualizar
-          </button>
+          </button>          
           <button
             onClick={() => gastoSelected(gasto, "Eliminar")}
             className="btn btn-danger"
@@ -35,6 +38,9 @@ const GastosListItem = ({ gasto, index, gastoSelected }) => {
             ELiminar
           </button>
         </div>
+        ):
+        null
+        }
       </CardBody>
     </Card>
   );

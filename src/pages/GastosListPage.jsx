@@ -26,7 +26,7 @@ const GastosListPage = () => {
 
   const {tienda, selectedStore} = useContext(TiendaContext)
 
-  const { query } = useContext(AuthContext);
+  const { query, user } = useContext(AuthContext);
 
   const { prevPage, nextPage, listFilter } = useFilters();
 
@@ -45,6 +45,7 @@ const GastosListPage = () => {
             gastos={gastos}
             totalGastos={tienda.tienda?.gastos}
             query={query}
+            user={user}
           />
 
           <div className="d-flex justify-content-around m-4">
@@ -53,11 +54,15 @@ const GastosListPage = () => {
             >
               Crear Gasto
             </Link>
+            {user.is_staff || user.is_superuser?(
             <Link to={'/gastos/tipo/create/'}
               className="btn btn-primary"
             >
               Crear Tipo Gasto
             </Link>
+            ):(
+              null
+            )}
           </div>
 
           {gastos.message ? (
@@ -70,6 +75,7 @@ const GastosListPage = () => {
                   gasto={gasto}
                   index={index}
                   gastoSelected={gastoSelected}
+                  user={user}
                 />
               ))}
               {listFilter(gastos, "gastos").length === 0 ? (
