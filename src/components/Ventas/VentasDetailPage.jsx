@@ -280,23 +280,37 @@ const VentasDetailPage = () => {
                         </span>
                       </div>
                     </div>
-
-                    <div className="card-footer d-flex flex-wrap justify-content-around">
-                      {recaudos.length > 0 ? (
-                        null
-                      ) : (
-                        <Link to={'/ventas/update/'} className="btn btn-warning mb-2">
-                          Actualizar
+                    
+                    {user.is_staff || user.is_superuser ?(
+                      <div className="card-footer d-flex flex-wrap justify-content-around">
+                        {recaudos.length > 0 ? null : (
+                          <Link
+                            to={"/ventas/update/"}
+                            className="btn btn-warning mb-2"
+                          >
+                            Actualizar
+                          </Link>
+                        )}
+                        <Link
+                          to={"/ventas/delete/"}
+                          className="btn btn-danger mb-2"
+                        >
+                          Eliminar
                         </Link>
-                      )}
-                      <Link to={'/ventas/delete/'} className="btn btn-danger mb-2">Eliminar</Link>
-                      <Link to="/ventas/" className="btn btn-secondary mb-2">
-                        Lista Ventas
-                      </Link>
-                    </div>
-                    {user.is_staff ? (
+                        <Link to="/ventas/" className="btn btn-secondary mb-2">
+                          Lista Ventas
+                        </Link>
+                      </div>
+                    ):(
+                      null
+                    )}
+
+                    {user.is_staff || user.is_superuser ? (
                       <div className="d-flex justify-content-center">
-                        <Link to={'/ventas/perdida/'} className="btn btn-outline-danger">
+                        <Link
+                          to={"/ventas/perdida/"}
+                          className="btn btn-outline-danger"
+                        >
                           Pérdida
                         </Link>
                       </div>
