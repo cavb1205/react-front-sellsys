@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { RecaudosContext } from "../../context/RecaudosContext";
 import AlertLoading from "../Utils/AlertLoading";
+import { AuthContext } from "../../context/AuthContext";
 
 const RecaudosDetail = () => {
   const { recaudoId } = useParams();
 
   const { getRecaudo, recaudo, loading } = useContext(RecaudosContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     getRecaudo(recaudoId);
@@ -45,14 +47,18 @@ const RecaudosDetail = () => {
                 <p>Comentario: {recaudo.visita_blanco?.comentario}</p>
               ) : null}
             </div>
-            <div className="d-flex justify-content-evenly m-3">
-              <Link to={"/recaudos/update/"} className="btn btn-warning">
-                Actualizar
-              </Link>
-              <Link to={"/recaudos/delete/"} className="btn btn-danger">
-                Eliminar
-              </Link>
-            </div>
+            {user.is_staff || user.is_superuser ?(
+              <div className="d-flex justify-content-evenly m-3">
+                <Link to={"/recaudos/update/"} className="btn btn-warning">
+                  Actualizar
+                </Link>
+                <Link to={"/recaudos/delete/"} className="btn btn-danger">
+                  Eliminar
+                </Link>
+              </div>
+            ):(
+              null
+            )}
           </div>
         </div>
       )}
