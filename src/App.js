@@ -64,11 +64,10 @@ import RecaudosUpdate from './components/Recaudos/RecaudosUpdate';
 import CierreCaja from './components/Informes/CierreCaja';
 import CierreDeleteConfirm from './components/Informes/CierreDeleteConfirm';
 import AlertMembershipExpiration from './components/Utils/AlertMembershipExpiration';
+import LandingPage from './pages/LandingPage';
 
 
 function App () {
-  
-  
   return (
     <div className='App'>
       <AuthProvider>
@@ -80,11 +79,12 @@ function App () {
                   <UtilidadesProvider>
                     <RecaudosProvider>
                       <TiendaProvider>
-                        <div className='mb-5'>                  
+                        <div className='mb-3'>                  
                           <Header />
                         </div>
                         <br /><br />
-                        <Routes>                          
+                        <Routes> 
+                          <Route path='/index/' element={<LandingPage />} />                         
                           <Route path='/expired/' element={<AlertMembershipExpiration />} />
                           <Route path='/register/' element={<RegisterPage />} />
                           <Route path='/caja/' element={<CierreCaja />} />

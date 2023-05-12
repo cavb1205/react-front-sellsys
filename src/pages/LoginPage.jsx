@@ -7,10 +7,11 @@ const LoginPage = () => {
   const { loginUser, error } = useContext(AuthContext);
 
   return (
+    
     <div className="container-sm">
-      <div className="card shadow-lg p-3 mb-5 bg-body rounded">
-        <form onSubmit={loginUser} className='m-4'>
-          <h1 className="text-center text-secondary">Ingreso al Sistema</h1>
+      <div className="card shadow-lg p-3 mb-3 bg-body rounded">
+        <form onSubmit={loginUser} className='m-2'>
+          <h3 className="text-center text-secondary">Ingreso al Sistema</h3>
           {error && <AlertError error={"Usuario o contraseña incorrectos."} />}
           <div className="form-floating mb-3">
             <input
@@ -20,7 +21,7 @@ const LoginPage = () => {
               id="floatingInput"
               placeholder="Usuario"
             />
-            <label>Usuario</label>
+            <label className="text-secondary">Usuario</label>
           </div>
           <div className="form-floating">
             <input
@@ -30,7 +31,7 @@ const LoginPage = () => {
               id="floatingPassword"
               placeholder="Password"
             />
-            <label>Contraseña</label>
+            <label className="text-secondary">Contraseña</label>
           </div>
           <div className="text-center mt-3">
             <button type="submmit" className="btn btn-success btn-lg">
@@ -38,6 +39,7 @@ const LoginPage = () => {
             </button>
           </div>
         </form>
+       
         <div className="text-center m-4">
           <p className="text-secondary">No tienes una cuenta?</p>
           <Link to={"/register/"}>

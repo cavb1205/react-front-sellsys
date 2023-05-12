@@ -75,7 +75,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("token");
     localStorage.removeItem("refresh");
     localStorage.removeItem("user");
-    navigate("/login/");
+    navigate("/index/");
   };
 
   const updateToken = async () => {
@@ -130,7 +130,7 @@ const AuthProvider = ({ children }) => {
       if (token) {
         updateToken();
       } else {
-        navigate("/login/");
+        navigate("/index/");
       }
     }, calc_time);
     return () => clearInterval(interval);

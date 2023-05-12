@@ -140,7 +140,7 @@ const TrabajadorDetail = () => {
           {user.is_staff ? (
             <div className="card-footer d-flex justify-content-evenly">
               <Link to={'/trabajadores/update/'} className="btn btn-warning m-1">Actualizar</Link>
-              <Link to={'/trabajadores/delete/'} className="btn btn-danger m-1">Eliminar</Link>
+              {/* <Link to={'/trabajadores/delete/'} className="btn btn-danger m-1">Eliminar</Link> */}
             </div>
           ) : null}
         </div>
