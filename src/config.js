@@ -3,7 +3,7 @@
 // export const URL = 'http://localhost:8000';
 
 //produccion
- export const URL = 'https://137.184.176.199:8000';
+ export const URL = 'https://api.carterafinanciera.com';
 
 
 //# de items a mostrar en la paginacion 
