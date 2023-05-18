@@ -7,4 +7,4 @@
 
 
 //# de items a mostrar en la paginacion 
-export const ITEMS = 10
+export const ITEMS = 20

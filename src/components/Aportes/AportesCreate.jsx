@@ -84,11 +84,15 @@ const AportesCreate = () => {
                     required
                     >
                         <option>Select</option>
-                    {trabajadores.map((aportante) => (
-                        <option key={aportante.id} value={aportante.id}>
-                        {aportante.trabajador}
-                        </option>
-                    ))}
+                        {trabajadores.length > 0? (
+                          trabajadores.map((aportante) => (
+                              <option key={aportante.id} value={aportante.id}>
+                              {aportante.trabajador}
+                              </option>
+                          ))
+                        ):(
+                          <option>No se han creado trabajadores</option>
+                        )}
                     </select>
                 </div>
             </div>

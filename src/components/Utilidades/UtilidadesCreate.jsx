@@ -83,15 +83,20 @@ const UtilidadesCreate = () => {
                   onChange={handleChange}
                   value={newUtilidad.trabajador}
                   name="trabajador"
-                  className="form-control"
+                  className="form-select"
                   required
                 >
                   <option />
-                  {aportantes.map((aportante) => (
-                    <option key={aportante.id} value={aportante.id}>
-                      {aportante.trabajador}
-                    </option>
-                  ))}
+                  {aportantes.length > 0 ?(
+                    aportantes.map((aportante) => (
+                      <option key={aportante.id} value={aportante.id}>
+                        {aportante.trabajador}
+                      </option>
+                    ))
+                  ):(
+                    <option>No se ha creado trabajadores</option>
+                  )
+                  }                  
                 </select>
               </div>
               <div className="card-footer text-center">
