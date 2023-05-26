@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-
 const HomeLastActivity = ({ ventas, gastos }) => {
   const totalVentas = () => {
     if (ventas.length > 0) {
@@ -27,33 +26,37 @@ const HomeLastActivity = ({ ventas, gastos }) => {
       <h6 className="text-secondary text-center">Actividad del Día</h6>
       <div className="card-header">
         <ul className="nav nav-tabs card-header-tabs d-flex justify-content-evenly">
-          <li className="nav-item">
-            <a
-              id="ventas-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#ventas"
-              className="nav-link active position-relative"
-              aria-current="true"
-            >
-              Ventas
-              <span className="position-absolute start-100 top-0 translate-middle badge rounded-pill bg-info">
-                {ventas.length}
-              </span>
-            </a>
-          </li>
-          <li className="nav-item">
-            <a
-              id="gastos-tab"
-              data-bs-toggle="tab"
-              data-bs-target="#gastos"
-              className="nav-link position-relative"
-            >
-              Gastos
-              <span className="position-absolute start-100 top-0 translate-middle badge rounded-pill bg-info">
-                {gastos.length}
-              </span>
-            </a>
-          </li>
+          {ventas.length > 0 ? (
+            <li className="nav-item">
+              <a
+                id="ventas-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#ventas"
+                className="nav-link active position-relative"
+                aria-current="true"
+              >
+                Ventas
+                <span className="position-absolute start-100 top-0 translate-middle badge rounded-pill bg-info">
+                  {ventas.length}
+                </span>
+              </a>
+            </li>
+          ) : null}
+          {gastos.length > 0 ? (
+            <li className="nav-item">
+              <a
+                id="gastos-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#gastos"
+                className="nav-link position-relative"
+              >
+                Gastos
+                <span className="position-absolute start-100 top-0 translate-middle badge rounded-pill bg-info">
+                  {gastos.length}
+                </span>
+              </a>
+            </li>
+          ) : null}
         </ul>
       </div>
       <div className="card-body tab-content" id="myTabContent">

@@ -4,14 +4,8 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 const Rating = ({ promedioDiasAtrasados }) => {
   const maxStars = 5;
 
-  const filledStars = promedioDiasAtrasados < 0 ? Math.ceil(Math.abs(promedioDiasAtrasados)) : 0;
-
-  const StarStyles = (index) => {
-    if (index < filledStars) {
-      return { color: "yellow" };
-    }
-    return { color: "gray" };
-  };
+  const filledStars =
+    promedioDiasAtrasados < 0 ? Math.ceil(Math.abs(promedioDiasAtrasados)) : 0;
 
   return (
     <div>
@@ -20,9 +14,11 @@ const Rating = ({ promedioDiasAtrasados }) => {
         {[...Array(maxStars)].map((_, index) => (
           <h4 className="text-secondary" key={index}>
             {index < filledStars ? (
-              <AiFillStar className="text-warning" style={StarStyles(index)} />
+              <AiFillStar className="text-warning"  />
             ) : (
-              <AiOutlineStar className="text-secondary" style={StarStyles(index)} />
+              <AiOutlineStar
+                className="text-secondary"
+              />
             )}
           </h4>
         ))}

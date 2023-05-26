@@ -22,6 +22,7 @@ const ClientesListPage = () => {
   useEffect(() => {
     getClientes(selectedStore);
   }, []);
+  
 
   return (
     <div className="container-sm">
