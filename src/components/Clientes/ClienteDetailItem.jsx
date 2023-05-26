@@ -6,6 +6,8 @@ import AlertLoading from "../Utils/AlertLoading";
 import AlertMessage from "../Utils/AlertMessage";
 import VentasClienteResume from "../Ventas/VentasClienteResume";
 import VentasClientHistoryList from "../Ventas/VentasClientHistoryList";
+import Rating from "../Utils/Rating";
+
 
 const ClienteDetailItem = () => {
   const {
@@ -24,6 +26,15 @@ const ClienteDetailItem = () => {
     getCliente(clienteId);
     getVentasActivasCliente(clienteId,selectedStore);
   }, []);
+console.log(ventasActivas)
+const calcularPromedioDias = ()=>{
+  const totalSuma = ventasActivas.reduce((total, venta) => total+venta.dias_atrasados,0)
+  
+  return totalSuma / ventasActivas.length;
+} 
+    
+console.log(calcularPromedioDias())
+
 
   return (
     <div className="container-sm">
@@ -60,6 +71,7 @@ const ClienteDetailItem = () => {
           {/* SECCION INFORMACION PERSONAL DEL CLIENTE */}
 
           <div className="card-body tab-pane fade show active" id="info">
+            <Rating promedioDiasAtrasados={calcularPromedioDias()}/>
             <div>
               <div className="row justify-content-around my-2">
                 <div className="col-5">
