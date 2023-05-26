@@ -26,14 +26,14 @@ const ClienteDetailItem = () => {
     getCliente(clienteId);
     getVentasActivasCliente(clienteId,selectedStore);
   }, []);
-console.log(ventasActivas)
+
 const calcularPromedioDias = ()=>{
   const totalSuma = ventasActivas.reduce((total, venta) => total+venta.dias_atrasados,0)
   
   return totalSuma / ventasActivas.length;
 } 
     
-console.log(calcularPromedioDias())
+
 
 
   return (
