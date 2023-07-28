@@ -75,6 +75,26 @@ const Header = () => {
                     </Link>
                   </DropdownItem>
                   <DropdownItem divider />
+                  {/* <DropdownItem>
+                    <Link
+                      className="dropdown-item"
+                      to="/informes/fecha/"
+                      onClick={toggle}
+                    >
+                      Resumen por Fecha
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem divider /> */}
+                  <DropdownItem>
+                    <Link
+                      className="dropdown-item"
+                      to="/informes/utilidad/"
+                      onClick={toggle}
+                    >
+                      Informe Utilidad
+                    </Link>
+                  </DropdownItem>
+                  <DropdownItem divider />
                   <DropdownItem>
                     <Link
                       className="dropdown-item"

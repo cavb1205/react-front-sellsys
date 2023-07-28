@@ -12,7 +12,7 @@ const VentasProvider = ({ children }) => {
   
   const [ventaDetail, setVentaDetail] = useState({});
   const [ventasActivas, setVentasActivas] = useState([]);
-  
+  const [ventasFecha, setVentasFecha] = useState([]);
   const [ventasPerdidas, setVentasPerdidas] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -47,6 +47,34 @@ const VentasProvider = ({ children }) => {
       let data = await response.json();
       if (response.status === 200) {
         setAllVentas(data);
+        setLoading(false);
+      } else if (response.statusText == "Unauthorized") {
+        logoutUser();
+      }
+    } catch {
+      setServerError(true);
+      setLoading(false);
+    }
+  };
+
+
+  const getVentasRangoFechas = async (fecha,fechaFin, tiendaId=null) => {
+    try {
+      setLoading(true)
+      let fullUrl = `${URL}/ventas/list/${fecha}/${fechaFin}/`
+      if(tiendaId){
+        fullUrl = `${URL}/ventas/list/${fecha}/${fechaFin}/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let data = await response.json();
+      if (response.status === 200) {
+        setVentasFecha(data);
         setLoading(false);
       } else if (response.statusText == "Unauthorized") {
         logoutUser();
@@ -342,6 +370,8 @@ const VentasProvider = ({ children }) => {
     serverError,
     error,
     query,
+    getVentasRangoFechas,
+    ventasFecha
   };
 
   return (

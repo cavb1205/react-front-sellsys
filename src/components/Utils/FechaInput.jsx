@@ -6,6 +6,7 @@ const FechaInput = ({fecha='', dateChange}) => {
     <div className="text-center mb-2">
       <span className="badge bg-primary">
         Fecha:{" "}
+          
         <input onChange={dateChange} value={fecha} type="date" name="fecha" />
       </span>
     </div>

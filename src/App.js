@@ -65,6 +65,8 @@ import CierreCaja from './components/Informes/CierreCaja';
 import CierreDeleteConfirm from './components/Informes/CierreDeleteConfirm';
 import AlertMembershipExpiration from './components/Utils/AlertMembershipExpiration';
 import LandingPage from './pages/LandingPage';
+import ResumenFechas from './components/Informes/ResumenFechas';
+import InformeUtilidad from './components/Informes/InformeUtilidad';
 
 
 function App () {
@@ -135,6 +137,8 @@ function App () {
                           <Route path='/trabajadores/update/' element={<TrabajadorUpdate />} />
                           <Route path='/trabajadores/delete/' element={<TrabajadorDelete />} />
                           <Route path='/trabajadores/password/' element={<TrabajadoresPassword />} />
+                          <Route path='/informes/fecha/' element={<ResumenFechas />} /> 
+                          <Route path='/informes/utilidad/' element={<InformeUtilidad />} />
                         </Routes>
 
                       </TiendaProvider>

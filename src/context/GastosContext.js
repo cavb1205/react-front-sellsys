@@ -8,7 +8,7 @@ const GastosProvider = ({ children }) => {
 
   const [tipoGastos, setTipoGastos] = useState([]);
   const [newTipoGasto, setNewTipoGasto] = useState({});
-  
+  const [gastosFecha, setGastosFecha] = useState([]);
 
   const [gastos, setGastos] = useState([]);
   const [gasto, setGasto] = useState({
@@ -81,6 +81,34 @@ const GastosProvider = ({ children }) => {
       setServerError(true);
     }
   };
+
+  const getGastosRangoFechas = async (fecha,fechaFin, tiendaId=null) => {
+    try {
+      setLoading(true)
+      let fullUrl = `${URL}/gastos/list/${fecha}/${fechaFin}/`
+      if(tiendaId){
+        fullUrl = `${URL}/gastos/list/${fecha}/${fechaFin}/t/${tiendaId}/`
+      }
+      let response = await fetch(fullUrl, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let data = await response.json();
+      if (response.status === 200) {
+        setGastosFecha(data);
+        setLoading(false);
+      } else if (response.statusText == "Unauthorized") {
+        logoutUser();
+      }
+    } catch {
+      setLoading(false);
+      setServerError(true);
+    }
+  };
+
 
   const getTipoGastos = async () => {
     let response = await fetch(`${URL}/gastos/tipo/`, {
@@ -254,6 +282,8 @@ const GastosProvider = ({ children }) => {
     serverError,
     getTipoGastos,
     query,
+    getGastosRangoFechas,
+    gastosFecha
   };
 
   return (

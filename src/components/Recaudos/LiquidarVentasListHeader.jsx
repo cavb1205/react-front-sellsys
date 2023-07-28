@@ -9,7 +9,7 @@ const LiquidarVentasListHeader = (props) => {
   const { handleChangeDate, liquidarDate, recaudos } =
     useContext(RecaudosContext);
   
-    console.log(recaudos)
+    
 
   const totalRecaudar = () => {
     if (ventas.message) {

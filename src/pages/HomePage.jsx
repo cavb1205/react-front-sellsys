@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
+// import '../index.css'
 
 import HomePageHeader from "../components/HomePage/HomePageHeader";
 import HomePageTiendaCaja from "../components/HomePage/HomePageTiendaCaja";
