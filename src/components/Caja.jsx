@@ -20,7 +20,7 @@ const Caja = () => {
   useEffect(() => {
     getTienda(selectedStore);
   }, []);
-  console.log(tienda)
+  
   useEffect(() => {
     getTienda(selectedStore);
     if(tienda.estado === "Vencida"){

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import FechaInput from "../Utils/FechaInput";
 import useDateFilter from "../../hooks/useDateFilter";
 import { GastosContext } from "../../context/GastosContext";
@@ -7,27 +7,38 @@ import { TiendaContext } from "../../context/TiendaContext";
 const InformeUtilidad = () => {
   const { fecha, fechaFin, dateChange, dateChangeFin } = useDateFilter();
   const { gastosFecha, getGastosRangoFechas } = useContext(GastosContext);
-  const { ventasFecha, getVentasRangoFechas } = useContext(VentasContext);
+  const { ventasFecha, getVentasRangoFechas } =
+    useContext(VentasContext);
   const { selectedStore } = useContext(TiendaContext);
 
-  useEffect(() => {
-    getGastosRangoFechas(fecha, fechaFin, selectedStore);
-    getVentasRangoFechas(fecha, fechaFin, selectedStore);
-  }, [fecha, fechaFin]);
+  const [dateRange, setDateRange] = React.useState([]);
+
+  
+
+  const handleButtonClick = async () => {
+    console.log("handleButtonClick");
+    await getGastosRangoFechas(fecha, fechaFin, selectedStore);
+    await getVentasRangoFechas(fecha, fechaFin, selectedStore);
+    setDateRange(getDatesInRange(fecha, fechaFin));
+  };
 
   const getDatesInRange = (startDate, endDate) => {
     let dates = [];
     let currentDate = new Date(startDate);
     endDate = new Date(endDate);
 
-    while (currentDate <= endDate) {
+    if (currentDate.getTime() === endDate.getTime()) {
+    
       dates.push(currentDate.toISOString().split("T")[0]);
-      currentDate.setDate(currentDate.getDate() + 1);
+    } else {
+    
+      while (currentDate <= endDate) {
+        dates.push(currentDate.toISOString().split("T")[0]);
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
     }
     return dates;
   };
-
-  const dateRange = getDatesInRange(fecha, fechaFin);
 
   const calculoPorDia = (dia) => {
     let ventasTotales = 0;
@@ -36,32 +47,24 @@ const InformeUtilidad = () => {
     let utilidad = 0;
     let valor = 0;
     if (gastosFecha.message) {
-      return {
-        fecha: dia,
-        valor,
-        ventasTotales,
-        ventasNetas,
-        gastos,
-        utilidad,
-      };
+      
+      gastos = 0;
     } else {
       gastosFecha.forEach((gasto) => {
+        
         if (gasto.fecha === dia) {
           gastos += parseInt(gasto.valor);
         }
       });
     }
     if (ventasFecha.message) {
-      return {
-        fecha: dia,
-        valor,
-        ventasTotales,
-        ventasNetas,
-        gastos,
-        utilidad,
-      };
+      
+      ventasTotales = 0;
+      ventasNetas = 0;
+      valor = 0;
     } else {
       ventasFecha.forEach((venta) => {
+        
         if (venta.fecha_venta === dia) {
           ventasTotales += parseInt(venta.total_a_pagar);
           ventasNetas += parseInt(venta.valor_venta);
@@ -70,7 +73,9 @@ const InformeUtilidad = () => {
     }
 
     utilidad = ventasTotales - ventasNetas - gastos;
-    valor = ventasFecha.filter((venta) => venta.fecha_venta === dia).length;
+    valor = ventasFecha.message
+      ? 0
+      : ventasFecha.filter((venta) => venta.fecha_venta == dia).length;
 
     return { fecha: dia, valor, ventasTotales, ventasNetas, gastos, utilidad };
   };
@@ -81,11 +86,15 @@ const InformeUtilidad = () => {
       <p className="text-secondary text-center my-3">
         Seleccione el rango de fechas a consultar
       </p>
-      <div className="d-flex flex-wrap justify-content-center gap-2 m-3">
+      <div className="d-flex flex-wrap justify-content-center gap-2">
         <FechaInput fecha={fecha} dateChange={dateChange} /> hasta
         <FechaInput fecha={fechaFin} dateChange={dateChangeFin} />
       </div>
-
+      <div className="text-center mb-2">
+        <button className="btn btn-primary btn-sm" onClick={handleButtonClick}>
+          Consultar
+        </button>
+      </div>
       <div>
         <table className="table table-hover">
           <thead>
@@ -117,22 +126,20 @@ const InformeUtilidad = () => {
               const colorUtilidad =
                 infoDia.utilidad > 0
                   ? "text-success"
-                  : infoDia.utilidad === 0
+                  : infoDia.utilidad == 0
                   ? "text-secondary"
                   : "text-danger";
               return (
-                <>
-                  <tr key={index}>
-                    <th className="text-secondary" scope="row">
-                      {infoDia.fecha}
-                    </th>
-                    <td className="text-secondary">{infoDia.valor}</td>
-                    <td className="text-secondary">{infoDia.ventasTotales}</td>
-                    <td className="text-secondary">{infoDia.ventasNetas}</td>
-                    <td className="text-secondary">{infoDia.gastos}</td>
-                    <td className={colorUtilidad}>{infoDia.utilidad}</td>
-                  </tr>
-                </>
+                <tr key={index}>
+                  <td className="text-secondary" >
+                    {infoDia.fecha}
+                  </td>
+                  <td className="text-secondary">{infoDia.valor}</td>
+                  <td className="text-secondary">{infoDia.ventasTotales}</td>
+                  <td className="text-secondary">{infoDia.ventasNetas}</td>
+                  <td className="text-secondary">{infoDia.gastos}</td>
+                  <td className={colorUtilidad}>{infoDia.utilidad}</td>
+                </tr>
               );
             })}
             <tr>
@@ -168,39 +175,39 @@ const InformeUtilidad = () => {
               </th>
               <th
                 className={`text-${
-                  ventasFecha.message || gastosFecha.message
-                    ? "secondary"
-                    : ventasFecha.reduce(
+                   (ventasFecha.message?0:ventasFecha.reduce(
                         (acc, venta) => acc + parseInt(venta.total_a_pagar),
                         0
-                      ) -
-                        ventasFecha.reduce(
+                      )) -
+                        (ventasFecha.message?0:ventasFecha.reduce(
                           (acc, venta) => acc + parseInt(venta.valor_venta),
                           0
-                        ) -
-                        gastosFecha.reduce(
+                        )) -
+                       ( gastosFecha.message?0:gastosFecha.reduce(
                           (acc, gasto) => acc + parseInt(gasto.valor),
                           0
-                        ) <
+                        )) <
                       0
                     ? "danger"
                     : "success"
                 }`}
               >
-                {ventasFecha.message || gastosFecha.message
+                {(ventasFecha.message
                   ? 0
                   : ventasFecha.reduce(
                       (acc, venta) => acc + parseInt(venta.total_a_pagar),
                       0
-                    ) -
-                    ventasFecha.reduce(
+                    )) -
+                    (ventasFecha.message?0:ventasFecha.reduce(
                       (acc, venta) => acc + parseInt(venta.valor_venta),
                       0
-                    ) -
-                    gastosFecha.reduce(
+                    ) )-
+                   ( gastosFecha.message
+                  ? 0
+                  : gastosFecha.reduce(
                       (acc, gasto) => acc + parseInt(gasto.valor),
                       0
-                    )}
+                    ))}
               </th>
             </tr>
           </tbody>
