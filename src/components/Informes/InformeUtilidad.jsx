@@ -13,10 +13,13 @@ const InformeUtilidad = () => {
 
   const [dateRange, setDateRange] = React.useState([]);
 
-  
+  console.log(ventasFecha)
+
+  // const perdidas = () => {
+  //   let perdidas = 0;
+
 
   const handleButtonClick = async () => {
-    console.log("handleButtonClick");
     await getGastosRangoFechas(fecha, fechaFin, selectedStore);
     await getVentasRangoFechas(fecha, fechaFin, selectedStore);
     setDateRange(getDatesInRange(fecha, fechaFin));
@@ -44,6 +47,7 @@ const InformeUtilidad = () => {
     let ventasTotales = 0;
     let ventasNetas = 0;
     let gastos = 0;
+    let perdidas = 0;
     let utilidad = 0;
     let valor = 0;
     if (gastosFecha.message) {
@@ -61,6 +65,7 @@ const InformeUtilidad = () => {
       
       ventasTotales = 0;
       ventasNetas = 0;
+      perdidas = 0;
       valor = 0;
     } else {
       ventasFecha.forEach((venta) => {
@@ -68,16 +73,19 @@ const InformeUtilidad = () => {
         if (venta.fecha_venta === dia) {
           ventasTotales += parseInt(venta.total_a_pagar);
           ventasNetas += parseInt(venta.valor_venta);
+          if (venta.estado_venta === "Perdida") {
+            perdidas += parseInt(venta.perdida);
+          }
         }
       });
     }
 
-    utilidad = ventasTotales - ventasNetas - gastos;
+    utilidad = ventasTotales - ventasNetas - gastos - perdidas;
     valor = ventasFecha.message
       ? 0
       : ventasFecha.filter((venta) => venta.fecha_venta == dia).length;
 
-    return { fecha: dia, valor, ventasTotales, ventasNetas, gastos, utilidad };
+    return { fecha: dia, valor, ventasTotales, ventasNetas, gastos,perdidas, utilidad };
   };
 
   return (
@@ -116,6 +124,9 @@ const InformeUtilidad = () => {
                 Gastos
               </th>
               <th className="text-secondary" scope="col">
+                Pérdidas
+              </th>
+              <th className="text-secondary" scope="col">
                 Utilidad
               </th>
             </tr>
@@ -138,6 +149,7 @@ const InformeUtilidad = () => {
                   <td className="text-secondary">{infoDia.ventasTotales}</td>
                   <td className="text-secondary">{infoDia.ventasNetas}</td>
                   <td className="text-secondary">{infoDia.gastos}</td>
+                  <td className="text-secondary">{infoDia.perdidas}</td>
                   <td className={colorUtilidad}>{infoDia.utilidad}</td>
                 </tr>
               );
@@ -170,6 +182,14 @@ const InformeUtilidad = () => {
                   ? 0
                   : gastosFecha.reduce(
                       (acc, gasto) => acc + parseInt(gasto.valor),
+                      0
+                    )}
+              </th>
+              <th className="text-secondary">
+                {ventasFecha.message
+                  ? 0
+                  : ventasFecha.filter(venta => venta.estado_venta === "Perdida").reduce(
+                      (acc, venta) => acc + parseInt(venta.perdida),
                       0
                     )}
               </th>
@@ -207,13 +227,20 @@ const InformeUtilidad = () => {
                   : gastosFecha.reduce(
                       (acc, gasto) => acc + parseInt(gasto.valor),
                       0
-                    ))}
+                    ))-
+                    (ventasFecha.message
+                      ? 0
+                      : ventasFecha.filter(venta => venta.estado_venta === "Perdida").reduce(
+                          (acc, venta) => acc + parseInt(venta.perdida),
+                          0
+                        ))
+                    }
               </th>
             </tr>
           </tbody>
         </table>
         <small className="text-secondary text-center">
-          Utilidad = Préstamos con intereses - Prestamos Neto - Gastos{" "}
+          Utilidad = Préstamos con intereses - Prestamos Neto - Gastos - Pérdidas
         </small>
       </div>
     </div>
