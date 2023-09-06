@@ -7,36 +7,32 @@ import { TiendaContext } from "../../context/TiendaContext";
 const InformeUtilidad = () => {
   const { fecha, fechaFin, dateChange, dateChangeFin } = useDateFilter();
   const { gastosFecha, getGastosRangoFechas } = useContext(GastosContext);
-  const { ventasFecha, getVentasRangoFechas } =
-    useContext(VentasContext);
+  const { ventasFecha, getVentasRangoFechas } = useContext(VentasContext);
   const { selectedStore } = useContext(TiendaContext);
 
   const [dateRange, setDateRange] = React.useState([]);
-
-  console.log(ventasFecha)
-
 
   const handleButtonClick = async () => {
     await getGastosRangoFechas(fecha, fechaFin, selectedStore);
     await getVentasRangoFechas(fecha, fechaFin, selectedStore);
     setDateRange(getDatesInRange(fecha, fechaFin));
   };
+  
 
   const getDatesInRange = (startDate, endDate) => {
     let dates = [];
     let currentDate = new Date(startDate);
     endDate = new Date(endDate);
-
-    if (currentDate.getTime() === endDate.getTime()) {
     
+    if (currentDate.getTime() === endDate.getTime()) {
       dates.push(currentDate.toISOString().split("T")[0]);
     } else {
-    
-      while (currentDate <= endDate) {
+      while (currentDate.getTime() <= endDate.getTime()) {
         dates.push(currentDate.toISOString().split("T")[0]);
-        currentDate.setDate(currentDate.getDate() + 1);
+        currentDate.setUTCDate(currentDate.getUTCDate() + 1);
       }
     }
+    
     return dates;
   };
 
@@ -48,25 +44,21 @@ const InformeUtilidad = () => {
     let utilidad = 0;
     let valor = 0;
     if (gastosFecha.message) {
-      
       gastos = 0;
     } else {
       gastosFecha.forEach((gasto) => {
-        
         if (gasto.fecha === dia) {
           gastos += parseInt(gasto.valor);
         }
       });
     }
     if (ventasFecha.message) {
-      
       ventasTotales = 0;
       ventasNetas = 0;
       perdidas = 0;
       valor = 0;
     } else {
       ventasFecha.forEach((venta) => {
-        
         if (venta.fecha_venta === dia) {
           ventasTotales += parseInt(venta.total_a_pagar);
           ventasNetas += parseInt(venta.valor_venta);
@@ -82,7 +74,15 @@ const InformeUtilidad = () => {
       ? 0
       : ventasFecha.filter((venta) => venta.fecha_venta == dia).length;
 
-    return { fecha: dia, valor, ventasTotales, ventasNetas, gastos,perdidas, utilidad };
+    return {
+      fecha: dia,
+      valor,
+      ventasTotales,
+      ventasNetas,
+      gastos,
+      perdidas,
+      utilidad,
+    };
   };
 
   return (
@@ -139,9 +139,7 @@ const InformeUtilidad = () => {
                   : "text-danger";
               return (
                 <tr key={index}>
-                  <td className="text-secondary" >
-                    {infoDia.fecha}
-                  </td>
+                  <td className="text-secondary">{infoDia.fecha}</td>
                   <td className="text-secondary">{infoDia.valor}</td>
                   <td className="text-secondary">{infoDia.ventasTotales}</td>
                   <td className="text-secondary">{infoDia.ventasNetas}</td>
@@ -185,26 +183,31 @@ const InformeUtilidad = () => {
               <th className="text-secondary">
                 {ventasFecha.message
                   ? 0
-                  : ventasFecha.filter(venta => venta.estado_venta === "Perdida").reduce(
-                      (acc, venta) => acc + parseInt(venta.perdida),
-                      0
-                    )}
+                  : ventasFecha
+                      .filter((venta) => venta.estado_venta === "Perdida")
+                      .reduce((acc, venta) => acc + parseInt(venta.perdida), 0)}
               </th>
               <th
                 className={`text-${
-                   (ventasFecha.message?0:ventasFecha.reduce(
+                  (ventasFecha.message
+                    ? 0
+                    : ventasFecha.reduce(
                         (acc, venta) => acc + parseInt(venta.total_a_pagar),
                         0
                       )) -
-                        (ventasFecha.message?0:ventasFecha.reduce(
+                    (ventasFecha.message
+                      ? 0
+                      : ventasFecha.reduce(
                           (acc, venta) => acc + parseInt(venta.valor_venta),
                           0
                         )) -
-                       ( gastosFecha.message?0:gastosFecha.reduce(
+                    (gastosFecha.message
+                      ? 0
+                      : gastosFecha.reduce(
                           (acc, gasto) => acc + parseInt(gasto.valor),
                           0
                         )) <
-                      0
+                  0
                     ? "danger"
                     : "success"
                 }`}
@@ -215,29 +218,33 @@ const InformeUtilidad = () => {
                       (acc, venta) => acc + parseInt(venta.total_a_pagar),
                       0
                     )) -
-                    (ventasFecha.message?0:ventasFecha.reduce(
-                      (acc, venta) => acc + parseInt(venta.valor_venta),
-                      0
-                    ) )-
-                   ( gastosFecha.message
-                  ? 0
-                  : gastosFecha.reduce(
-                      (acc, gasto) => acc + parseInt(gasto.valor),
-                      0
-                    ))-
-                    (ventasFecha.message
-                      ? 0
-                      : ventasFecha.filter(venta => venta.estado_venta === "Perdida").reduce(
+                  (ventasFecha.message
+                    ? 0
+                    : ventasFecha.reduce(
+                        (acc, venta) => acc + parseInt(venta.valor_venta),
+                        0
+                      )) -
+                  (gastosFecha.message
+                    ? 0
+                    : gastosFecha.reduce(
+                        (acc, gasto) => acc + parseInt(gasto.valor),
+                        0
+                      )) -
+                  (ventasFecha.message
+                    ? 0
+                    : ventasFecha
+                        .filter((venta) => venta.estado_venta === "Perdida")
+                        .reduce(
                           (acc, venta) => acc + parseInt(venta.perdida),
                           0
-                        ))
-                    }
+                        ))}
               </th>
             </tr>
           </tbody>
         </table>
         <small className="text-secondary text-center">
-          Utilidad = Préstamos con intereses - Prestamos Neto - Gastos - Pérdidas
+          Utilidad = Préstamos con intereses - Prestamos Neto - Gastos -
+          Pérdidas
         </small>
       </div>
     </div>
