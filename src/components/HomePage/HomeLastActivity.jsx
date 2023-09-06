@@ -21,6 +21,9 @@ const HomeLastActivity = ({ ventas, gastos }) => {
     }
   };
 
+
+  
+
   return (
     <div className="card shadow-lg p-3 mb-5 bg-body rounded">
       <h6 className="text-secondary text-center">Actividad del Día</h6>
@@ -60,7 +63,8 @@ const HomeLastActivity = ({ ventas, gastos }) => {
         </ul>
       </div>
       <div className="card-body tab-content" id="myTabContent">
-        <div className="tab-pane fade show active" id="ventas" role="tabpanel">
+              {ventas.length > 0 ? (
+        <div className={`tab-pane fade show active `} id="ventas" role="tabpanel">
           <table className="table">
             <thead>
               <tr>
@@ -69,8 +73,7 @@ const HomeLastActivity = ({ ventas, gastos }) => {
               </tr>
             </thead>
             <tbody>
-              {ventas.length > 0 ? (
-                ventas.map((venta) => (
+                {ventas.map((venta) => (
                   <tr key={venta.id}>
                     <td>
                       <Link
@@ -82,12 +85,7 @@ const HomeLastActivity = ({ ventas, gastos }) => {
                     </td>
                     <td className="text-secondary">{venta.valor_venta}</td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td>No se registraron ventas</td>
-                </tr>
-              )}
+                ))}
             </tbody>
           </table>
           <div className="d-flex justify-content-evenly  mt-3">
@@ -99,7 +97,8 @@ const HomeLastActivity = ({ ventas, gastos }) => {
             </span>
           </div>
         </div>
-        <div className="tab-pane fade show " id="gastos" role="tabpanel">
+              ):null}
+        <div className={(ventas.length>0)?`tab-pane fade show`:`tab-pane fade show active`} id="gastos" role="tabpanel">
           <table className="table">
             <thead>
               <tr>
