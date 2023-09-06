@@ -36,20 +36,21 @@ const Header = () => {
             <span className="navbar-brand">
               <Caja />
             </span>
-            {user.id === tienda.tienda?.administrador_id && (
-              <small className="text-secondary text-capitalize ">{tienda.tienda?.nombre}</small>
-            )}
+
+            <small className="text-secondary text-capitalize ">
+              {tienda.tienda?.nombre}
+            </small>
           </NavbarBrand>
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="me-auto" navbar>
-              {user.id === tienda.tienda?.administrador_id && (
-                <NavItem>
-                  <Link className="nav-link" to="/select/" onClick={toggle}>
-                    Rutas
-                  </Link>
-                </NavItem>
-              )}
+              
+              <NavItem>
+                <Link className="nav-link" to="/select/" onClick={toggle}>
+                  Rutas
+                </Link>
+              </NavItem>
+
               <NavItem>
                 <Link
                   className="nav-link"
@@ -75,16 +76,7 @@ const Header = () => {
                     </Link>
                   </DropdownItem>
                   <DropdownItem divider />
-                  {/* <DropdownItem>
-                    <Link
-                      className="dropdown-item"
-                      to="/informes/fecha/"
-                      onClick={toggle}
-                    >
-                      Resumen por Fecha
-                    </Link>
-                  </DropdownItem>
-                  <DropdownItem divider /> */}
+                  
                   <DropdownItem>
                     <Link
                       className="dropdown-item"
@@ -104,7 +96,7 @@ const Header = () => {
                       Cierres Caja
                     </Link>
                   </DropdownItem>
-                  {user.username === 'root' ? (
+                  {user.username === "root" ? (
                     <DropdownItem>
                       <Link
                         className="dropdown-item"

@@ -15,9 +15,6 @@ const InformeUtilidad = () => {
 
   console.log(ventasFecha)
 
-  // const perdidas = () => {
-  //   let perdidas = 0;
-
 
   const handleButtonClick = async () => {
     await getGastosRangoFechas(fecha, fechaFin, selectedStore);

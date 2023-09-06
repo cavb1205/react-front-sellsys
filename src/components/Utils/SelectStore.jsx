@@ -3,18 +3,12 @@ import React, { useContext, useEffect } from "react";
 import { TiendaContext } from "../../context/TiendaContext";
 
 const SelectStore = () => {
-  const {
-    stores,
-    selectedStore,
-    setSelectedStore,
-    getTiendaMembresiaAdmin,
-  } = useContext(TiendaContext);
-
-console.log(selectedStore)
+  const { stores, selectedStore, setSelectedStore, getTiendaMembresiaAdmin } =
+    useContext(TiendaContext);
 
   useEffect(() => {
     if (stores.length > 0) {
-      setSelectedStore(stores[0].id);
+      setSelectedStore(stores[0].tienda?.id);
     }
   }, [stores]);
 
@@ -37,8 +31,8 @@ console.log(selectedStore)
         value={selectedStore}
       >
         {stores.map((store) => (
-          <option key={store.id} value={store.id}>
-            {store.nombre}
+          <option key={store.tienda?.id} value={store.tienda?.id}>
+            {store.tienda?.nombre}
           </option>
         ))}
       </select>

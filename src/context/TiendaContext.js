@@ -17,12 +17,16 @@ const TiendaProvider = ({ children }) => {
   const [cierresCaja, setCierresCaja] = useState([]);
   
   const [stores, setStores] = useState([])
+  
   const [selectedStore, setSelectedStore] = useState('')
+
+
   
 
     const getStoresAdmin = async ()=>{
       setLoading(true)
-      let response = await fetch(`${URL}/tiendas/list/admin/`, {
+      
+        let response = await fetch(`${URL}/tiendas/list/tiendas/admin/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -37,6 +41,8 @@ const TiendaProvider = ({ children }) => {
       logoutUser();
     }
     }
+
+    
 
   const getAllTiendas = async () => {
     setLoading(true)
@@ -277,6 +283,9 @@ const TiendaProvider = ({ children }) => {
     getTiendaMembresiaAdmin,
     activateSuscriptionMounth,
     activateSuscriptionYear,
+    
+    
+    
   };
   return (
     <TiendaContext.Provider value={contextData}>
