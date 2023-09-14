@@ -10,7 +10,7 @@ import AlertError from "../Utils/AlertError";
 import AlertLoading from "../Utils/AlertLoading";
 
 const VentasCreate = () => {
-  const { query } = useContext(AuthContext);
+  const { query, user } = useContext(AuthContext);
 
   const { error, newVenta, setNewVenta, handleChange, ventasCreateItem, loading } =
     useContext(VentasContext);
@@ -72,6 +72,8 @@ const VentasCreate = () => {
               </div>
               <div className="mb-3">
                 <label>Interés %</label>
+                {user.is_staff ? (
+
                 <input
                   onChange={handleChange}
                   value={newVenta.interes}
@@ -79,7 +81,19 @@ const VentasCreate = () => {
                   type="number"
                   className="form-control"
                   required
+                  
                 />
+                ) : (
+                  <input
+                  onChange={handleChange}
+                  value={newVenta.interes}
+                  name="interes" 
+                  type="number"
+                  className="form-control"
+                  required
+                  disabled
+                />
+                )}
               </div>
               <div className="mb-3">
                 <label>Cuotas</label>
