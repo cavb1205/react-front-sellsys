@@ -1,11 +1,15 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { RecaudosContext } from '../../context/RecaudosContext'
+import {createUtcDateIso} from '../../hooks/useDate'
+import { AuthContext } from '../../context/AuthContext'
 
 
 
 const RecaudosListItem = ({ venta }) => {
-  const {selectedNoPago, SelectedRecaudo} = useContext(RecaudosContext)
+  const {selectedNoPago, SelectedRecaudo, liquidarDate} = useContext(RecaudosContext)
+  const {user} = useContext(AuthContext)
+  const fechaActual = createUtcDateIso()
   return (
     <div className='shadow p-3 mb-3 bg-body rounded'>
       <div className='card-body'>
@@ -45,7 +49,12 @@ const RecaudosListItem = ({ venta }) => {
         </div>
         <div className='d-flex flex-wrap justify-content-around'>
           <button onClick={() => selectedNoPago(venta)} className='btn btn-danger mb-2'>No Pagó</button>
+          {!user.is_staff &&
+          fechaActual !== liquidarDate.fecha_liquidar ?
+          <button disabled onClick={() => SelectedRecaudo(venta)} className='btn btn-success mb-2'>Abonar</button>
+          :
           <button onClick={() => SelectedRecaudo(venta)} className='btn btn-success mb-2'>Abonar</button>
+}
         </div>
       </div>
     </div>

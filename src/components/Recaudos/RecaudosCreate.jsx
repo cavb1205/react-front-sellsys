@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import { RecaudosContext } from "../../context/RecaudosContext";
 import { TiendaContext } from "../../context/TiendaContext";
 import AlertLoading from "../Utils/AlertLoading";
+import { AuthContext } from "../../context/AuthContext";
 
 const RecaudosCreate = () => {
   const { venta, newRecaudo, handleChange, recaudosCreateItem, loading } =
     useContext(RecaudosContext);
+
+  const {user} = useContext(AuthContext)
 
   const { selectedStore } = useContext(TiendaContext);
 
@@ -30,6 +33,8 @@ const RecaudosCreate = () => {
             <div className="card-body">
               <div className="mb-3">
                 <label>Fecha Abono:</label>
+                {user.is_staff?
+                
                 <input
                   onChange={handleChange}
                   type="date"
@@ -38,6 +43,17 @@ const RecaudosCreate = () => {
                   className="form-control"
                   required
                 />
+                :
+                <input
+                  onChange={handleChange}
+                  type="date"
+                  name="fecha_recaudo"
+                  value={newRecaudo.fecha_recaudo}
+                  className="form-control"
+                  required
+                  disabled
+                />
+              }
               </div>
               <div className="mb-3">
                 <label>Valor:</label>

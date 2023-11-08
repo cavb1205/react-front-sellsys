@@ -50,14 +50,28 @@ const VentasCreate = () => {
             <div className="card-body">
               <div className="mb-3">
                 <label>Fecha Venta</label>
-                <input
-                  onChange={handleChange}
-                  value={newVenta.fecha_venta}
-                  name="fecha_venta"
-                  type="date"
-                  className="form-control"
-                  required
-                />
+                {
+                  user.is_staff ?
+
+                  <input
+                    onChange={handleChange}
+                    value={newVenta.fecha_venta}
+                    name="fecha_venta"
+                    type="date"
+                    className="form-control"
+                    required
+                  />
+                  :
+                  <input
+                    onChange={handleChange}
+                    value={newVenta.fecha_venta}
+                    name="fecha_venta"
+                    type="date"
+                    className="form-control"
+                    required
+                    disabled
+                  />
+                }
               </div>
               <div className="mb-3">
                 <label>Valor</label>
