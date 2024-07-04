@@ -27,11 +27,16 @@ const Caja = () => {
       navigate('/expired/')
     }
   }, [aportes, gastos, utilidades, ventasActivas, recaudos]);
+
+  //formato de miles y millones a valores del homepage
+  const formatNumber = (number) => {
+    return number.toLocaleString()
+  }
   
   return tienda.tienda?.caja > 0 ? (
-    <span className="badge text-bg-success">{tienda.tienda?.caja}</span>
+    <span className="badge text-bg-success">{tienda.tienda?formatNumber(tienda.tienda?.caja):tienda.tienda?.caja}</span>
   ) : (
-    <span className="badge text-bg-danger">{tienda.tienda?.caja}</span>
+    <span className="badge text-bg-danger">{tienda.tienda?formatNumber(tienda.tienda?.caja):tienda.tienda?.caja}</span>
   );
 };
 

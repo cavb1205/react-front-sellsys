@@ -262,6 +262,12 @@ const TiendaProvider = ({ children }) => {
     }
   };
 
+
+  //formato de miles y millones a valores del homepage
+  const formatNumber = (number) => {
+    return number.toLocaleString()
+  }
+
   const contextData = {
     tienda,
     loading,
@@ -283,7 +289,7 @@ const TiendaProvider = ({ children }) => {
     getTiendaMembresiaAdmin,
     activateSuscriptionMounth,
     activateSuscriptionYear,
-    
+    formatNumber,
     
     
   };

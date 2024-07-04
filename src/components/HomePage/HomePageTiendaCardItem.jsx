@@ -16,11 +16,15 @@ const HomePageTiendaCardItem = ({ tipo, total }) => {
       return 'secondary'
     }
   }
+   //formato de miles y millones a valores del homepage
+   const formatNumber = (number) => {
+    return number.toLocaleString()
+  }
   return (
     <div className={`card border-${cardColor()} shadow`}>
       <div className={`card-body text-${cardColor()} text-center`}>
         <h4 className='card-title'>{tipo}</h4>
-        <h2 className='card-text'>$ {total}</h2>
+        <h2 className='card-text'>$ {total?formatNumber(total):total}</h2>
       </div>
     </div>
   )
