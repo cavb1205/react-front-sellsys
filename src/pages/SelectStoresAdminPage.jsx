@@ -22,9 +22,9 @@ const SelectStoresAdminPage = () => {
           ) : (
             <>
           <SelectStore />
-          <Link className="btn btn-success mt-4" to="/">
+          {/* <Link className="btn btn-success mt-4" to="/">
             Ver Ruta
-          </Link>
+          </Link> */}
             </>
           )}
         </div>
