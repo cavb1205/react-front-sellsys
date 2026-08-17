@@ -13,11 +13,11 @@ const LoginPage = () => {
 
     <div className="container-sm">
 
-      {/* ── Banner nueva versión ─────────────────────────────────────────── */}
+      {/* ── Aviso de transición ──────────────────────────────────────────── */}
       {bannerVisible && (
         <div
           style={{
-            background: "linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)",
+            background: "linear-gradient(135deg, #92400e 0%, #b45309 58%, #d97706 100%)",
             borderRadius: 16,
             padding: "20px 20px 16px",
             marginBottom: 16,
@@ -32,7 +32,7 @@ const LoginPage = () => {
               position: "absolute",
               top: 10,
               right: 14,
-              background: "rgba(255,255,255,0.2)",
+              background: "rgba(255,255,255,0.18)",
               border: "none",
               borderRadius: 8,
               color: "#fff",
@@ -62,18 +62,18 @@ const LoginPage = () => {
                 textTransform: "uppercase",
               }}
             >
-              ✨ Nueva versión disponible
+              ⏳ Cambio programado · 1 semana
             </span>
           </div>
 
           {/* Título */}
           <p style={{ fontWeight: 900, fontSize: 16, margin: "0 0 6px", lineHeight: 1.3 }}>
-            Actualizamos la plataforma con mejoras importantes
+            Este sistema antiguo será descontinuado el 24 de agosto de 2026
           </p>
 
           {/* Descripción */}
           <p style={{ fontSize: 13, margin: "0 0 14px", opacity: 0.9, lineHeight: 1.5 }}>
-            El nuevo sistema tiene el mismo usuario y contraseña. Accede desde:
+            Desde esa fecha las ventas, abonos, gastos y cierres se registrarán únicamente en la nueva plataforma. Usa desde ahora el mismo usuario y contraseña en:
           </p>
 
           {/* URL destacada */}
@@ -91,6 +91,10 @@ const LoginPage = () => {
           >
             🔗 app.carterafinanciera.com
           </div>
+
+          <p style={{ fontSize: 12, margin: "0 0 14px", opacity: 0.92, lineHeight: 1.5 }}>
+            Puedes seguir consultando este sistema durante la transición, pero el <strong>24 de agosto</strong> ya no permitirá registrar nuevas operaciones.
+          </p>
 
           {/* Beneficios */}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 16 }}>
@@ -124,7 +128,7 @@ const LoginPage = () => {
               rel="noopener noreferrer"
               style={{
                 background: "#fff",
-                color: "#4f46e5",
+                color: "#92400e",
                 border: "none",
                 borderRadius: 10,
                 padding: "10px 20px",
@@ -136,7 +140,7 @@ const LoginPage = () => {
                 letterSpacing: "0.03em",
               }}
             >
-              Ir al nuevo sitio →
+              Comenzar en la nueva plataforma →
             </a>
             <a
               href={`${NEW_APP_URL}/guia-rapida`}
